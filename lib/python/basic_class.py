@@ -39,8 +39,13 @@ def find_real_funcName():
     """this function used to fidn the father level of current logging function"""
     import traceback
     import inspect    
-
-    funcName = (traceback.format_stack(inspect.currentframe()))[-3].split(',')[2].split('\n')[0].split()[1]
+    
+    stack_trace = traceback.format_stack(inspect.currentframe()) 
+    funcName = stack_trace[-3].split(',')[2].split('\n')[0].split()[1]
+    if funcName == '<module>':
+        funcName = stack_trace[-2].split(',')[2].split('\n')[0].split()[1]
+    else:
+        pass
     return funcName
     
     
@@ -101,7 +106,7 @@ class Loggger_record():
         
     def debug(self,debugmessages='this is debug message'): 
         funcName = find_real_funcName()  
-        self.logger.debug('[{}] '.format(funcName)+'\033[1;33m'+str(debugmessages)+'\033[0m')
+        self.logger.debug('[{}]  '.format(funcName)+'\033[1;33m'+str(debugmessages)+'\033[0m')
 
     def info(self,infomessages='this is info message'):
         funcName = find_real_funcName()

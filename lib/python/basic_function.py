@@ -138,17 +138,17 @@ def parse_testcaselocation(testcaselocation):
                     lines.append(line.strip())             # only return the read testcase lines 
                 else:
                     pass
-            return lines
+            return sorted(lines)
         else:
             basic_class.mylogger_record.debug('The testcase located in:') 
             basic_class.mylogger_recordnf.debug(testcaselocation[0])  
             testcaselocation
-            return testcaselocation                       # single specific testcase location
+            return testcaselocation                        # single specific testcase location
     else:
         basic_class.mylogger_record.debug('The testcase located in:') 
         for testcase in testcaselocation:
             basic_class.mylogger_recordnf.debug(testcase)  
-        return testcaselocation                           # multiple specific testcase locations
+        return sorted(testcaselocation)                           # multiple specific testcase locations
 
 
 def decide_import_or_reload(case_name,count_type,tmp_type):
@@ -210,7 +210,7 @@ def traverse(Path):
     
     os.chdir(Path)                 # switch to current Path
     
-    currentlists = os.listdir('.') # get current folder and file names in current path
+    currentlists = sorted(os.listdir('.')) # get current folder and file names in current path
     for list in currentlists:      # delete the hiden files and folders
         if list.startswith('.'):
             currentlists.remove(list)
