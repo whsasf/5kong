@@ -11,8 +11,11 @@ def remote_operation(sshhost,username,passwd,cmds,\
     paramikologenable = 0 \
     ):     
     
-    """This function will used to do remote operations through ssh"""
-
+    """This function will used to do remote operations through ssh.
+       will first try use key auth if it exists in default place or user defined place ,
+       then try password auth if key auth failed
+    """
+    
     import paramiko                   # third party libs needs for ssh authentication
     import basic_class                # using log part
     import os
