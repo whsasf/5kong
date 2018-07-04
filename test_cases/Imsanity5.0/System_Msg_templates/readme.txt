@@ -1,0 +1,1 @@
+THis flder contains the  message template files.

@@ -1,0 +1,42 @@
+1  set encryption key:
+
+ram@bigchina ~/workspace/WuKong/test_cases/cassandra_test $ curl -s -X POST  -d currentKey="1004:aes-128-cbc:6666666666666664" http://10.49.58.240:8081/mxos/encryption/v2/messageBodyEncryption|jq .
+
+
+
+2 get encryption key:
+
+ram@bigchina ~/workspace/WuKong/test_cases/cassandra_test $ curl -s -X GET http://10.49.58.240:8081/mxos/encryption/v2/messageBodyEncryption|jq .
+{
+  "currentKey": {
+    "uid": "1004",
+    "cipherName": "aes-128-cbc",
+    "encryptionKey": "6666666666666664"
+  },
+  "keys": {
+    "version": [
+      {
+        "uid": "1001",
+        "cipherName": "aes-128-cbc",
+        "encryptionKey": "6666666666666666"
+      },
+      {
+        "uid": "1002",
+        "cipherName": "aes-128-cbc",
+        "encryptionKey": "6666666666666667"
+      },
+      {
+        "uid": "1003",
+        "cipherName": "aes-128-cbc",
+        "encryptionKey": "6666666666666668"
+      },
+      {
+        "uid": "1004",
+        "cipherName": "aes-128-cbc",
+        "encryptionKey": "6666666666666664"
+      }
+    ]
+  }
+}
+
+

@@ -1,0 +1,10 @@
+Changes in this verrsion :5.0.3
+
+(1)change account create in random names
+(2)delete some parts not necessary
+ 
+
+Changes in this verrsion :5.0.2 
+(1) changed test cases in Body preview to meet the changes since MX9.5.01-149 .
+(2) add 9 test cases for body_preview _symbals 
+(3) details can be found in :https://confluence.synchronoss.net:8443/display/MSGEN/MX+Imsanity+test+scripts+update+project

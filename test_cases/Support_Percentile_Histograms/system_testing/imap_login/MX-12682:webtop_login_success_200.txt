@@ -1,0 +1,15 @@
+1 set key:
+ /*/common/perfStatThresholds: [StatImapAuthCommand 200]
+
+2 in each UI login, can find 2 imap auth records in imapserv.log:
+
+20180626 030235233-0400 mx1 imapserv 19978 9691 140237873886976 Note;ImapConnMade(56/16) user=xx1@openwave.com:mbox=8395903668388721010:mss=cluster01:cmd=LLUP1 AUTHENTICATE PLAIN:port=55014:fromhost=10.49.58.240:fromport=44959:sid=e7504ba6-790e-11e8-8c8a-cd372db8b4ee:respcode=OK:resptime=20:node=mx2:nodePort=55014:cosId=default
+20180626 030235233-0400 mx1 imapserv 19978 2144 140237875218176 Note;MsgTrace(65/26) capability:user=xx1@openwave.com:mbox=8395903668388721010:mss=cluster01:cmd=LLNOUP2 CAPABILITY:port=55014:fromhost=10.49.58.240:fromport=44959:sid=e7504ba6-790e-11e8-8c8a-cd372db8b4ee:respcode=OK:resptime=0:node=mx2:nodePort=55014:cosId=default
+20180626 030235234-0400 mx1 imapserv 19978 2141 140237876016896 Note;ImapConnMade(56/16) user=xx1@openwave.com:mbox=8395903668388721010:mss=cluster01:cmd=LLUP1 AUTHENTICATE PLAIN:port=55014:fromhost=10.49.58.240:fromport=44958:sid=e7504818-790e-11e8-9aa0-b2d7eff80d01:respcode=OK:resptime=21:node=mx2:nodePort=55014:cosId=default
+
+2 try to login and logout 5 times, shold see 10 counts in imapserv.stat:
+
+
+20180626 034936083-0400 mx1 imapserv 2935;StatImapAuthCommand(77/706) 0/sec 19 ms [200] 6/6/0 115/14/29
+20180626 035006083-0400 mx1 imapserv 2935;StatImapAuthCommand(77/706) 0/sec 21 ms [200] 4/4/0 86/19/24
+

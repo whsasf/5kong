@@ -1,0 +1,18 @@
+1 clear all previous keys:
+ram@bigchina ~/workspace/WuKong/test_cases/cassandra_test $ curl -s -X GET http://10.49.58.240:8081/mxos/encryption/v2/messageBodyEncryption|jq .
+{
+  "currentKey": {
+    "uid": "1002",
+    "cipherName": "aes-128-cbc",
+    "encryptionKey": "6666666666666662"
+  }
+}
+
+2 restart mss ,mss can not start, 
+
+a[SEARCH]IPAddress\3a[10.49.58.241]Port\3a[8888]
+20180617 234907308-0400 mx1 mss.1 18811 18811 139685348333376 Note;MsgTrace(65/26) Starts operation blackout for 30 sec.
+20180617 234907318-0400 mx1 mss.1 18811 18832 139685283432192 Note;DiscoveryNewInstanceDiscovered(138/2) Discovered new service. AppID\3a[MAILBOXSERVICE]IPAddress\3a[10.49.58.240]Port\3a[8081]
+20180617 234907322-0400 mx1 mss.1 18811 18811 139685348333376 Note;ConfCryptoFailed(51/95)
+20180617 234907322-0400 mx1 mss.1 18811 18811 139685348333376 Erro;SslConfigurationErr(64/2) Initialize FAILED - Invalid decryption key provided
+20180617 234907322-0400 mx1 mss.1 18811 18811 139685348333376 Fatl;ConfCryptoFailed(51/95)

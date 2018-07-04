@@ -1,0 +1,1 @@
+rcpts = <James.Song@synchronoss.com> <yzou0001@synchronoss.com> <Lynn.Li@synchronoss.com> <Eunice.Cui@synchronoss.com> <lisa.liang@synchronoss.com> <Steven.Bai@synchronoss.com> <HaiSheng.Wang@synchronoss.com>

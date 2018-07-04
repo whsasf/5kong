@@ -1,0 +1,112 @@
+ram@bigchina ~/share/5kong $ openssl s_client -starttls imap -connect 10.49.58.239:20143
+CONNECTED(00000003)
+depth=0 C = US, ST = California, L = Redwood City, O = Openwave Messaging Inc., emailAddress = info@owmessaging.com
+verify error:num=18:self signed certificate
+verify return:1
+depth=0 C = US, ST = California, L = Redwood City, O = Openwave Messaging Inc., emailAddress = info@owmessaging.com
+verify error:num=10:certificate has expired
+notAfter=Feb 23 23:52:44 2017 GMT
+verify return:1
+depth=0 C = US, ST = California, L = Redwood City, O = Openwave Messaging Inc., emailAddress = info@owmessaging.com
+notAfter=Feb 23 23:52:44 2017 GMT
+verify return:1
+---
+Certificate chain
+ 0 s:/C=US/ST=California/L=Redwood City/O=Openwave Messaging Inc./emailAddress=info@owmessaging.com
+   i:/C=US/ST=California/L=Redwood City/O=Openwave Messaging Inc./emailAddress=info@owmessaging.com
+---
+Server certificate
+-----BEGIN CERTIFICATE-----
+MIID1TCCAr2gAwIBAgIJAJ6PxZjPlV+aMA0GCSqGSIb3DQEBBQUAMIGAMQswCQYD
+VQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5pYTEVMBMGA1UEBwwMUmVkd29vZCBD
+aXR5MSAwHgYDVQQKDBdPcGVud2F2ZSBNZXNzYWdpbmcgSW5jLjEjMCEGCSqGSIb3
+DQEJARYUaW5mb0Bvd21lc3NhZ2luZy5jb20wHhcNMTQwMjI0MjM1MjQ0WhcNMTcw
+MjIzMjM1MjQ0WjCBgDELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWEx
+FTATBgNVBAcMDFJlZHdvb2QgQ2l0eTEgMB4GA1UECgwXT3BlbndhdmUgTWVzc2Fn
+aW5nIEluYy4xIzAhBgkqhkiG9w0BCQEWFGluZm9Ab3dtZXNzYWdpbmcuY29tMIIB
+IjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3qfvHGA1DbzzNkb3AqOzLNGU
+UNWtVPyvPD94tux7y7Xq/AP40irSbK7SWBcPsl1IlnP2STI7yCjlezyGgH24YU7L
+LwPBmjFZv+VDjlbJ4TlKBGyAD/5DXnkcXS91hLplZ4iUtES3/crGr6Ts/8DEqrKl
+WUTD92ajgtyCMFDO0PeBk8xTuZWI5p8oZ2GB+lvg4vc5hSnXS10Z0R+4Tx71PTU4
+Xv3FOokCV07G+I88nQQrWu0rxqVw1afUkkqpuOdseVRQegjaEmxl/eWJVwk+kRId
++yVGgsDr9StbrLieAtnW2NT+XV2ZRG2RIqNr4K5EumYZ5WtegLuZtL45Yf3JzQID
+AQABo1AwTjAdBgNVHQ4EFgQUxpSbelFjzXwner+CdY+K/Iun+gUwHwYDVR0jBBgw
+FoAUxpSbelFjzXwner+CdY+K/Iun+gUwDAYDVR0TBAUwAwEB/zANBgkqhkiG9w0B
+AQUFAAOCAQEAOLkJSW1lr33UXQqvUVFcLC8VAFksVDIGhRa96M84otycmrkXP19h
+X2z//BD7AwC+Z4ci+NIx/4cb3viYdBiBSoWzwO2JwuB3GbKrnPmLO9U0VizQuuOT
+2msEKAXb3ymqkw8eJF/GZMLklEtCZYCJeuMnMoP/sAdRlaXFXnJD8/EWaA3Wmxzm
+VKc6UrIuDtZ9rVETnUdbNColQEGfogYFWWXFbuopJtI1qVNfVA/CSD3RwU9XDYgD
+NAfXV8nybdcQD0FN9uuQJNAD4MNhP7Uv6HTqIwBDdEMUzUL03KhB543dsEHOLeTL
+ddoitHAUQT2dv3+e/aLN1yWW0fNj7gdg5w==
+-----END CERTIFICATE-----
+subject=/C=US/ST=California/L=Redwood City/O=Openwave Messaging Inc./emailAddress=info@owmessaging.com
+issuer=/C=US/ST=California/L=Redwood City/O=Openwave Messaging Inc./emailAddress=info@owmessaging.com
+---
+No client certificate CA names sent
+Peer signing digest: SHA512
+Server Temp Key: ECDH, P-256, 256 bits
+---
+SSL handshake has read 1942 bytes and written 457 bytes
+---
+New, TLSv1/SSLv3, Cipher is ECDHE-RSA-AES256-GCM-SHA384
+Server public key is 2048 bit
+Secure Renegotiation IS supported
+Compression: NONE
+Expansion: NONE
+No ALPN negotiated
+SSL-Session:
+    Protocol  : TLSv1.2
+    Cipher    : ECDHE-RSA-AES256-GCM-SHA384
+    Session-ID: 7885AD86557A51048B5736CCF3E39CB5866128D702243566B2995D1E8B1A16D1
+    Session-ID-ctx: 
+    Master-Key: 57CC6B1C8B40450A011D5BAF21683247A79F0141F18E2BBD7E133C3F50895E3D836C69055253B61539315C02B2DC7861
+    Key-Arg   : None
+    PSK identity: None
+    PSK identity hint: None
+    SRP username: None
+    TLS session ticket lifetime hint: 300 (seconds)
+    TLS session ticket:
+    0000 - 2b 31 7b bf a0 fb e7 44-94 9e c5 01 1a 63 be 28   +1{....D.....c.(
+    0010 - 64 42 95 98 47 87 71 e1-34 ae 76 cb aa 5d 6e 5b   dB..G.q.4.v..]n[
+    0020 - 44 7f 09 cd 54 5d 75 d5-8d 85 40 1c 68 68 ef 30   D...T]u...@.hh.0
+    0030 - 3d c1 40 c1 f5 be e1 55-cb f6 c8 22 1a cb ce 60   =.@....U..."...`
+    0040 - b4 27 45 a7 8c 6e c3 ac-35 34 ad 24 60 8c 82 53   .'E..n..54.$`..S
+    0050 - a2 8f 93 34 6e 30 67 7f-5a ab 79 fa 39 a3 cc 0b   ...4n0g.Z.y.9...
+    0060 - 9b c9 d5 23 48 c3 ff f9-d7 9b 75 f1 7e 6e b5 a0   ...#H.....u.~n..
+    0070 - 5b 77 ef fc 20 ce 90 37-b3 6e e4 b8 f5 38 82 02   [w.. ..7.n...8..
+    0080 - 71 07 1a c4 81 70 84 c6-2f 7a 56 c9 e4 75 f7 d0   q....p../zV..u..
+    0090 - 5f ae e9 c3 f4 2c 97 f3-be ef 16 65 99 e2 1d 79   _....,.....e...y
+
+    Start Time: 1529648016
+    Timeout   : 300 (sec)
+    Verify return code: 10 (certificate has expired)
+---
+. OK CAPABILITY completed
+a login xx1 p
+a OK LOGIN completed
+a select inbox
+* 6 EXISTS
+* OK [UNSEEN 0] First unseen message
+* OK [UIDVALIDITY 1529632299] UIDs valid
+* OK [UIDNEXT 1006] Predicted next UID
+* FLAGS (\Answered \Flagged \Deleted \Draft \Seen)
+* OK [PERMANENTFLAGS (\* \Answered \Flagged \Deleted \Draft \Seen)] Permanent flags
+* 0 RECENT
+a OK [READ-WRITE] SELECT completed
+a logout
+* BYE IMAP4 server terminating connection
+a OK LOGOUT completed
+read:errno=0
+
+
+
+
+
+20180622 020553763-0400 mx1 imapserv 25056 25139 139750340867840 Note;SslHandshakeSucceeded(64/3) cmd=. STARTTLS:fromhost=10.37.2.214:fromport=39934:sid=51aeef14-75e2-11e8-ac43-9205aa161d4b:respcode=OK:resptime=0
+20180622 020558145-0400 mx1 imapserv 25056 25106 139750349653760 Note;ImapConnMade(56/16) user=xx1:mbox=8455062972622233238:mss=cluster01:cmd=a login xx1 <password>:port=55014:fromhost=10.37.2.214:fromport=39934:sid=51aeef14-75e2-11e8-ac43-9205aa161d4b:respcode=OK:resptime=43:node=mx1:nodePort=55014:cosId=default
+20180622 020601062-0400 mx1 imapserv 25056 25117 139750346725120 Note;ImapNotificationInfo(56/45) notification service is available:user=xx1:mbox=8455062972622233238:mss=cluster01:fldr=inbox:cmd=a select inbox:port=55014:fromhost=10.37.2.214:fromport=39934:sid=51aeef14-75e2-11e8-ac43-9205aa161d4b:node=mx1:nodePort=55014:cosId=default
+20180622 020601067-0400 mx1 imapserv 25056 25117 139750346725120 Note;ImapNotificationInfo(56/45) folder INBOX is subscribed for notification:user=xx1:mbox=8455062972622233238:mss=cluster01:fldr=inbox:cmd=a select inbox:port=55014:fromhost=10.37.2.214:fromport=39934:sid=51aeef14-75e2-11e8-ac43-9205aa161d4b:node=mx1:nodePort=55014:cosId=default
+20180622 020601077-0400 mx1 imapserv 25056 25117 139750346725120 Note;MsgTrace(65/26) select:user=xx1:mbox=8455062972622233238:mss=cluster01:fldr=inbox:cmd=a select inbox:port=55014:fromhost=10.37.2.214:fromport=39934:sid=51aeef14-75e2-11e8-ac43-9205aa161d4b:respcode=OK:resptime=15:node=mx1:nodePort=55014:cosId=default
+20180622 020603166-0400 mx1 imapserv 25056 25128 139750343796480 Note;ImapNotificationInfo(56/45) folder INBOX is unsubscribed for notification:user=xx1:mbox=8455062972622233238:mss=cluster01:fldr=inbox:cmd=a logout:port=55014:fromhost=10.37.2.214:fromport=39934:sid=51aeef14-75e2-11e8-ac43-9205aa161d4b:node=mx1:nodePort=55014:cosId=default
+20180622 020603166-0400 mx1 imapserv 25056 25128 139750343796480 Note;ImapLogout(56/43) user=xx1:mbox=8455062972622233238:mss=cluster01:cmd=a logout:port=55014:fromhost=10.37.2.214:fromport=39934:sid=51aeef14-75e2-11e8-ac43-9205aa161d4b:respcode=OK:resptime=6:node=mx1:nodePort=55014:cosId=default
+20180622 020603166-0400 mx1 imapserv 25056 25128 139750343796480 Note;ImapDisconnected(56/17) user=xx1:mbox=8455062972622233238:mss=cluster01:cmd=a logout:port=55014:fromhost=10.37.2.214:fromport=39934:sid=51aeef14-75e2-11e8-ac43-9205aa161d4b:respcode=OK:resptime=5021:node=mx1:nodePort=55014:cosId=default

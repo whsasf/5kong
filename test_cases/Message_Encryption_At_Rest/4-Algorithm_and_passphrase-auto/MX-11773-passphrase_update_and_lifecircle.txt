@@ -1,0 +1,1 @@
+current ,we can only create the passphrases, can update or delete using mxos API, you have to use LDAP to delete the passphrases.

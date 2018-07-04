@@ -1,0 +1,130 @@
+ram@bigchina ~/share/5kong $ openssl s_client -starttls smtp -connect 10.49.58.239:20025
+CONNECTED(00000003)
+depth=0 C = US, ST = California, L = Redwood City, O = Openwave Messaging Inc., emailAddress = info@owmessaging.com
+verify error:num=18:self signed certificate
+verify return:1
+depth=0 C = US, ST = California, L = Redwood City, O = Openwave Messaging Inc., emailAddress = info@owmessaging.com
+verify error:num=10:certificate has expired
+notAfter=Feb 23 23:52:44 2017 GMT
+verify return:1
+depth=0 C = US, ST = California, L = Redwood City, O = Openwave Messaging Inc., emailAddress = info@owmessaging.com
+notAfter=Feb 23 23:52:44 2017 GMT
+verify return:1
+---
+Certificate chain
+ 0 s:/C=US/ST=California/L=Redwood City/O=Openwave Messaging Inc./emailAddress=info@owmessaging.com
+   i:/C=US/ST=California/L=Redwood City/O=Openwave Messaging Inc./emailAddress=info@owmessaging.com
+---
+Server certificate
+-----BEGIN CERTIFICATE-----
+MIID1TCCAr2gAwIBAgIJAJ6PxZjPlV+aMA0GCSqGSIb3DQEBBQUAMIGAMQswCQYD
+VQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5pYTEVMBMGA1UEBwwMUmVkd29vZCBD
+aXR5MSAwHgYDVQQKDBdPcGVud2F2ZSBNZXNzYWdpbmcgSW5jLjEjMCEGCSqGSIb3
+DQEJARYUaW5mb0Bvd21lc3NhZ2luZy5jb20wHhcNMTQwMjI0MjM1MjQ0WhcNMTcw
+MjIzMjM1MjQ0WjCBgDELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWEx
+FTATBgNVBAcMDFJlZHdvb2QgQ2l0eTEgMB4GA1UECgwXT3BlbndhdmUgTWVzc2Fn
+aW5nIEluYy4xIzAhBgkqhkiG9w0BCQEWFGluZm9Ab3dtZXNzYWdpbmcuY29tMIIB
+IjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3qfvHGA1DbzzNkb3AqOzLNGU
+UNWtVPyvPD94tux7y7Xq/AP40irSbK7SWBcPsl1IlnP2STI7yCjlezyGgH24YU7L
+LwPBmjFZv+VDjlbJ4TlKBGyAD/5DXnkcXS91hLplZ4iUtES3/crGr6Ts/8DEqrKl
+WUTD92ajgtyCMFDO0PeBk8xTuZWI5p8oZ2GB+lvg4vc5hSnXS10Z0R+4Tx71PTU4
+Xv3FOokCV07G+I88nQQrWu0rxqVw1afUkkqpuOdseVRQegjaEmxl/eWJVwk+kRId
++yVGgsDr9StbrLieAtnW2NT+XV2ZRG2RIqNr4K5EumYZ5WtegLuZtL45Yf3JzQID
+AQABo1AwTjAdBgNVHQ4EFgQUxpSbelFjzXwner+CdY+K/Iun+gUwHwYDVR0jBBgw
+FoAUxpSbelFjzXwner+CdY+K/Iun+gUwDAYDVR0TBAUwAwEB/zANBgkqhkiG9w0B
+AQUFAAOCAQEAOLkJSW1lr33UXQqvUVFcLC8VAFksVDIGhRa96M84otycmrkXP19h
+X2z//BD7AwC+Z4ci+NIx/4cb3viYdBiBSoWzwO2JwuB3GbKrnPmLO9U0VizQuuOT
+2msEKAXb3ymqkw8eJF/GZMLklEtCZYCJeuMnMoP/sAdRlaXFXnJD8/EWaA3Wmxzm
+VKc6UrIuDtZ9rVETnUdbNColQEGfogYFWWXFbuopJtI1qVNfVA/CSD3RwU9XDYgD
+NAfXV8nybdcQD0FN9uuQJNAD4MNhP7Uv6HTqIwBDdEMUzUL03KhB543dsEHOLeTL
+ddoitHAUQT2dv3+e/aLN1yWW0fNj7gdg5w==
+-----END CERTIFICATE-----
+subject=/C=US/ST=California/L=Redwood City/O=Openwave Messaging Inc./emailAddress=info@owmessaging.com
+issuer=/C=US/ST=California/L=Redwood City/O=Openwave Messaging Inc./emailAddress=info@owmessaging.com
+---
+No client certificate CA names sent
+Peer signing digest: SHA512
+Server Temp Key: ECDH, P-256, 256 bits
+---
+SSL handshake has read 1924 bytes and written 466 bytes
+---
+New, TLSv1/SSLv3, Cipher is ECDHE-RSA-AES256-GCM-SHA384
+Server public key is 2048 bit
+Secure Renegotiation IS supported
+Compression: NONE
+Expansion: NONE
+No ALPN negotiated
+SSL-Session:
+    Protocol  : TLSv1.2
+    Cipher    : ECDHE-RSA-AES256-GCM-SHA384
+    Session-ID: 915B1B75071A46F3771B97C0A30F7AB97DAF49A1135CE41548F4F17C2FF47E60
+    Session-ID-ctx: 
+    Master-Key: 9ED82844420DAEB702DABACDA6CC8413912A8FDCE25D2266140B97715A96D50081BBD75705B6625CE91E1388C9CCC5F0
+    Key-Arg   : None
+    PSK identity: None
+    PSK identity hint: None
+    SRP username: None
+    TLS session ticket lifetime hint: 300 (seconds)
+    TLS session ticket:
+    0000 - f7 d4 d2 dd 8f 98 79 74-8c 8b 67 e2 bd d1 82 b4   ......yt..g.....
+    0010 - a7 29 88 04 3f a5 51 b9-fb af 7f a9 13 fb 8e 0c   .)..?.Q.........
+    0020 - 27 fc b6 7a 0a be 00 3b-7f 86 44 3c 10 bc 0c 07   '..z...;..D<....
+    0030 - 79 56 4d c9 ff 8f 30 c7-06 29 1e 44 bb 58 c4 fc   yVM...0..).D.X..
+    0040 - 33 7f 31 09 6e ad ad 71-1b 4a 79 a7 e1 c2 61 ea   3.1.n..q.Jy...a.
+    0050 - 4f bf cb 47 c7 e3 af aa-63 7a c1 17 59 d8 9b 4f   O..G....cz..Y..O
+    0060 - 7e cc 44 81 48 a7 ea 39-09 df f4 fc 6b bc e1 3f   ~.D.H..9....k..?
+    0070 - 75 36 b2 44 3f 21 24 ea-b5 b9 03 f2 50 12 2d f8   u6.D?!$.....P.-.
+    0080 - fe 00 6c f4 da 9d d5 dc-26 40 7a 53 a1 1a 90 e5   ..l.....&@zS....
+    0090 - 41 f1 08 78 7f 4f fd a4-45 a0 b5 fc f2 3f 6a be   A..x.O..E....?j.
+
+    Start Time: 1529648174
+    Timeout   : 300 (sec)
+    Verify return code: 10 (certificate has expired)
+---
+250 SIZE 30996480
+mail from:xx2
+250 Sender <xx2> Ok
+rcpt to:xx1
+250 Recipient <xx1> Ok
+data
+354 Ok Send data ending with <CRLF>.<CRLF>
+from:xx2
+to:xx1
+subject:dddddd
+
+dddddd
+.
+250 Message received: 20180622060839.AAA24883.mx1.openwave.com@openssl.client.net
+quit
+221 mx1.openwave.com ESMTP server closing connection
+read:errno=0
+
+
+
+
+20180622 020725669-0400 mx1 popserv 25005 25716 140024283215616 Note;SslHandshakeSucceeded(64/3) cmd=STLS:fromhost=10.37.2.214:fromport=46420
+20180622 020730092-0400 mx1 popserv 25005 25716 140024283215616 Note;PopConnMade(66/9) user=xx1:mbox=8455062972622233238:mss=cluster01:cmd=pass <pswd>:port=55014:fromhost=10.37.2.214:fromport=46420:node=mx1:nodePort=55014:cosId=default
+20180622 020735839-0400 mx1 popserv 25005 25716 140024283215616 Note;PopConnQuit(66/13) user=xx1:mbox=8455062972622233238:mss=cluster01:cmd=quit:port=55014:fromhost=10.37.2.214:fromport=46420:node=mx1:nodePort=55014:cosId=default:time=11
+^C
+mx1:imail:Mx9.5:~/log$ tail -100f mta.log
+20180622 020328180-0400 mx1 mta 24883 24883 140443854333760 Note;ProcLaunchReport(67/1) root: M.9.05.03.00 201-2473-138-1 (i386-unknown-linux-gnu) (RME Version 180) Wed Jun 20 14\3a27\3a29 EDT 2018
+20180622 020328180-0400 mx1 mta 24883 24883 140443854333760 Note;ConfNonStandardPort(51/56) SMTPPort:mta:mx1:25:20025
+20180622 020328180-0400 mx1 mta 24883 24883 140443854333760 Note;ConfNonStandardPort(51/56) sslSMTPPort:mta:mx1:465:20465
+20180622 020328193-0400 mx1 mta 24883 24883 140443854333760 Note;ProcSetuidSucceed(67/86) imail:500
+20180622 020328193-0400 mx1 mta 24883 24883 140443854333760 Note;ProcReExecingProg(67/91) /opt/imail/lib/mta
+20180622 020328283-0400 mx1 mta 24883 24883 140185810384704 Note;ProcSchedulerReport(67/107) MultiPoll:2:20:40:80
+20180622 020328295-0400 mx1 mta 24883 24883 140185810384704 Note;MtaServiceMode(79/166) Standard
+20180622 020328296-0400 mx1 mta 24883 24939 140185724290816 Note;ConfConnectedToConfigServer(51/86) imconfserv:mx1:26003
+20180622 020329317-0400 mx1 mta 24883 24883 140185810384704 Note;DiscoveryServiceDiscoveryFailed(138/1) Discovered new service. AppID\3a[MAILBOXSERVICE]IPAddress\3a[10.49.58.240]Port\3a[8081]
+20180622 020343220-0400 mx1 mta 24883 24883 140185810384704 Erro;NioGetHostNameFail(73/51) mx1.openwave.com:GetHostByName:DNS Bad Host
+20180622 020343228-0400 mx1 mta 24883 24883 140185810384704 Warn;UserDataException(504/1) UserDataAdapter\3a\3agetMailingLists return done nothing::::
+20180622 020343236-0400 mx1 mta 24883 24883 140185810384704 Note;DiscoveryServiceDiscoveryFailed(138/1) Discovered new service. AppID\3a[QUEUEADMIN]IPAddress\3a[10.49.58.240]Port\3a[8015]
+20180622 020343236-0400 mx1 mta 24883 24883 140185810384704 Note;DiscoveryServiceDiscoveryFailed(138/1) Discovered new service. AppID\3a[QUEUE]IPAddress\3a[10.49.58.240]Port\3a[8013]
+20180622 020830825-0400 mx1 mta 24883 25868 140185705596672 Note;SmtpConnectionReceived(70/1) [10.37.2.214]:fromhost=10.37.2.214:fromport=35194:localAddr=10.49.58.239:sid=DF580162-6ED4CE86-00000002.0
+20180622 020834932-0400 mx1 mta 24883 25868 140185705596672 Warn;SmtpAddressFixed(70/13) [10.37.2.214]:mail from\3axx2:<xx2>:fromhost=10.37.2.214:fromport=35194:localAddr=10.49.58.239:sid=DF580162-6ED4CE86-00000002.1
+20180622 020838124-0400 mx1 mta 24883 25868 140185705596672 Warn;SmtpAddressFixed(70/13) [10.37.2.214]:rcpt to\3axx1:<xx1>:from=<xx2>:fromhost=10.37.2.214:fromport=35194:localAddr=10.49.58.239:sid=DF580162-6ED4CE86-00000002.1:cosId=default
+20180622 020850461-0400 mx1 mta 24883 25868 140185705596672 Note;MsgTrace(65/26) received from internet:from=<xx2>:msgid=<20180622060839.AAA24883.mx1.openwave.com@openssl.client.net>:fromhost=[10.37.2.214]:fromport=35194:localAddr=10.49.58.239:sid=DF580162-6ED4CE86-00000002.1:cosId=default:rcptCosId=default:msgsize=363:time=16:sender=<xx2>:rcpts=<xx1@openwave.com>:protocol=ESMTP:encoding=SSL
+20180622 020850484-0400 mx1 mta 24883 25915 140185706129152 Note;MsgTrace(65/26) docid will be used for message-id:user=xx1@openwave.com:from=<xx2@openwave.com>:msgid=<20180622060839.AAA24883.mx1.openwave.com@openssl.client.net>:size=438:fromhost=10.37.2.214:fromport=35194:localAddr=[10.49.58.239]:sid=DF580162-6ED4CE86-00000002.1:cosId=default:rcptCosId=default
+20180622 020851957-0400 mx1 mta 24883 25868 140185705596672 Note;SmtpConnectionClosed(70/2) [10.37.2.214]:21:1:112:fromhost=[10.37.2.214]:fromport=35194:localAddr=10.49.58.239:sid=DF580162-6ED4CE86-00000002.1
+20180622 020854844-0400 mx1 mta 24883 25919 140185704797952 Note;MsgTrace(65/26) delivered:user=xx1@openwave.com:mbox=8455062972622233238:mss=mx1:from=<xx2@openwave.com>:msgid=<20180622060839.AAA24883.mx1.openwave.com@openssl.client.net>:size=471:port=55014:fromhost=10.37.2.214:fromport=35194:localAddr=[10.49.58.239]:sid=DF580162-6ED4CE86-00000002.1:docid=bb8f0158-75e2-11e8-8d77-e2c120e9bd04:node=mx1:nodePort=55014:cosId=default:rcptCosId=default
+

@@ -1,0 +1,107 @@
+ram@bigchina ~/share/5kong $ openssl s_client -starttls pop3 -connect 10.49.58.239:20110
+CONNECTED(00000003)
+depth=0 C = US, ST = California, L = Redwood City, O = Openwave Messaging Inc., emailAddress = info@owmessaging.com
+verify error:num=18:self signed certificate
+verify return:1
+depth=0 C = US, ST = California, L = Redwood City, O = Openwave Messaging Inc., emailAddress = info@owmessaging.com
+verify error:num=10:certificate has expired
+notAfter=Feb 23 23:52:44 2017 GMT
+verify return:1
+depth=0 C = US, ST = California, L = Redwood City, O = Openwave Messaging Inc., emailAddress = info@owmessaging.com
+notAfter=Feb 23 23:52:44 2017 GMT
+verify return:1
+---
+Certificate chain
+ 0 s:/C=US/ST=California/L=Redwood City/O=Openwave Messaging Inc./emailAddress=info@owmessaging.com
+   i:/C=US/ST=California/L=Redwood City/O=Openwave Messaging Inc./emailAddress=info@owmessaging.com
+---
+Server certificate
+-----BEGIN CERTIFICATE-----
+MIID1TCCAr2gAwIBAgIJAJ6PxZjPlV+aMA0GCSqGSIb3DQEBBQUAMIGAMQswCQYD
+VQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5pYTEVMBMGA1UEBwwMUmVkd29vZCBD
+aXR5MSAwHgYDVQQKDBdPcGVud2F2ZSBNZXNzYWdpbmcgSW5jLjEjMCEGCSqGSIb3
+DQEJARYUaW5mb0Bvd21lc3NhZ2luZy5jb20wHhcNMTQwMjI0MjM1MjQ0WhcNMTcw
+MjIzMjM1MjQ0WjCBgDELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3JuaWEx
+FTATBgNVBAcMDFJlZHdvb2QgQ2l0eTEgMB4GA1UECgwXT3BlbndhdmUgTWVzc2Fn
+aW5nIEluYy4xIzAhBgkqhkiG9w0BCQEWFGluZm9Ab3dtZXNzYWdpbmcuY29tMIIB
+IjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3qfvHGA1DbzzNkb3AqOzLNGU
+UNWtVPyvPD94tux7y7Xq/AP40irSbK7SWBcPsl1IlnP2STI7yCjlezyGgH24YU7L
+LwPBmjFZv+VDjlbJ4TlKBGyAD/5DXnkcXS91hLplZ4iUtES3/crGr6Ts/8DEqrKl
+WUTD92ajgtyCMFDO0PeBk8xTuZWI5p8oZ2GB+lvg4vc5hSnXS10Z0R+4Tx71PTU4
+Xv3FOokCV07G+I88nQQrWu0rxqVw1afUkkqpuOdseVRQegjaEmxl/eWJVwk+kRId
++yVGgsDr9StbrLieAtnW2NT+XV2ZRG2RIqNr4K5EumYZ5WtegLuZtL45Yf3JzQID
+AQABo1AwTjAdBgNVHQ4EFgQUxpSbelFjzXwner+CdY+K/Iun+gUwHwYDVR0jBBgw
+FoAUxpSbelFjzXwner+CdY+K/Iun+gUwDAYDVR0TBAUwAwEB/zANBgkqhkiG9w0B
+AQUFAAOCAQEAOLkJSW1lr33UXQqvUVFcLC8VAFksVDIGhRa96M84otycmrkXP19h
+X2z//BD7AwC+Z4ci+NIx/4cb3viYdBiBSoWzwO2JwuB3GbKrnPmLO9U0VizQuuOT
+2msEKAXb3ymqkw8eJF/GZMLklEtCZYCJeuMnMoP/sAdRlaXFXnJD8/EWaA3Wmxzm
+VKc6UrIuDtZ9rVETnUdbNColQEGfogYFWWXFbuopJtI1qVNfVA/CSD3RwU9XDYgD
+NAfXV8nybdcQD0FN9uuQJNAD4MNhP7Uv6HTqIwBDdEMUzUL03KhB543dsEHOLeTL
+ddoitHAUQT2dv3+e/aLN1yWW0fNj7gdg5w==
+-----END CERTIFICATE-----
+subject=/C=US/ST=California/L=Redwood City/O=Openwave Messaging Inc./emailAddress=info@owmessaging.com
+issuer=/C=US/ST=California/L=Redwood City/O=Openwave Messaging Inc./emailAddress=info@owmessaging.com
+---
+No client certificate CA names sent
+Peer signing digest: SHA512
+Server Temp Key: ECDH, P-256, 256 bits
+---
+SSL handshake has read 1705 bytes and written 437 bytes
+---
+New, TLSv1/SSLv3, Cipher is ECDHE-RSA-AES256-GCM-SHA384
+Server public key is 2048 bit
+Secure Renegotiation IS supported
+Compression: NONE
+Expansion: NONE
+No ALPN negotiated
+SSL-Session:
+    Protocol  : TLSv1.2
+    Cipher    : ECDHE-RSA-AES256-GCM-SHA384
+    Session-ID: 14C263350A9A74DD47AA71055B7A6E27EC9481C8414DCE587A1B08D0E83F8A02
+    Session-ID-ctx: 
+    Master-Key: 53280021E5ED988E544CFD0EC0B28233EB2D64996F7D7C2D7BEAE95B9F4B18AA6A89A5ACB9BA85ED38E2470FDA943AC1
+    Key-Arg   : None
+    PSK identity: None
+    PSK identity hint: None
+    SRP username: None
+    TLS session ticket lifetime hint: 300 (seconds)
+    TLS session ticket:
+    0000 - c0 f2 38 0b aa 16 20 da-3c cf 66 cf 47 3a 4c 76   ..8... .<.f.G:Lv
+    0010 - 73 e1 3a 25 bc d4 83 e4-75 1f 0f 12 8a e8 4c 26   s.:%....u.....L&
+    0020 - 61 90 b2 1a 51 1d e5 0a-37 7b cc a4 d6 eb 58 63   a...Q...7{....Xc
+    0030 - 93 ad 8f ed 5b 20 b8 13-64 4c 4b b8 44 b0 c3 e1   ....[ ..dLK.D...
+    0040 - 42 00 f9 da 52 8d 74 73-68 93 5b 42 8f 84 f1 06   B...R.tsh.[B....
+    0050 - b5 65 ee 01 87 a5 95 ca-0f d6 4a d4 63 07 19 8f   .e........J.c...
+    0060 - 27 d2 43 8f 0b b7 c5 18-c3 22 49 be 56 ba dd 43   '.C......"I.V..C
+    0070 - 88 61 1f da ce b2 3d 9a-7c a7 48 93 fe 42 3f 5b   .a....=.|.H..B?[
+    0080 - 6b ab 3f 77 28 ff 44 56-2e 4d a1 c3 26 c7 0e a1   k.?w(.DV.M..&...
+    0090 - d9 4a ae 73 df 9d 08 c5-cf 3b b9 1a 3c f2 79 84   .J.s.....;..<.y.
+
+    Start Time: 1529648108
+    Timeout   : 300 (sec)
+    Verify return code: 10 (certificate has expired)
+---
++OK InterMail POP3 server ready.
+user xx1
++OK please send PASS command
+pass p
++OK xx1 is welcome here
+list
++OK 6 messages
+1 405
+2 454
+3 437
+4 95774
+5 72
+6 95774
+.
+quit
++OK xx1 InterMail POP3 server signing off.
+read:errno=0
+
+
+
+
+20180622 020725669-0400 mx1 popserv 25005 25716 140024283215616 Note;SslHandshakeSucceeded(64/3) cmd=STLS:fromhost=10.37.2.214:fromport=46420
+20180622 020730092-0400 mx1 popserv 25005 25716 140024283215616 Note;PopConnMade(66/9) user=xx1:mbox=8455062972622233238:mss=cluster01:cmd=pass <pswd>:port=55014:fromhost=10.37.2.214:fromport=46420:node=mx1:nodePort=55014:cosId=default
+20180622 020735839-0400 mx1 popserv 25005 25716 140024283215616 Note;PopConnQuit(66/13) user=xx1:mbox=8455062972622233238:mss=cluster01:cmd=quit:port=55014:fromhost=10.37.2.214:fromport=46420:node=mx1:nodePort=55014:cosId=default:time=11

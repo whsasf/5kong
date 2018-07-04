@@ -1,0 +1,14 @@
+%awsSecretAccessKeys = (
+    # personal account
+    personal => {
+        id => 'otosan',
+        key => 'otosankey',
+    },
+
+    # corporate account
+    company => {
+        id => '1ATXQ3HHA59CYF1CVS02',
+        key => 'WQY4SrSS95pJUT95V6zWea01gBKBCL6PI0cdxeH8',
+    },
+);
+

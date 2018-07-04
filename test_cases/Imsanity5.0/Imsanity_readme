@@ -1,0 +1,61 @@
+################################Imsanity#########################################
+###########################Version Imsanity 3.1##################################
+
+Developed by :- qe_automation_team
+Date :- 4-12-2013
+
+
+ Imsanity tool is  a sanity testing tool for Mx
+
+ Imsanity tool should run on the main mss host
+
+ There is no prerequisite for Imsanity tool to run
+
+Setup Requirement to run Imsanity
+
+For stateful : All servers on one host 
+
+For stateless :
+   All servers + MSS1 = host1
+   MSS2 = host2
+   Cassandra meta+blob = host3
+
+
+It coveers total 229 Test cases for Stateless and 220 Test cases for statefull
+
+How to run Imsanity
+
+1. Copy the folder Imsanity_Tool_3.1 on your SUT home folder from location 
+     cp -pr /sandbox/ce/vpathak/vpathak-tti/Test_Procedures_stateless_NEW/Komal_TPs/Imsanity_Tool_3.1 .
+
+2. Execute 
+    Imsanity_Tool_3.1/mainimsanity.sh
+
+3. After completion of run you can check summary.log file to view summary of the run . It will show total cases executed , no of cases passed , no of cases failed as well as result for individual case (Pass/fail)
+
+4. Ctrl+C during run will start Cleanup. 
+
+5. In case the users created by sanity tool are not removed from your setup , you can execute this to cleanup
+                 Imsanity_Tool_3.1/delete.sh
+Summary.log
+
+1. Summary.log file will be generated on your system.
+
+2. Summary.log will contain statistics of the sanity run and time taken by entire sanity tool and each test case separately.
+
+3. If a test case fails due to ITS , its no is displayed in summary.
+
+Example:
+ IMAP get quota root ...........................................: [FAIL] (Time Taken : 0 Sec.) ITS:1324836 
+ Imboxdelete utility ..............................................:  [PASS] (Time Taken : 28 Sec.)
+ re-creation of account and mailbox ....................: [PASS] (Time Taken : 6 Sec.)
+ Account deletion .................................................: [PASS] (Time Taken : 30 Sec.)
+================================================================
+IMSANITY TOOL TOOK 9.85 MINUTE TO COMPLETE
+================================================================
+ Total number of Test Cases : 231
+ PASS : 221
+ FAIL : 10
+
+
+

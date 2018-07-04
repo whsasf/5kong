@@ -1,0 +1,119 @@
+verified in latest MX9.5.3.0-17.
+
+1 (1) try to set:aes-128-cbc with key: 6666666
+
+ram@bigchina ~/Desktop/projects/scality/s3-curl $ curl -s -X POST  -d currentKey="2003:aes-128-cbc:6666666" http://10.49.58.240:8081/mxos/encryption/v2/messageBodyEncryption|jq 
+ram@bigchina ~/Desktop/projects/scality/s3-curl $ curl -s -X GET  http://10.49.58.240:8081/mxos/encryption/v2/messageBodyEncryption|jq  
+{
+  "currentKey": {
+    "uid": "2003",
+    "cipherName": "aes-128-cbc",
+    "encryptionKey": "6666666"
+  },
+  "keys": {
+    "version": [
+      {
+        "uid": "1001",
+        "cipherName": "aes-128-cbc",
+        "encryptionKey": "6666666666666666"
+      },
+      {
+        "uid": "1002",
+        "cipherName": "aes-128-cbc",
+        "encryptionKey": "6666666666666666"
+      },
+      {
+        "uid": "2003",
+        "cipherName": "aes-128-cbc",
+        "encryptionKey": "6666666"
+      }
+    ]
+  }
+}
+
+(2) mss failed to start with error:
+
+20180622 022112498-0400 mx1 mss.1 27810 27810 139763456337728 Erro;SslConfigurationErr(64/2) SSLCrypto validateKey FAILED - uid\3a2003, cipher\3a aes-128-cbc, key length not correct. Expected\3a 16
+20180622 022112498-0400 mx1 mss.1 27810 27810 139763456337728 Fatl;ConfCryptoFailed(51/95)
+
+2 try to set:aes-256-cbc with key: 6666666
+
+ram@bigchina ~/Desktop/projects/scality/s3-curl $ curl -s -X POST  -d currentKey="2004:aes-256-cbc:6666666" http://10.49.58.240:8081/mxos/encryption/v2/messageBodyEncryption|jq 
+ram@bigchina ~/Desktop/projects/scality/s3-curl $ curl -s -X GET  http://10.49.58.240:8081/mxos/encryption/v2/messageBodyEncryption|jq {
+  "currentKey": {
+    "uid": "2004",
+    "cipherName": "aes-256-cbc",
+    "encryptionKey": "6666666"
+  },
+  "keys": {
+    "version": [
+      {
+        "uid": "1001",
+        "cipherName": "aes-128-cbc",
+        "encryptionKey": "6666666666666666"
+      },
+      {
+        "uid": "1002",
+        "cipherName": "aes-128-cbc",
+        "encryptionKey": "6666666666666666"
+      },
+      {
+        "uid": "2003",
+        "cipherName": "aes-128-cbc",
+        "encryptionKey": "6666666"
+      },
+      {
+        "uid": "2004",
+        "cipherName": "aes-256-cbc",
+        "encryptionKey": "6666666"
+      }
+    ]
+  }
+}
+(2) mss failed to start with error:
+
+20180622 022609740-0400 mx1 mss.1 29590 29590 140464283567936 Erro;SslConfigurationErr(64/2) SSLCrypto validateKey FAILED - uid\3a2004, cipher\3a aes-256-cbc, key length not correct. Expected\3a 32
+20180622 022609740-0400 mx1 mss.1 29590 29590 140464283567936 Fatl;ConfCryptoFailed(51/95)
+3 (1) try to set:aes-192-cbc with key: 6666666
+
+ram@bigchina ~/Desktop/projects/scality/s3-curl $ curl -s -X POST  -d currentKey="2005:aes-192-cbc:6666666" http://10.49.58.240:8081/mxos/encryption/v2/messageBodyEncryption|jq 
+ram@bigchina ~/Desktop/projects/scality/s3-curl $ curl -s -X GET  http://10.49.58.240:8081/mxos/encryption/v2/messageBodyEncryption|jq {
+  "currentKey": {
+    "uid": "2005",
+    "cipherName": "aes-192-cbc",
+    "encryptionKey": "6666666"
+  },
+  "keys": {
+    "version": [
+      {
+        "uid": "1001",
+        "cipherName": "aes-128-cbc",
+        "encryptionKey": "6666666666666666"
+      },
+      {
+        "uid": "1002",
+        "cipherName": "aes-128-cbc",
+        "encryptionKey": "6666666666666666"
+      },
+      {
+        "uid": "2003",
+        "cipherName": "aes-128-cbc",
+        "encryptionKey": "6666666"
+      },
+      {
+        "uid": "2004",
+        "cipherName": "aes-256-cbc",
+        "encryptionKey": "6666666"
+      },
+      {
+        "uid": "2005",
+        "cipherName": "aes-192-cbc",
+        "encryptionKey": "6666666"
+      }
+    ]
+  }
+}
+(2) mss failed to start with error:
+
+20180622 022757467-0400 mx1 mss.1 30104 30104 139921707558720 Erro;SslConfigurationErr(64/2) SSLCrypto validateKey FAILED - uid\3a2005, cipher\3a aes-192-cbc, key length not correct. Expected\3a 24
+20180622 022757467-0400 mx1 mss.1 30104 30104 139921707558720 Fatl;ConfCryptoFailed(51/95)

@@ -1,0 +1,107 @@
+1 set passphrase:
+
+ram@bigchina ~/workspace/WuKong/test_cases/cassandra_test $ curl -s -X POST  -d currentKey="1001:aes-128-cbc:6666666666666666" http://10.49.58.240:8081/mxos/encryption/v2/messageBodyEncryption|jq .
+ram@bigchina ~/workspace/WuKong/test_cases/cassandra_test $ curl -s -X GET http://10.49.58.240:8081/mxos/encryption/v2/messageBodyEncryption|jq .
+{
+  "currentKey": {
+    "uid": "1001",
+    "cipherName": "aes-128-cbc",
+    "encryptionKey": "6666666666666666"
+  },
+  "keys": {
+    "version": [
+      {
+        "uid": "1001",
+        "cipherName": "aes-128-cbc",
+        "encryptionKey": "6666666666666666"
+      }
+    ]
+  }
+}
+
+
+
+2 restart mss. mta send message:
+
+3 check cassandra:
+
+ key     | 0xb2f16f3272ad11e8aacc9445c508eead
+ column1 | 7
+ value   | 0x31303031
+
+@ Row 7
+---------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ key     | 0xb2f16f3272ad11e8aacc9445c508eead
+ column1 | 101
+ value   | 0x66847fbb52ae336979f7955faaeee4fb57f824680d29076677ee4f6945b865e45b6375947e2fee5afb2129d722e7caac7f3895082d0e82d36f8bc16a4051e31777480b526581214333a071263d63ffba7283f9dab90509bba1fb58699de5b0d8706f3dcd0bf7da19b1a34822be0db9d9faf8f7c89a33ce2aaf936deac96304c9174482dba6f0a75d9440d7a79bdce971029edb9c32b581a77e5d5624d6f9eec165840ca4e8edc99d3cd0dbc4edb69fe7282cc35c9c0cc9ebb4f79e29d02cffe450813f1f6d3d3f36ee4fe5a0eca1a2dcbcdeedff02b840d0799c6ca19661c7f13dab3a4af3f3cc96936592e446c4c2a050887b88926c6f446978688501a1d91d8d8fb60eb37d35f3db71de4096ac13993043cf5ff1d5b67b8eb411688ec8765f2e84b5d8968d5541c03df31cab034d94de56015ee86f36e8f8bde8615ddb5d1ff2d0ec16a5c5130ec8f9ea6f6dbf28862687915d8ee706e9485714a684bff9ed0375295069cc66013926fed0734c18e93fc5f92d082f4a8b6780e9cd20067232acb178d8cff018a889115fc8a69de99f11e8e61c596654e10c4236bbe3fb61c916c15c8311d02de4f1fe9290b70e731b9dcf16d555136a62c4c8f76f1f46b4509b8e1005c0d4b183ad6b5c5bbcb8f7171e898afc0412ac630e6db9bb43c43577dfe0d0cdd4bef471bae2259d7101ae52b3a35dec4f6ed9644a6b9e1d35cf2ee3be2298e096f6d0c3bf9d1f5253107efda05516fb09be1c7e2e576835ffe88ada53670c76236fa70467f4dee55c3b091e4ac1d45416011b94f9f4fae8e2588f4cacbd19df1a6a7fd0f76c05a08c61caddb32eaf28d6c49a87fd3d0a5922c575e8a509cb0086229c52ca220f5de286ce188f9d8e96cde7a2af14fd64358701bb471535f35ae89b57489b602a8a51dbcdd724014bfd3d666219461f8de89f198cb253797aa689402040397f6c76e7f9cdfd42173c1ae4e32a0f151affaa2ccc0d24694c5e3e6be42372ebb1b062f052359439c2ee62ebce365b9a73e29b2a69e0bd7ca939ba110b63bd614df3f12178cb265bd9adc901f605f4db4b9239633acd25e6012c093459bc08f5b05ec570bd8cbe12560f14d9ce0d75fc99be2e4c903686ed9209fd78335042ea627a7b7606ababcc1ac13ce3d6b251ffbb53408b01a8ad10e6cea6f8e48703a8eaaa7e0e8091581ab46dba41324a4d62fa60d39615213a9abba163e141b2b707d5acc596552f765289477fe4ae6043854cad378d154b402f7e691ad733692f1a3d9bcd8421e021c54487bab286793e53ed46aeada25439f6c9b8c31335c133e90f0ccf2a55e1ed025e2eb2f2da0cb50bcc2cd919c781d01580b717b024e23dfa56991c314679b0a92fc0957e735cff874263dfaef6bc5e02266ce7b4eee688cb4d837ae322f25b27a9e49a1c22e3ba54c4482b33409e74b6b7d63b3ea4d0cc3a642933365a44d1674a3de42ab420eda2dd5bbd96c5222f53495e184403cba396c1ef537d45b377951265c92515cc0ea13d2bbacc2dd78365a23a13e65d01af6f7595a20e485eaf455d473c1f6a0146ae7d64f0db13ed13da7bfb60ee6128b7af4e9491549246ccc23203bcf629f9eebf1f5649baba367cf0dff33ce50f9f3ad72993aae6dbe1aff52e0c53dfa6656af4511b2ec0d0eceebcf000d1d303809da761891463ced422dd083005a3cfdd379dc1a1775c22e031437452f30afc76596b3e529266500187637d99ecc9f010fea9edac27ec785ff7a81c1fe96713623551070bad443d88bc72a3391684c6828965dd0256a17650b9cd939be3a3095183add26dcc7da0ef4d86b711e46ed073b4cd95c59e1430866cbe85d9252b8c382474685bd5e6ab6524f4c9ff3948ad751e2474906be17bc36a7c5408b12c9baec6c5a94dcfdf6e063ac03434ee32007d4595ab0eeda15655e44111a40c30ef95bb3dd6b113859948befd4a22fc758b4f2c0dd54cc51e935005ba3436c390597b855f4b5e6afb8e18b1448f797a12d2d75e3dae2e4d48ee05eb214428d2abca17cf92a684daac019fd0cf6c0d5db6f2683ecfff097f678c0fd9a2533529062a4a1c63d280946e7a4153fd1c0f69fd59008cd6773aa365352c96094598c48b4247c388be746977986b8a74ed32ff5544b650476d9868ca7c7a7cdcfd8c45560ed10062c8de56dc688faa119fb89fca02143f123d65c066ce29206ef8eae7df391b8f67af4acb84c67de44486c92ae93cb1d4308c698c665b0491a12c11b023a0b82b9992946fb7f6b70c543ea5d21f6eddc675b3fbf7874c25f95b2d54ddc463379b5311280852732d00dad1d03cfd0f72051b5d9de5a72cc4a6c977a6b663b132ab896bffee219b554ef7ee83e0afcf5de92ab08619087a1aea0166dcb91723b4bfa190ac20d12c3c160980b69768bba6720638d3132276a7982151b1e101bfe5d4d58b7b4d72150076fd6130de12c8df29d69988e648f6875039c1b36adf6eacbd20bfaf6745033790d5f508889f8eee10ab886564353ad2d446684554b8d71ceb27bb11c675ad8372d674dec35e32b14f153a66637fb90526ce97a7943dddf465606360f70743c1313a797ae53e2cd0b6d87a00b7848113a3b1473e03bcfce5e33abf80f15479e7c2
+
+(7 rows)
+
+
+4 decode data from cassandra manually:
+
+	s
+��tsu<xx2@openwave.com>SMTP�0'[1.0�
+multipartmixedAUNIQUEMARKER7BIT	boundaryAUNIQUEMARKERW�<�textplain8bit���textplainattachment	filenameattach.txtbase64nameattach.txt:/ C�%�B!/	:Cat5�%�B�xx2�xx1�Sending Attachement� Mon, 18 Jun 2018 00:11:39 -0400%b2f16f32-72ad-11e8-aacc-9445c508eead*�H��4*�H��6
+.X-Intermail-Unknown-MIME-Type=unparsedmessage�Return-Path: <xx2@openwave.com>
+Received: from [127.0.1.1] (really [10.37.2.214]) by mx1.openwave.com
+(InterMail vM.9.05.03.00 201-2473-138-1) with ESMTP
+id <20180618041138.ACJ32511.mx1.openwave.com@[127.0.1.1]>
+for <xx1@openwave.com>; Mon, 18 Jun 2018 00:11:38 -0400
+From: xx2
+To: xx1
+Subject: Sending Attachement
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary=AUNIQUEMARKER
+Date: Mon, 18 Jun 2018 00:11:39 -0400
+Message-Id: <20180618041138.ACJ32511.mx1.openwave.com@[127.0.1.1]>
+
+This is a multi-part message in MIME format.
+--AUNIQUEMARKER
+Content-Type: text/plain
+Content-Transfer-Encoding:8bit
+
+-This is a test email to send an attachement,haha,are you OK? we love world !!!!!!ucucucucucucucucucucucucucuc
+--AUNIQUEMARKER
+Content-Type: text/plain; name="attach.txt"
+Content-Transfer-Encoding:base64
+Content-Disposition: attachment; filename="attach.txt"
+
+d29ybGQgcGVhY2UuYXJlIHUgT0s/aGFoYWhhaGFoYWhh
+--AUNIQUEMARKER--
+
+
+5 IMAP fetch email:
+
+* 1 FETCH (RFC822 {990}
+Return-Path: <xx2@openwave.com>
+Received: from [127.0.1.1] (really [10.37.2.214]) by mx1.openwave.com
+          (InterMail vM.9.05.03.00 201-2473-138-1) with ESMTP
+          id <20180618041138.ACJ32511.mx1.openwave.com@[127.0.1.1]>
+          for <xx1@openwave.com>; Mon, 18 Jun 2018 00:11:38 -0400
+From: xx2
+To: xx1
+Subject: Sending Attachement
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary=AUNIQUEMARKER
+Date: Mon, 18 Jun 2018 00:11:39 -0400
+Message-Id: <20180618041138.ACJ32511.mx1.openwave.com@[127.0.1.1]>
+
+This is a multi-part message in MIME format.
+--AUNIQUEMARKER
+Content-Type: text/plain
+Content-Transfer-Encoding:8bit
+
+-This is a test email to send an attachement,haha,are you OK? we love world !!!!!!ucucucucucucucucucucucucucuc
+--AUNIQUEMARKER
+Content-Type: text/plain; name="attach.txt"
+Content-Transfer-Encoding:base64
+Content-Disposition: attachment; filename="attach.txt"
+
+d29ybGQgcGVhY2UuYXJlIHUgT0s/aGFoYWhhaGFoYWhh
+--AUNIQUEMARKER--
+ FLAGS (\Recent \Seen))
+a OK FETCH completed
+
+
+2 messages the same .pass

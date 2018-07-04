@@ -1,0 +1,26 @@
+#!/bin/bash
+> debug.log
+> summary.log
+#Result=1_by_fefault
+Result=1
+start_time_tc
+
+#set keys:
+
+set_config_keys "/*/common/loginAliases" "true"
+
+
+#create test account
+Sanityuser=test$(echo $RANDOM)
+account_create_fn $Sanityuser
+imboxstats $Sanityuser@${default_domain} &>accountexist.tmp
+ec=$(grep -i "Unable to get mailbox" accountexist.tmp |wc -l)
+if [ "$ec" -eq 1 ];then
+	account_create_fn $Sanityuser
+fi
+
+immsgdelete $Sanityuser@${default_domain} -all 
+
+#create alias
+create_alias 2 $Sanityuser plus4 minus4 multiply4 divide4
+
