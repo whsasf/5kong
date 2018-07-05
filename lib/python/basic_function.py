@@ -46,72 +46,79 @@ def print_mx_version():
 
 
 
-def construct_mx_topology(seed_host,root_account = 'root',root_passwd = 'letmein',mx_user = 'imail'):
+def construct_mx_topology(seed_host = '',root_user = '',root_pass = '',mx_user = ''):
     """ this function used to construct topology of MX environemnt """
     
     import os
-    import paramiko
+    #import paramiko
+    import basic_class
+    import remote_operations
+    import global_variables
     
-    Host = seed_host 
-    root_account = root_account
-    root_passwd = root_passwd    
-    User = mx_user
-    print('Host = '+Host)
-    print('root_account = '+root_account)   
-    print('root_passwd = '+root_passwd)
-    print('User = '+User)
-        
-    #Host_list,Port_list,Addr_list,Cass_list =[],[],[],[]
-    Host_dict,Port_dict,Addr_dict,Cass_dict ={},{},{},{}
-    allHost_common_user_home = ''
+    initialpath,mx_seed_host,root_account,root_passwd,mx_account = global_variables.get_values('initialpath','mx_seed_host','root_account','root_passwd','mx_account')
     
-    ssh_allHost = paramiko.SSHClient()
-    ssh_allHost.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh_allHost.connect(Host,22,root_account,root_passwd)
-
-    
-    tmp_cmd1='cat /etc/passwd|grep '+User+'|cut -d\':\' -f6'
-    stdin,stdout1,stderr=ssh_allHost.exec_command(tmp_cmd1)
-    if (len(stderr.read())==0):
-        allHost_common_user_home=stdout1.read().strip().decode()
+    if seed_host:
+        Host = seed_host 
     else:
-        print ('Error')
-    print('allHost_common_user_home = '+str(allHost_common_user_home))
+        Host = mx_seed_host
+        
+    if root_user:
+        root_account = root_user
+    else:
+        root_account = root_account
+    if root_pass:
+        root_passwd = root_pass    
+    else:
+        root_passwd = root_passwd
+    if mx_user:
+        User = mx_user
+    else:
+        User = mx_account
+        
+    basic_class.mylogger_record.debug('Host = '+str(Host))
+    basic_class.mylogger_record.debug('root_account = '+str(root_account))
+    basic_class.mylogger_record.debug('root_passwd = '+str(root_passwd))
+    basic_class.mylogger_record.debug('User = '+str(User))
     
+    total = []  # used to store all items as a list
+    Host_dict,Port_dict,Addr_dict,Cass_dict ={},{},{},{}
 
-    #get hosts and hosts' ip addrs
     
-    tmp_cmd4 = 'source '+allHost_common_user_home+'/.profile;imconfget  -hosts | grep -v cluster|grep -v \' $\''
-    stdin,stdout4,stderr=ssh_allHost.exec_command(tmp_cmd4)
-    h_lists=stdout4.readlines()
+    tmp_cmd2 = 'su - {};imconfget  -hosts | grep -v cluster|grep -v \' $\''.format(User)
+    stdout2 = remote_operations.remote_operation(Host,root_account,root_passwd,'su - {0} -c \'{1} \''.format(User,tmp_cmd2),0)
+    #stdin,stdout2,stderr=ssh_allHost.exec_command(tmp_cmd2)
+    h_lists=stdout2.readlines()
     i = 0
     for h_list in h_lists:
         h_list = h_list.split()[0]
         key = 'Host'+str(i+1)
         value = str(h_list)
         Addr_dict[key] = value
-        tmp_cmd5="grep "+str(h_list)+" /etc/hosts|awk \'{print $1}\' | head -1"
-        stdin,stdout5,stderr=ssh_allHost.exec_command(tmp_cmd5)
-        tmpip=stdout5.readlines()
+        tmp_cmd3="grep "+str(h_list)+" /etc/hosts|awk \'{print $1}\' | head -1"
+        stdout3 = remote_operations.remote_operation(Host,root_account,root_passwd,'su - {0} -c \'{1} \''.format(User,tmp_cmd3),0)
+        #stdin,stdout3,stderr=ssh_allHost.exec_command(tmp_cmd3)
+        tmpip=stdout3.readlines()
         key = 'Host'+str(i+1)+"_IP"
         value = ''.join(tmpip[0].split())
         Addr_dict[key] = value
         i += 1
 
     
-    tmp_cmd2 ='source '+allHost_common_user_home+'/.profile;imconfcontrol -ports'
-    stdin,stdout2,stderr=ssh_allHost.exec_command(tmp_cmd2)
+    tmp_cmd4 ='su - {};imconfcontrol -ports'.format(User)
+    stdout4 = remote_operations.remote_operation(Host,root_account,root_passwd,'su - {0} -c \'{1} \''.format(User,tmp_cmd4),0)
+    #stdin,stdout4,stderr=ssh_allHost.exec_command(tmp_cmd4)
     if (len(stderr.read())==0):
-        tmp_list = stdout2.readlines()
+        tmp_list = stdout4.readlines()
         for hostports in tmp_list:
             tmp_a = hostports.split()
             
             if tmp_a[0].isdigit():
                 #print(tmp_a[2])
                 #print('===>'+str(tmp_a))
-                tmp_cmd3 = 'source '+allHost_common_user_home+'/.profile;imconfget -server '+ tmp_a[2]
-                stdin,stdout3,stderr=ssh_allHost.exec_command(tmp_cmd3)
-                s_list=stdout3.readlines()
+                tmp_cmd5 = 'su - {};imconfget -server '.format(User)+ tmp_a[2]
+                stdout5 = remote_operations.remote_operation(Host,root_account,root_passwd,'su - {0} -c \'{1} \''.format(User,tmp_cmd5),0)
+                #stdin,stdout5,stderr=ssh_allHost.exec_command(tmp_cmd5)
+                s_list=stdout5.readlines()
                 for serverhosts in s_list:
                     server_tmp=serverhosts.split()
                     #print(len(server_tmp))
@@ -124,58 +131,60 @@ def construct_mx_topology(seed_host,root_account = 'root',root_passwd = 'letmein
                             Host_dict[key] = value
                             key = tmp_a[2]+'_host'+str(i+1)+'_IP'
                             value = [Addr_dict.get(k+'_IP') for k,v in Addr_dict.items() if v == server_tmp[i]]
-                            Host_dict[key] = value
+                            Host_dict[key] = value[0]
                             #print(Host_list)
                             key = tmp_a[2]+'_host'+str(i+1)+'_'+tmp_a[3]
                             value = tmp_a[0]
                             Port_dict[key] = value
-                            #print(Port_list)
-                               
+                            #print(Port_list)                               
             else:   #skip the titles 
                 pass
     else:
         print ('Error')
-    
-    print(Addr_dict)
-    print(Host_dict)
-    print(Port_dict)  
-      
+         
     #get cassandra info
-    #tmp_cmd6 = 'grep hostInfo '+allHost_common_user_home+'/config/config.db | cut -d \':\' -f 3'
+    tmp_cmd6 = 'su - {};grep hostInfo config/config.db | cut -d \':\' -f 3'.format(User)
+    stdout6 = remote_operations.remote_operation(Host,root_account,root_passwd,'su - {0} -c \'{1} \''.format(User,tmp_cmd6),0)
     #stdin,stdout6,stderr=ssh_allHost.exec_command(tmp_cmd6)
-    #b_n = stdout6.readlines()
-    #blobtier = b_n[0].split()
-    #tmp_cmd7 = "grep "+str(blobtier)+" /etc/hosts|awk \'{print $1}\' | head -1"
+    b_n = stdout6.readlines()
+    blobtier = b_n[0].split()[0]
+    tmp_cmd7 = "grep "+str(blobtier)+" /etc/hosts|awk \'{print $1}\' | head -1"
+    stdout7 = remote_operations.remote_operation(Host,root_account,root_passwd,'su - {0} -c \'{1} \''.format(User,tmp_cmd7),0)
     #stdin,stdout7,stderr=ssh_allHost.exec_command(tmp_cmd7)
-    #tmp_ip = stdout7.readlines()
-    #blob_ip=tmp_ip[0].split()
-    #Cass_dict.append("cassblobhosts =" + str(blobtier))
-    #Cass_list.append("cassblobip = " + str(blob_ip))
-    #
-    #tmp_cmd8 = 'grep cassandraMDCluster '+allHost_common_user_home+'/config/config.db | cut -d \'[\' -f 2| cut -d \']\' -f1 '
+    tmp_ip = stdout7.readlines()
+    blob_ip=tmp_ip[0].split()[0] 
+    Cass_dict['cassblob_hosts'] =str(blobtier)
+    Cass_dict['cassblob_IP'] = str(blob_ip) 
+    
+    tmp_cmd8 = 'su - {};grep cassandraMDCluster config/config.db | cut -d \'[\' -f 2| cut -d \']\' -f1 '.format(User)
+    stdout8 = remote_operations.remote_operation(Host,root_account,root_passwd,'su - {0} -c \'{1} \''.format(User,tmp_cmd8),0)
     #stdin,stdout8,stderr=ssh_allHost.exec_command(tmp_cmd8)
-    #m_n = stdout8.readlines()
-    #metadata = m_n[0].split()
-    #tmp_cmd9 = "grep "+str(metadata)+" /etc/hosts|awk \'{print $1}\' | head -1"
-    #stdin,stdout9,stderr=ssh_allHost.exec_command(tmp_cmd9)
-    #print(stdout9)
-    #tmp_ip = stdout9.readlines()
-    #meta_ip = tmp_ip[0].split()
-    #Cass_list.append("cassmetahosts = "+str(metadata))
-    #Cass_list.append("cassmetaip = " +str(meta_ip))
+    m_n = stdout8.readlines()
+    metadata = m_n[0].split()[0]
+    tmp_cmd9 = "grep "+str(metadata)+" /etc/hosts|awk \'{print $1}\' | head -1"
+    stdin,stdout9,stderr=ssh_allHost.exec_command(tmp_cmd9)
+    tmp_ip = stdout9.readlines()
+    meta_ip = tmp_ip[0].split()[0]
+    Cass_dict['cassmeta_hosts'] = str(metadata)
+    Cass_dict['cassmeta_IP'] = str(meta_ip)
     
     
-    user_var_file = open('etc/auto-user.vars', "w")
-    tmp_list=list(set(Host_list+Port_list+Addr_list+Cass_list))
-    tmp_list=sorted(tmp_list)
-    for h in tmp_list:
-        user_var_file.write(h+"\n")
+    user_var_file = open(initialpath+'/etc/auto-user.vars', "w")
+    #tmp_list=list(set(Host_list+Port_list+Addr_list+Cass_list))
+    for tck ,tcv in sorted(Addr_dict.items(),key=lambda Addr_dict:Addr_dict[0]):
+        total.append(tck+' = '+tcv)
+    for tck ,tcv in sorted(Host_dict.items(),key=lambda Host_dict:Host_dict[0]):
+        #user_var_file.write(tck+' = '+tcv+"\n")
+        total.append(tck+' = '+tcv)        
+    for tck ,tcv in sorted(Port_dict.items(),key=lambda Port_dict:Port_dict[0]):       
+        total.append(tck+' = '+tcv)          
+    for tck ,tcv in sorted(Cass_dict.items(),key=lambda Cass_dict:Cass_dict[0]):       
+        total.append(tck+' = '+tcv)     
+    #print(total)
+    for item in sorted(total):
+        user_var_file.write(item+"\n") 
     user_var_file.close()
     
-    #print (set(Host_list))
-    #print (set(Port_list))
-    
-       
     
 def variables_prepare(initialpath):
     """ this function is used to get some predefined variables """    
