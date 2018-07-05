@@ -2,7 +2,7 @@
 import os
 import re
 import datetime
-import paramiko
+import remote_operations import remote_operation
 import socket
 
 Host='10.49.58.239'

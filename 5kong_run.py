@@ -15,7 +15,8 @@ initialpath = ''
 import setlibpath
 initialpath = setlibpath.setlibpath() #all the other modules import should after this function call,otherwise can not find correct customized lib location  
 import sys
-from basic_function import create_log_folders ,variables_prepare ,welcome ,print_mx_version
+from basic_function import create_log_folders ,construct_mx_topology,variables_prepare ,welcome ,print_mx_version
+construct_mx_topology('10.49.58.239')         # get construct topology of mx
 variables_prepare(initialpath)  # gather pre-defined variables
 create_log_folders()            # create alltestcases.log and summary.log
 welcome()                       # print welcome headers 
