@@ -21,14 +21,14 @@ import time
 
 basic_class.mylogger_record.debug('Preparing... get some variables needed for tests')
 
-mx1_mta1_port,mx1_mta1_host_ip,mx1_mxos2_port,mx1_mxos2_host_ip,mx1_mss2_host_ip,mx1_mss1_host_ip,mx1_pop1_host,mx1_pop1_port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,default_domain = \
-global_variables.get_values('mx1_mta1_port','mx1_mta1_host_ip','mx1_mxos2_port','mx1_mxos2_host_ip','mx1_mss2_host_ip','mx1_mss1_host_ip','mx1_pop1_host','mx1_pop1_port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','default_domain')
+mx1_mta_host1_SMTPPort,mx1_mta_host1_ip,mx1_mxos_host2_eureka_port,mx1_mxos_host2_ip,mx1_mss_host2_ip,mx1_mss_host1_ip,mx1_popserv_host1,mx1_popserv_host1_pop3Port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,default_domain = \
+global_variables.get_values('mx1_mta_host1_SMTPPort','mx1_mta_host1_ip','mx1_mxos_host2_eureka_port','mx1_mxos_host2_ip','mx1_mss_host2_ip','mx1_mss_host1_ip','mx1_popserv_host1','mx1_popserv_host1_pop3Port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','default_domain')
 
 basic_class.mylogger_record.info('step1:set keys and restart services')
 remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c \'imconfcontrol -install -key \"/*/common/hostInfo=blobtier=Cassandra:blobcluster:9162\";imconfcontrol -install -key \"/*/common/messageBodyEncryptionEnabled=false\";imconfcontrol -install -key \"/*/mss/compressionEnabled=true\"\''.format(mx_account),0)
-remote_operations.remote_operation(mx1_mss1_host_ip,root_account,root_passwd,'su - {0} -c \'~/lib/imservctrl killStart mss\''.format(mx_account),0)
-remote_operations.remote_operation(mx1_mss2_host_ip,root_account,root_passwd,'su - {0} -c \'~/lib/imservctrl killStart mss mxos\''.format(mx_account),0)
-remote_operations.remote_operation(mx1_mxos2_host_ip,root_account,root_passwd,'su - {0} -c \'~/lib/imservctrl killStart mxos\''.format(mx_account),0)
+remote_operations.remote_operation(mx1_mss_host1_ip,root_account,root_passwd,'su - {0} -c \'~/lib/imservctrl killStart mss\''.format(mx_account),0)
+remote_operations.remote_operation(mx1_mss_host2_ip,root_account,root_passwd,'su - {0} -c \'~/lib/imservctrl killStart mss mxos\''.format(mx_account),0)
+remote_operations.remote_operation(mx1_mxos_host2_ip,root_account,root_passwd,'su - {0} -c \'~/lib/imservctrl killStart mxos\''.format(mx_account),0)
 
 basic_class.mylogger_record.info('sleeping 200 seconds')
 time.sleep(200)
@@ -39,5 +39,5 @@ remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {
 
 basic_class.mylogger_record.info('step3:deliever 1 message from testuser2 to testuser1')
 	
-smtp_operations.fast_send_mail(mx1_mta1_host_ip,mx1_mta1_port,'testuser2',[test_account_base+'1'])
+smtp_operations.fast_send_mail(mx1_mta_host1_ip,mx1_mta_host1_SMTPPort,'testuser2',[test_account_base+'1'])
 

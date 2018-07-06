@@ -26,8 +26,8 @@ import time
 #basic_class.mylogger_record.info('Runing setup testcase:mx-11633-apop_auth_10_accounts_half_pass_half_fail')
 basic_class.mylogger_record.debug('Preparing... get some variables needed for tests')
 
-mx1_mxos1_host_ip,mx1_mxos2_host_ip,mx1_pop1_host,mx1_pop1_port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,default_domain = \
-global_variables.get_values('mx1_mxos1_host_ip','mx1_mxos2_host_ip','mx1_pop1_host','mx1_pop1_port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','default_domain')
+mx1_mxos_host1_ip,mx1_mxos_host2_ip,mx1_popserv_host1,mx1_popserv_host1_pop3Port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,default_domain = \
+global_variables.get_values('mx1_mxos_host1_ip','mx1_mxos_host2_ip','mx1_popserv_host1','mx1_popserv_host1_pop3Port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','default_domain')
 
 
 basic_class.mylogger_record.info('step1:set keys')
@@ -35,8 +35,8 @@ remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {
 
 basic_class.mylogger_record.info('step2:create 10 accounts')
 remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c \'for ((i=1;i<=10;i++));do account-create {1}$i@{2}   {1}$i default;done\''.format(mx_account,test_account_base,default_domain),1,'Mailbox Created Successfully',10)
-remote_operations.remote_operation(mx1_mxos2_host_ip,root_account,root_passwd,'su - {0} -c "~/lib/imservctrl killStart mxos"'.format(mx_account),0)
-remote_operations.remote_operation(mx1_mxos1_host_ip,root_account,root_passwd,'su - {0} -c "~/lib/imservctrl killStart mss mxos"'.format(mx_account),0)
+remote_operations.remote_operation(mx1_mxos_host2_ip,root_account,root_passwd,'su - {0} -c "~/lib/imservctrl killStart mxos"'.format(mx_account),0)
+remote_operations.remote_operation(mx1_mxos_host1_ip,root_account,root_passwd,'su - {0} -c "~/lib/imservctrl killStart mss mxos"'.format(mx_account),0)
 
 time.sleep(50) # to avoid last operations not expires
 basic_class.mylogger_record.info('step3: clear current popserv.stat file')

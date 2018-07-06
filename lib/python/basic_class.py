@@ -106,31 +106,31 @@ class Loggger_record():
         
     def debug(self,debugmessages='this is debug message'): 
         funcName = find_real_funcName()  
-        self.logger.debug('[{}]  '.format(funcName)+'\033[1;33m'+str(debugmessages)+'\033[0m')
+        self.logger.debug('\033[1;33m'+'[{}] '.format(funcName)+str(debugmessages)+'\033[0m')
 
     def info(self,infomessages='this is info message'):
         funcName = find_real_funcName()
-        self.logger.info('[{}] '.format(funcName)+infomessages)
+        self.logger.info(' [{}] '.format(funcName)+infomessages)
 
     def warning(self,warnmessages='this is warn message'):
         funcName = find_real_funcName()
-        self.logger.warn('[{}] '.format(funcName)+'\033[1;31m'+warnmessages+'\033[0m')
+        self.logger.warn('\033[1;31m'+' [{}] '.format(funcName)+warnmessages+'\033[0m')
 
     def error(self,errormessages='this is error message'):    
         funcName = find_real_funcName()
-        self.logger.error('[{}] '.format(funcName)+'\033[1;31m'+errormessages+'\033[0m')
+        self.logger.error('\033[1;31m'+'[{}] '.format(funcName)+errormessages+'\033[0m')
 
     def critical(self,criticalmessages='this is critical message'):    
         funcName = find_real_funcName()
-        self.logger.critical('[{}] '.format(funcName)+'\033[1;31m'+criticalmessages+'\033[0m')
+        self.logger.critical('\033[1;31m'+'[{}] '.format(funcName)+criticalmessages+'\033[0m')
 
     def yes(self,yesmessages='this is yes message'):
         funcName = find_real_funcName()
-        self.logger.info('[{}] '.format(funcName)+'\033[1;32m'+yesmessages+'\033[0m')
+        self.logger.info('\033[1;32m'+'[{}] '.format(funcName)+yesmessages+'\033[0m')
 
     def no(self,nomessages='this is no message'):
         funcName = find_real_funcName()
-        self.logger.info('[{}] '.format(funcName)+'\033[1;31m'+nomessages+'\033[0m')        
+        self.logger.info('\033[1;31m'+'[{}] '.format(funcName)+nomessages+'\033[0m')        
         
 
 class Loggger_record_noformat():

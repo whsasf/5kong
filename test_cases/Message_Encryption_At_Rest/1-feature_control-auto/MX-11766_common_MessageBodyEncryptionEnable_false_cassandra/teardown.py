@@ -19,8 +19,8 @@ import time
 
 basic_class.mylogger_record.debug('Preparing... get some variables needed for tests')
 
-mx1_blobstore_port,mx1_blobstore_host_ip,mx1_mxos2_port,mx1_mxos2_host_ip,mx1_mss2_host_ip,mx1_mss1_host_ip,mx1_pop1_host,mx1_pop1_port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,default_domain = \
-global_variables.get_values('mx1_blobstore_port','mx1_blobstore_host_ip','mx1_mxos2_port','mx1_mxos2_host_ip','mx1_mss2_host_ip','mx1_mss1_host_ip','mx1_pop1_host','mx1_pop1_port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','default_domain')
+mx1_search_cassandraBlobPort,mx1_cassblob_ip,mx1_mxos_host2_eureka_port,mx1_mxos_host2_ip,mx1_mss_host2_ip,mx1_mss_host1_ip,mx1_popserv_host1,mx1_popserv_host1_pop3Port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,default_domain = \
+global_variables.get_values('mx1_search_cassandraBlobPort','mx1_cassblob_ip','mx1_mxos_host2_eureka_port','mx1_mxos_host2_ip','mx1_mss_host2_ip','mx1_mss_host1_ip','mx1_popserv_host1','mx1_popserv_host1_pop3Port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','default_domain')
 
 
 
@@ -30,6 +30,6 @@ remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {
 
 basic_class.mylogger_record.info('step2:restore keys and restart services')
 remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c \'imconfcontrol -install -key \"/*/mss/compressionEnabled=true\"\''.format(mx_account),0)
-remote_operations.remote_operation(mx1_mss1_host_ip,root_account,root_passwd,'su - {0} -c \'~/lib/imservctrl killStart mss\''.format(mx_account),0)
-remote_operations.remote_operation(mx1_mss2_host_ip,root_account,root_passwd,'su - {0} -c \'~/lib/imservctrl killStart mss\''.format(mx_account),0)
+remote_operations.remote_operation(mx1_mss_host1_ip,root_account,root_passwd,'su - {0} -c \'~/lib/imservctrl killStart mss\''.format(mx_account),0)
+remote_operations.remote_operation(mx1_mss_host2_ip,root_account,root_passwd,'su - {0} -c \'~/lib/imservctrl killStart mss\''.format(mx_account),0)
 

@@ -17,12 +17,12 @@ import stat_statistics
 #step 1
 basic_class.mylogger_record.info('step1:imap login:5 account with correct passwd, the other 5 use wrong pssswd')
 
-mx1_imap1_host_ip,mx1_imap1_port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,default_domain = \
-global_variables.get_values('mx1_imap1_host_ip','mx1_imap1_port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','default_domain')
+mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,default_domain = \
+global_variables.get_values('mx1_imapserv_host1_ip','mx1_imapserv_host1_imap4Port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','default_domain')
 
 
 for i in range(1,6): 
-    mximap1 = imap_operations.IMAP_Ops(mx1_imap1_host_ip,mx1_imap1_port)
+    mximap1 = imap_operations.IMAP_Ops(mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port)
     try:
         mximap1.imap_login('u'+str(i)+'@'+default_domain,test_account_base+str(i)) # using correct passwd
         basic_class.mylogger_record.info('imap alias login success')
@@ -32,7 +32,7 @@ for i in range(1,6):
     mximap1.imap_logout()
 
 for i in range(6,11): 
-    mximap2 = imap_operations.IMAP_Ops(mx1_imap1_host_ip,mx1_imap1_port)
+    mximap2 = imap_operations.IMAP_Ops(mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port)
     try:
         mximap2.imap_login('u'+str(i)+'@'+default_domain,'password') # using wrong passwd :password here
     except:

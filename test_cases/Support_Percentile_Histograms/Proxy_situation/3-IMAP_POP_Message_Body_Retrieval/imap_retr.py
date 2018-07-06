@@ -11,8 +11,8 @@ import stat_statistics
 
 basic_class.mylogger_record.debug('Preparing... get some variables needed for tests')                                                               
                                                                                                                                                     
-mx2_imap1_host_ip,mx2_mss1_host_ip,mx2_mta1_port,mx2_mta1_host_ip,mx2_host1_ip,mx2_pop1_port,mx2_pop1_host,mx2_imap1_port,mx2_imap1_host,mx1_mss1_host_ip,mx1_mss2_host_ip,mx1_imap1_host_ip,mx1_imap1_port,mx1_mta1_host_ip,mx1_mta1_port,mx1_pop1_host_ip,mx1_pop1_port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,default_domain = \
-global_variables.get_values('mx2_imap1_host_ip','mx2_mss1_host_ip','mx2_mta1_port','mx2_mta1_host_ip','mx2_host1_ip','mx2_pop1_port','mx2_pop1_host','mx2_imap1_port','mx2_imap1_host','mx1_mss1_host_ip','mx1_mss2_host_ip','mx1_imap1_host_ip','mx1_imap1_port','mx1_mta1_host_ip','mx1_mta1_port','mx1_pop1_host_ip','mx1_pop1_port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','default_domain')
+mx2_imapserv_host1_ip,mx2_mss_host1_ip,mx2_mta_host1_SMTPPort,mx2_mta_host1_ip,mx2_host1_ip,mx2_popserv_host1_pop3Port,mx2_popserv_host1,mx2_imapserv_host1_imap4Port,mx2_imapserv_host1,mx1_mss_host1_ip,mx1_mss_host2_ip,mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port,mx1_mta_host1_ip,mx1_mta_host1_SMTPPort,mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,default_domain = \
+global_variables.get_values('mx2_imapserv_host1_ip','mx2_mss_host1_ip','mx2_mta_host1_SMTPPort','mx2_mta_host1_ip','mx2_host1_ip','mx2_popserv_host1_pop3Port','mx2_popserv_host1','mx2_imapserv_host1_imap4Port','mx2_imapserv_host1','mx1_mss_host1_ip','mx1_mss_host2_ip','mx1_imapserv_host1_ip','mx1_imapserv_host1_imap4Port','mx1_mta_host1_ip','mx1_mta_host1_SMTPPort','mx1_popserv_host1_ip','mx1_popserv_host1_pop3Port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','default_domain')
 
 
 # IMAP Message bodyRetrieval--StatMSSRetrMsg
@@ -21,7 +21,7 @@ basic_class.mylogger_recordnf.title('StatMSSRetrMsg=200')
 basic_class.mylogger_record.info('set keys:StatMSSRetrMsg=200')
 remote_operations.remote_operation(mx2_host1_ip,root_account,root_passwd,'su - {0} -c \'imconfcontrol -install -key \"/*/common/perfStatThresholds=StatMSSRetrMsg 200\"\''.format(mx_account),0)
 
-remote_operations.remote_operation(mx2_mss1_host_ip,root_account,root_passwd,'su - {0} -c "~/lib/imservctrl killStart imapserv"'.format(mx_account),0)
+remote_operations.remote_operation(mx2_mss_host1_ip,root_account,root_passwd,'su - {0} -c "~/lib/imservctrl killStart imapserv"'.format(mx_account),0)
 time.sleep(50)
 
  
@@ -31,7 +31,7 @@ basic_class.mylogger_record.info('clear current imapserv.stat file')
 remote_operations.remote_operation(mx2_host1_ip,root_account,root_passwd,'su - {0} -c "> log/imapserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    myimap = imap_operations.IMAP_Ops(mx1_imap1_host_ip,mx1_imap1_port)
+    myimap = imap_operations.IMAP_Ops(mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port)
     myimap.imap_login(test_account_base+str(i),test_account_base+str(i))
     myimap.imap_select()
     myimap.imap_fetch('1:5','rfc822')
@@ -53,7 +53,7 @@ basic_class.mylogger_record.info('clear current imapserv.stat file')
 remote_operations.remote_operation(mx2_host1_ip,root_account,root_passwd,'su - {0} -c "> log/imapserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    myimap = imap_operations.IMAP_Ops(mx1_imap1_host_ip,mx1_imap1_port)
+    myimap = imap_operations.IMAP_Ops(mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port)
     myimap.imap_login(test_account_base+str(i),test_account_base+str(i))
     myimap.imap_select()
     myimap.imap_fetch('1,3,4,5','rfc822')
@@ -75,7 +75,7 @@ basic_class.mylogger_record.info('clear current imapserv.stat file')
 remote_operations.remote_operation(mx2_host1_ip,root_account,root_passwd,'su - {0} -c "> log/imapserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    myimap = imap_operations.IMAP_Ops(mx1_imap1_host_ip,mx1_imap1_port)
+    myimap = imap_operations.IMAP_Ops(mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port)
     myimap.imap_login(test_account_base+str(i),test_account_base+str(i))
     myimap.imap_select()
     myimap.imap_fetch('2','rfc822')
@@ -97,7 +97,7 @@ basic_class.mylogger_record.info('clear current imapserv.stat file')
 remote_operations.remote_operation(mx2_host1_ip,root_account,root_passwd,'su - {0} -c "> log/imapserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    myimap = imap_operations.IMAP_Ops(mx1_imap1_host_ip,mx1_imap1_port)
+    myimap = imap_operations.IMAP_Ops(mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port)
     myimap.imap_login(test_account_base+str(i),test_account_base+str(i))
     myimap.imap_select()
     try:
@@ -129,7 +129,7 @@ basic_class.mylogger_record.info('clear current imapserv.stat file')
 remote_operations.remote_operation(mx2_host1_ip,root_account,root_passwd,'su - {0} -c "> log/imapserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    myimap = imap_operations.IMAP_Ops(mx1_imap1_host_ip,mx1_imap1_port)
+    myimap = imap_operations.IMAP_Ops(mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port)
     myimap.imap_login(test_account_base+str(i),test_account_base+str(i))
     myimap.imap_select()
     try:
@@ -161,7 +161,7 @@ basic_class.mylogger_record.info('clear current imapserv.stat file')
 remote_operations.remote_operation(mx2_host1_ip,root_account,root_passwd,'su - {0} -c "> log/imapserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    myimap = imap_operations.IMAP_Ops(mx1_imap1_host_ip,mx1_imap1_port)
+    myimap = imap_operations.IMAP_Ops(mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port)
     myimap.imap_login(test_account_base+str(i),test_account_base+str(i))
     myimap.imap_select('test')
     myimap.imap_fetch('1:5','rfc822')
@@ -184,7 +184,7 @@ basic_class.mylogger_record.info('clear current imapserv.stat file')
 remote_operations.remote_operation(mx2_host1_ip,root_account,root_passwd,'su - {0} -c "> log/imapserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    myimap = imap_operations.IMAP_Ops(mx1_imap1_host_ip,mx1_imap1_port)
+    myimap = imap_operations.IMAP_Ops(mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port)
     myimap.imap_login(test_account_base+str(i),test_account_base+str(i))
     myimap.imap_select('test')
     myimap.imap_fetch('1,3,4,6','rfc822')
@@ -207,7 +207,7 @@ basic_class.mylogger_record.info('clear current imapserv.stat file')
 remote_operations.remote_operation(mx2_host1_ip,root_account,root_passwd,'su - {0} -c "> log/imapserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    myimap = imap_operations.IMAP_Ops(mx1_imap1_host_ip,mx1_imap1_port)
+    myimap = imap_operations.IMAP_Ops(mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port)
     myimap.imap_login(test_account_base+str(i),test_account_base+str(i))
     myimap.imap_select('test')
     myimap.imap_fetch('2','rfc822')
@@ -230,7 +230,7 @@ basic_class.mylogger_record.info('clear current imapserv.stat file')
 remote_operations.remote_operation(mx2_host1_ip,root_account,root_passwd,'su - {0} -c "> log/imapserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    myimap = imap_operations.IMAP_Ops(mx1_imap1_host_ip,mx1_imap1_port)
+    myimap = imap_operations.IMAP_Ops(mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port)
     myimap.imap_login(test_account_base+str(i),test_account_base+str(i))
     myimap.imap_select('test')
     try:
@@ -262,7 +262,7 @@ basic_class.mylogger_record.info('clear current imapserv.stat file')
 remote_operations.remote_operation(mx2_host1_ip,root_account,root_passwd,'su - {0} -c "> log/imapserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    myimap = imap_operations.IMAP_Ops(mx1_imap1_host_ip,mx1_imap1_port)
+    myimap = imap_operations.IMAP_Ops(mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port)
     myimap.imap_login(test_account_base+str(i),test_account_base+str(i))
     myimap.imap_select('test')
     try:
@@ -290,7 +290,7 @@ basic_function.summary(result_lists,'MX-12754:statMSSRetrMsg_200_imap_fetch_test
 basic_class.mylogger_recordnf.title('StatMSSRetrMsg=0')
 basic_class.mylogger_record.info('chang key to:StatMSSRetrMsg=0')
 remote_operations.remote_operation(mx2_host1_ip,root_account,root_passwd,'su - {0} -c \'imconfcontrol -install -key \"/*/common/perfStatThresholds=StatMSSRetrMsg 0\"\''.format(mx_account),0)
-remote_operations.remote_operation(mx2_mss1_host_ip,root_account,root_passwd,'su - {0} -c "~/lib/imservctrl killStart imapserv"'.format(mx_account),0)
+remote_operations.remote_operation(mx2_mss_host1_ip,root_account,root_passwd,'su - {0} -c "~/lib/imservctrl killStart imapserv"'.format(mx_account),0)
 
 time.sleep(50)
 
@@ -300,7 +300,7 @@ basic_class.mylogger_record.info('clear current imapserv.stat file')
 remote_operations.remote_operation(mx2_host1_ip,root_account,root_passwd,'su - {0} -c "> log/imapserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    myimap = imap_operations.IMAP_Ops(mx1_imap1_host_ip,mx1_imap1_port)
+    myimap = imap_operations.IMAP_Ops(mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port)
     myimap.imap_login(test_account_base+str(i),test_account_base+str(i))
     myimap.imap_select()
     myimap.imap_fetch('1:5','rfc822')
@@ -322,7 +322,7 @@ basic_class.mylogger_record.info('clear current imapserv.stat file')
 remote_operations.remote_operation(mx2_host1_ip,root_account,root_passwd,'su - {0} -c "> log/imapserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    myimap = imap_operations.IMAP_Ops(mx1_imap1_host_ip,mx1_imap1_port)
+    myimap = imap_operations.IMAP_Ops(mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port)
     myimap.imap_login(test_account_base+str(i),test_account_base+str(i))
     myimap.imap_select()
     myimap.imap_fetch('1,3,4,5','rfc822')
@@ -344,7 +344,7 @@ basic_class.mylogger_record.info('clear current imapserv.stat file')
 remote_operations.remote_operation(mx2_host1_ip,root_account,root_passwd,'su - {0} -c "> log/imapserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    myimap = imap_operations.IMAP_Ops(mx1_imap1_host_ip,mx1_imap1_port)
+    myimap = imap_operations.IMAP_Ops(mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port)
     myimap.imap_login(test_account_base+str(i),test_account_base+str(i))
     myimap.imap_select()
     myimap.imap_fetch('2','rfc822')
@@ -366,7 +366,7 @@ basic_class.mylogger_record.info('clear current imapserv.stat file')
 remote_operations.remote_operation(mx2_host1_ip,root_account,root_passwd,'su - {0} -c "> log/imapserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    myimap = imap_operations.IMAP_Ops(mx1_imap1_host_ip,mx1_imap1_port)
+    myimap = imap_operations.IMAP_Ops(mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port)
     myimap.imap_login(test_account_base+str(i),test_account_base+str(i))
     myimap.imap_select()
     try:
@@ -398,7 +398,7 @@ basic_class.mylogger_record.info('clear current imapserv.stat file')
 remote_operations.remote_operation(mx2_host1_ip,root_account,root_passwd,'su - {0} -c "> log/imapserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    myimap = imap_operations.IMAP_Ops(mx1_imap1_host_ip,mx1_imap1_port)
+    myimap = imap_operations.IMAP_Ops(mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port)
     myimap.imap_login(test_account_base+str(i),test_account_base+str(i))
     myimap.imap_select()
     try:
@@ -430,7 +430,7 @@ basic_class.mylogger_record.info('clear current imapserv.stat file')
 remote_operations.remote_operation(mx2_host1_ip,root_account,root_passwd,'su - {0} -c "> log/imapserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    myimap = imap_operations.IMAP_Ops(mx1_imap1_host_ip,mx1_imap1_port)
+    myimap = imap_operations.IMAP_Ops(mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port)
     myimap.imap_login(test_account_base+str(i),test_account_base+str(i))
     myimap.imap_select('test')
     myimap.imap_fetch('1:5','rfc822')
@@ -453,7 +453,7 @@ basic_class.mylogger_record.info('clear current imapserv.stat file')
 remote_operations.remote_operation(mx2_host1_ip,root_account,root_passwd,'su - {0} -c "> log/imapserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    myimap = imap_operations.IMAP_Ops(mx1_imap1_host_ip,mx1_imap1_port)
+    myimap = imap_operations.IMAP_Ops(mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port)
     myimap.imap_login(test_account_base+str(i),test_account_base+str(i))
     myimap.imap_select('test')
     myimap.imap_fetch('1,3,4,6','rfc822')
@@ -476,7 +476,7 @@ basic_class.mylogger_record.info('clear current imapserv.stat file')
 remote_operations.remote_operation(mx2_host1_ip,root_account,root_passwd,'su - {0} -c "> log/imapserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    myimap = imap_operations.IMAP_Ops(mx1_imap1_host_ip,mx1_imap1_port)
+    myimap = imap_operations.IMAP_Ops(mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port)
     myimap.imap_login(test_account_base+str(i),test_account_base+str(i))
     myimap.imap_select('test')
     myimap.imap_fetch('2','rfc822')
@@ -499,7 +499,7 @@ basic_class.mylogger_record.info('clear current imapserv.stat file')
 remote_operations.remote_operation(mx2_host1_ip,root_account,root_passwd,'su - {0} -c "> log/imapserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    myimap = imap_operations.IMAP_Ops(mx1_imap1_host_ip,mx1_imap1_port)
+    myimap = imap_operations.IMAP_Ops(mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port)
     myimap.imap_login(test_account_base+str(i),test_account_base+str(i))
     myimap.imap_select('test')
     try:
@@ -531,7 +531,7 @@ basic_class.mylogger_record.info('clear current imapserv.stat file')
 remote_operations.remote_operation(mx2_host1_ip,root_account,root_passwd,'su - {0} -c "> log/imapserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    myimap = imap_operations.IMAP_Ops(mx1_imap1_host_ip,mx1_imap1_port)
+    myimap = imap_operations.IMAP_Ops(mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port)
     myimap.imap_login(test_account_base+str(i),test_account_base+str(i))
     myimap.imap_select('test')
     try:

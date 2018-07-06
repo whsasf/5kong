@@ -17,8 +17,8 @@ import imap_operations
 import global_variables
 import remote_operations
 
-mx1_imap1_host,mx1_imap1_port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,default_domain = \
-global_variables.get_values('mx1_imap1_host','mx1_imap1_port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','default_domain')
+mx1_imapserv_host1,mx1_imapserv_host1_imap4Port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,default_domain = \
+global_variables.get_values('mx1_imapserv_host1','mx1_imapserv_host1_imap4Port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','default_domain')
 
 
 basic_class.mylogger_record.info('step1:delete 10 accounts')

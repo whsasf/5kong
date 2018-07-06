@@ -11,8 +11,8 @@ import stat_statistics
 
 basic_class.mylogger_record.debug('Preparing... get some variables needed for tests')                                                               
                                                                                                                                                     
-mx1_mss1_host_ip,mx1_mss2_host_ip,mx1_imap1_host_ip,mx1_imap1_port,mx1_mta1_host_ip,mx1_mta1_port,mx1_pop1_host_ip,mx1_pop1_port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,default_domain = \
-global_variables.get_values('mx1_mss1_host_ip','mx1_mss2_host_ip','mx1_imap1_host_ip','mx1_imap1_port','mx1_mta1_host_ip','mx1_mta1_port','mx1_pop1_host_ip','mx1_pop1_port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','default_domain')
+mx1_mss_host1_ip,mx1_mss_host2_ip,mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port,mx1_mta_host1_ip,mx1_mta_host1_SMTPPort,mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,default_domain = \
+global_variables.get_values('mx1_mss_host1_ip','mx1_mss_host2_ip','mx1_imapserv_host1_ip','mx1_imapserv_host1_imap4Port','mx1_mta_host1_ip','mx1_mta_host1_SMTPPort','mx1_popserv_host1_ip','mx1_popserv_host1_pop3Port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','default_domain')
 
 
 
@@ -29,7 +29,7 @@ basic_class.mylogger_record.info('clear current popserv.stat file')
 remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    mypop3 = pop_operations.POP_Ops(mx1_pop1_host_ip,mx1_pop1_port)
+    mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
     mypop3.pop_login(test_account_base+str(i),test_account_base+str(i))
     mypop3.pop_list()
     mypop3.pop_retr(2)
@@ -53,7 +53,7 @@ basic_class.mylogger_record.info('clear current popserv.stat file')
 remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    mypop3 = pop_operations.POP_Ops(mx1_pop1_host_ip,mx1_pop1_port)
+    mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
     mypop3.pop_login(test_account_base+str(i),test_account_base+str(i))
     mypop3.pop_list()
     mypop3.pop_retr(1)
@@ -78,7 +78,7 @@ basic_class.mylogger_record.info('clear current popserv.stat file')
 remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    mypop3 = pop_operations.POP_Ops(mx1_pop1_host_ip,mx1_pop1_port)
+    mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
     mypop3.pop_login(test_account_base+str(i),test_account_base+str(i))
     mypop3.pop_list()
     mypop3.pop_retr(7)
@@ -102,7 +102,7 @@ basic_class.mylogger_record.info('clear current popserv.stat file')
 remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    mypop3 = pop_operations.POP_Ops(mx1_pop1_host_ip,mx1_pop1_port)
+    mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
     mypop3.pop_login(test_account_base+str(i),test_account_base+str(i))
     mypop3.pop_list()
     mypop3.pop_retr(5)
@@ -127,7 +127,7 @@ basic_class.mylogger_record.info('clear current popserv.stat file')
 remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    mypop3 = pop_operations.POP_Ops(mx1_pop1_host_ip,mx1_pop1_port)
+    mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
     mypop3.pop_login(test_account_base+str(i),test_account_base+str(i))
     mypop3.pop_list()
     mypop3.pop_top(1,1)
@@ -152,7 +152,7 @@ basic_class.mylogger_record.info('clear current popserv.stat file')
 remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    mypop3 = pop_operations.POP_Ops(mx1_pop1_host_ip,mx1_pop1_port)
+    mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
     mypop3.pop_login(test_account_base+str(i),test_account_base+str(i))
     mypop3.pop_list()
     mypop3.pop_top(1,1)
@@ -177,7 +177,7 @@ basic_class.mylogger_record.info('clear current popserv.stat file')
 remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    mypop3 = pop_operations.POP_Ops(mx1_pop1_host_ip,mx1_pop1_port)
+    mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
     mypop3.pop_login(test_account_base+str(i),test_account_base+str(i))
     mypop3.pop_list()
     mypop3.pop_top(6,1)
@@ -201,7 +201,7 @@ basic_class.mylogger_record.info('clear current popserv.stat file')
 remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    mypop3 = pop_operations.POP_Ops(mx1_pop1_host_ip,mx1_pop1_port)
+    mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
     mypop3.pop_login(test_account_base+str(i),test_account_base+str(i))
     mypop3.pop_list()
     mypop3.pop_top(3,1)
@@ -234,7 +234,7 @@ basic_class.mylogger_record.info('clear current popserv.stat file')
 remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    mypop3 = pop_operations.POP_Ops(mx1_pop1_host_ip,mx1_pop1_port)
+    mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
     mypop3.pop_login(test_account_base+str(i),test_account_base+str(i))
     mypop3.pop_list()
     mypop3.pop_retr(2)
@@ -258,7 +258,7 @@ basic_class.mylogger_record.info('clear current popserv.stat file')
 remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    mypop3 = pop_operations.POP_Ops(mx1_pop1_host_ip,mx1_pop1_port)
+    mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
     mypop3.pop_login(test_account_base+str(i),test_account_base+str(i))
     mypop3.pop_list()
     mypop3.pop_retr(1)
@@ -283,7 +283,7 @@ basic_class.mylogger_record.info('clear current popserv.stat file')
 remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    mypop3 = pop_operations.POP_Ops(mx1_pop1_host_ip,mx1_pop1_port)
+    mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
     mypop3.pop_login(test_account_base+str(i),test_account_base+str(i))
     mypop3.pop_list()
     mypop3.pop_retr(7)
@@ -307,7 +307,7 @@ basic_class.mylogger_record.info('clear current popserv.stat file')
 remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    mypop3 = pop_operations.POP_Ops(mx1_pop1_host_ip,mx1_pop1_port)
+    mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
     mypop3.pop_login(test_account_base+str(i),test_account_base+str(i))
     mypop3.pop_list()
     mypop3.pop_retr(5)
@@ -332,7 +332,7 @@ basic_class.mylogger_record.info('clear current popserv.stat file')
 remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    mypop3 = pop_operations.POP_Ops(mx1_pop1_host_ip,mx1_pop1_port)
+    mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
     mypop3.pop_login(test_account_base+str(i),test_account_base+str(i))
     mypop3.pop_list()
     mypop3.pop_top(1,1)
@@ -357,7 +357,7 @@ basic_class.mylogger_record.info('clear current popserv.stat file')
 remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    mypop3 = pop_operations.POP_Ops(mx1_pop1_host_ip,mx1_pop1_port)
+    mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
     mypop3.pop_login(test_account_base+str(i),test_account_base+str(i))
     mypop3.pop_list()
     mypop3.pop_top(1,1)
@@ -382,7 +382,7 @@ basic_class.mylogger_record.info('clear current popserv.stat file')
 remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    mypop3 = pop_operations.POP_Ops(mx1_pop1_host_ip,mx1_pop1_port)
+    mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
     mypop3.pop_login(test_account_base+str(i),test_account_base+str(i))
     mypop3.pop_list()
     mypop3.pop_top(6,1)
@@ -406,7 +406,7 @@ basic_class.mylogger_record.info('clear current popserv.stat file')
 remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
 
 for i in range(1,6):
-    mypop3 = pop_operations.POP_Ops(mx1_pop1_host_ip,mx1_pop1_port)
+    mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
     mypop3.pop_login(test_account_base+str(i),test_account_base+str(i))
     mypop3.pop_list()
     mypop3.pop_top(3,1)

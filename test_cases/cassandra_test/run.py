@@ -16,8 +16,8 @@ import time
 #basic_class.mylogger_record.info('Runing setup testcase:mx-11632-pop_auth_plain_10_accounts_half_pass_half_fail')
 basic_class.mylogger_record.debug('Preparing... get some variables needed for tests')
 
-mx1_pop1_host,mx1_pop1_port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,default_domain = \
-global_variables.get_values('mx1_pop1_host','mx1_pop1_port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','default_domain')
+mx1_popserv_host1,mx1_popserv_host1_pop3Port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,default_domain = \
+global_variables.get_values('mx1_popserv_host1','mx1_popserv_host1_pop3Port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','default_domain')
 
 
 remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c \'imconfcontrol -install -key \"/*/mta/requireAuthentication=true\";imconfcontrol -install -key \"/inbound-standardmta-direct/mta/requireAuthentication=true\";imconfcontrol -install -key \"/*/mta/allowCRAMMD5=true\";imconfcontrol -install -key \"/*/mta/allowTLS=true\"\''.format(mx_account),0)

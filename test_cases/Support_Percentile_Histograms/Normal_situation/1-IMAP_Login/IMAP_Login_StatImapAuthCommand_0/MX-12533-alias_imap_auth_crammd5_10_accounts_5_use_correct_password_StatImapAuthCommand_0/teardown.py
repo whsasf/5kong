@@ -18,8 +18,8 @@ import imap_operations
 import global_variables
 import remote_operations
 
-mx1_imap1_host,mx1_imap1_port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,default_domain = \
-global_variables.get_values('mx1_imap1_host','mx1_imap1_port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','default_domain')
+mx1_imapserv_host1,mx1_imapserv_host1_imap4Port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,default_domain = \
+global_variables.get_values('mx1_imapserv_host1','mx1_imapserv_host1_imap4Port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','default_domain')
 
 basic_class.mylogger_record.info('step1:delete alias accounts for 10 accounts')
 remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c \'for ((i=1;i<=10;i++));do imdbcontrol DeleteAlias u$i {2};done\''.format(mx_account,test_account_base,default_domain),0)
