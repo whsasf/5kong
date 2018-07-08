@@ -53,7 +53,7 @@ def construct_mx_topology(root_user = '',root_pass = '',mx_user = ''):
     import paramiko
     import global_variables
     import basic_class
-    
+    import remote_operations
     if root_user:
         root_account = root_user
     else:
@@ -106,26 +106,28 @@ def construct_mx_topology(root_user = '',root_pass = '',mx_user = ''):
         for xyz in range(int(mx_seed_host_nums)):
             seed_host = global_variables.get_value('mx_seed_host{}_ip'.format(xyz+1))
             basic_class.mylogger_record.debug('seed_host = '+str(seed_host))
-            ssh_allhost = paramiko.SSHClient()
-            ssh_allhost.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            ssh_allhost.connect(seed_host,22,root_account,root_passwd)
+            #ssh_allhost = paramiko.SSHClient()
+            #ssh_allhost.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            #ssh_allhost.connect(seed_host,22,root_account,root_passwd)
             
             
-            tmp_cmd1='cat /etc/passwd|grep '+mx_account+'|cut -d\':\' -f6'
-            basic_class.mylogger_record.debug('tmp_cmd1 = '+str(tmp_cmd1))
-            stdin,stdout1,stderr=ssh_allhost.exec_command(tmp_cmd1)
-            if (len(stderr.read())==0):
-                allhost_common_user_home=stdout1.read().strip().decode()
-            else:
-                basic_class.mylogger_record.error('SSH Error!')
-                exit (1)
-            basic_class.mylogger_record.debug('allhost_common_user_home = '+str(allhost_common_user_home))
+            #tmp_cmd1='cat /etc/passwd|grep '+mx_account+'|cut -d\':\' -f6'
+            #basic_class.mylogger_record.debug('tmp_cmd1 = '+str(tmp_cmd1))
+            #stdin,stdout1,stderr=ssh_allhost.exec_command(tmp_cmd1)
+            #if (len(stderr.read())==0):
+            #    allhost_common_user_home=stdout1.read().strip().decode()
+            #else:
+            #    basic_class.mylogger_record.error('SSH Error!')
+            #    exit (1)
+            #basic_class.mylogger_record.debug('allhost_common_user_home = '+str(allhost_common_user_home))
                 
             #get hosts and hosts, ip, addrs                
-            tmp_cmd2 = 'source '+allhost_common_user_home+'/.profile;imconfget  -hosts | grep -v cluster|grep -v \' $\''
+            tmp_cmd2 = 'imconfget  -hosts | grep -v cluster'
             basic_class.mylogger_record.debug('tmp_cmd2 = '+str(tmp_cmd2))
-            stdin,stdout2,stderr=ssh_allhost.exec_command(tmp_cmd2)
-            h_lists=stdout2.readlines()
+            #stdin,stdout2,stderr=ssh_allhost.exec_command(tmp_cmd2)
+            stdout2 = remote_operations.remote_operation(seed_host,root_account,root_passwd,'su - {0} -c "{1}"'.format(mx_account,tmp_cmd2),0)
+            h_lists=stdout2.split('\n')[0:-2]
+            print(h_lists)
             i = 0
             for h_list in h_lists:
                 h_list = h_list.split()[0]
@@ -134,79 +136,86 @@ def construct_mx_topology(root_user = '',root_pass = '',mx_user = ''):
                 addr_dict[key] = value
                 tmp_cmd3="grep "+str(h_list)+" /etc/hosts|awk \'{print $1}\' | head -1"
                 basic_class.mylogger_record.debug('tmp_cmd3 = '+str(tmp_cmd3))
-                stdin,stdout3,stderr=ssh_allhost.exec_command(tmp_cmd3)
-                tmpip=stdout3.readlines()
+                #stdin,stdout3,stderr=ssh_allhost.exec_command(tmp_cmd3)
+                stdout3 = remote_operations.remote_operation(seed_host,root_account,root_passwd,'su - {0} -c "{1}"'.format(mx_account,tmp_cmd3),0)
+                tmpip=stdout3.split('\n')[0:-1][0]
+                print(tmpip)
                 key = 'mx'+str(xyz+1)+'_host'+str(i+1)+"_ip"
                 value = ''.join(tmpip[0].split())
                 addr_dict[key] = value
                 i += 1
             
             
-            tmp_cmd4 ='source '+allhost_common_user_home+'/.profile;imconfcontrol -ports'
+            tmp_cmd4 = 'imconfcontrol -ports'
             basic_class.mylogger_record.debug('tmp_cmd4 = '+str(tmp_cmd4))
-            stdin,stdout4,stderr=ssh_allhost.exec_command(tmp_cmd4)
-            if (len(stderr.read())==0):
-                tmp_list = stdout4.readlines()
-                for hostports in tmp_list:
-                    tmp_a = hostports.split()
-                    
-                    if tmp_a[0].isdigit():
-                        #print(tmp_a[2])
-                        #print('===>'+str(tmp_a))
-                        tmp_cmd5 = 'source '+allhost_common_user_home+'/.profile;imconfget -server '+ tmp_a[2]
-                        basic_class.mylogger_record.debug('tmp_cmd5 = '+str(tmp_cmd5))
-                        stdin,stdout5,stderr=ssh_allhost.exec_command(tmp_cmd5)
-                        s_list=stdout5.readlines()
-                        for serverhosts in s_list:
-                            server_tmp=serverhosts.split()
-                            #print(len(server_tmp))
-                            if len(server_tmp) > 0:
-                                #print('-->'+str(server_tmp))
-                                for i in range(len(server_tmp)):
-                                    #print('i='+str(i))
-                                    key = 'mx'+str(xyz+1)+'_'+tmp_a[2]+'_host'+str(i+1)
-                                    value = server_tmp[i]
-                                    host_dict[key] = value
-                                    key = 'mx'+str(xyz+1)+'_'+tmp_a[2]+'_host'+str(i+1)+'_ip'
-                                    value = [addr_dict.get(k+'_ip') for k,v in addr_dict.items() if v == server_tmp[i]]
-                                    host_dict[key] = value[0]
-                                    #print(host_list)
-                                    key = 'mx'+str(xyz+1)+'_'+tmp_a[2]+'_host'+str(i+1)+'_'+tmp_a[3].replace('.','_')
-                                    value = tmp_a[0]
-                                    port_dict[key] = value
-                                    #print(port_list)
-                            else:
-                                key = 'mx'+str(xyz+1)+'_'+tmp_a[2]+'_'+tmp_a[3].replace('.','_')
+            #stdin,stdout4,stderr=ssh_allhost.exec_command(tmp_cmd4)
+            stdout4 = remote_operations.remote_operation(seed_host,root_account,root_passwd,'su - {0} -c "{1}"'.format(mx_account,tmp_cmd4),0)
+            #if (len(stderr.read())==0):
+            tmp_list = stdout4.split('\n')[0:-1]
+            for hostports in tmp_list:
+                tmp_a = hostports.split()
+                
+                if tmp_a[0].isdigit():
+                    #print(tmp_a[2])
+                    #print('===>'+str(tmp_a))
+                    tmp_cmd5 = 'imconfget -server '+ tmp_a[2]
+                    basic_class.mylogger_record.debug('tmp_cmd5 = '+str(tmp_cmd5))
+                    #stdin,stdout5,stderr=ssh_allhost.exec_command(tmp_cmd5)
+                    stdout5 = remote_operations.remote_operation(seed_host,root_account,root_passwd,'su - {0} -c "{1}"'.format(mx_account,tmp_cmd5),0)
+                    s_list=stdout5.split()[0:-1]
+                    print(s_list)
+                    for serverhosts in s_list:
+                        server_tmp=serverhosts.split()
+                        #print(len(server_tmp))
+                        if len(server_tmp) > 0:
+                            #print('-->'+str(server_tmp))
+                            for i in range(len(server_tmp)):
+                                #print('i='+str(i))
+                                key = 'mx'+str(xyz+1)+'_'+tmp_a[2]+'_host'+str(i+1)
+                                value = server_tmp[i]
+                                host_dict[key] = value
+                                key = 'mx'+str(xyz+1)+'_'+tmp_a[2]+'_host'+str(i+1)+'_ip'
+                                value = [addr_dict.get(k+'_ip') for k,v in addr_dict.items() if v == server_tmp[i]]
+                                host_dict[key] = value[0]
+                                #print(host_list)
+                                key = 'mx'+str(xyz+1)+'_'+tmp_a[2]+'_host'+str(i+1)+'_'+tmp_a[3].replace('.','_')
                                 value = tmp_a[0]
-                                port_dict[key] = value                                           
-                    else:   #skip the titles 
-                        pass
-            else:
-                basic_class.mylogger_record.error('SSH Error!')
-                exit (1)
+                                port_dict[key] = value
+                                #print(port_list)
+                        else:
+                            key = 'mx'+str(xyz+1)+'_'+tmp_a[2]+'_'+tmp_a[3].replace('.','_')
+                            value = tmp_a[0]
+                            port_dict[key] = value                                           
+                else:   #skip the titles 
+                    pass
+
                  
             #get cassandra info
-            tmp_cmd6 = 'grep hostInfo '+allhost_common_user_home+'/config/config.db | cut -d \':\' -f 3'
+            tmp_cmd6 = 'grep hostInfo config/config.db | cut -d \':\' -f 3'
             basic_class.mylogger_record.debug('tmp_cmd6 = '+str(tmp_cmd6))
-            stdin,stdout6,stderr=ssh_allhost.exec_command(tmp_cmd6)
-            b_n = stdout6.readlines()
+            #stdin,stdout6,stderr=ssh_allhost.exec_command(tmp_cmd6)
+            stdout6 = remote_operations.remote_operation(seed_host,root_account,root_passwd,'su - {0} -c "{1}"'.format(mx_account,tmp_cmd6),0)
+            b_n = stdout6.split('\n')[0]
             blobtier = b_n[0].split()[0]
             tmp_cmd7 = "grep "+str(blobtier)+" /etc/hosts|awk \'{print $1}\' | head -1"
             basic_class.mylogger_record.debug('tmp_cmd7 = '+str(tmp_cmd7))
-            stdin,stdout7,stderr=ssh_allhost.exec_command(tmp_cmd7)
-            tmp_ip = stdout7.readlines()
+            #stdin,stdout7,stderr=ssh_allhost.exec_command(tmp_cmd7)
+            stdout7 = remote_operations.remote_operation(seed_host,root_account,root_passwd,'su - {0} -c "{1}"'.format(mx_account,tmp_cmd7),0)
+            tmp_ip = stdout7.split('\n')[0]
             blob_ip=tmp_ip[0].split()[0] 
             cass_dict['mx'+str(xyz+1)+'_cassblob_hosts'] =str(blobtier)
             cass_dict['mx'+str(xyz+1)+'_cassblob_ip'] = str(blob_ip) 
             
-            tmp_cmd8 = 'grep cassandraMDCluster '+allhost_common_user_home+'/config/config.db | cut -d \'[\' -f 2| cut -d \']\' -f1 '
+            tmp_cmd8 = 'grep cassandraMDCluster config/config.db | cut -d \'[\' -f 2| cut -d \']\' -f1 '
             basic_class.mylogger_record.debug('tmp_cmd8 = '+str(tmp_cmd8))
-            stdin,stdout8,stderr=ssh_allhost.exec_command(tmp_cmd8)
-            m_n = stdout8.readlines()
+            #stdin,stdout8,stderr=ssh_allhost.exec_command(tmp_cmd8)
+            stdout8 = remote_operations.remote_operation(seed_host,root_account,root_passwd,'su - {0} -c "{1}"'.format(mx_account,tmp_cmd8),0)
+            m_n = stdout8.split('\n')[0:-1]
             metadata = m_n[0].split()[0]
             tmp_cmd9 = "grep "+str(metadata)+" /etc/hosts|awk \'{print $1}\' | head -1"
-            stdin,stdout9,stderr=ssh_allhost.exec_command(tmp_cmd9)
-            tmp_ip = stdout9.readlines()
+            #stdin,stdout9,stderr=ssh_allhost.exec_command(tmp_cmd9)
+            stdout9 = remote_operations.remote_operation(seed_host,root_account,root_passwd,'su - {0} -c "{1}"'.format(mx_account,tmp_cmd9),0)
+            tmp_ip = stdout9.split('-n')[0]
             meta_ip = tmp_ip[0].split()[0]
             cass_dict['mx'+str(xyz+1)+'_cassmeta_hosts'] = str(metadata)
             cass_dict['mx'+str(xyz+1)+'_cassmeta_ip'] = str(meta_ip)
@@ -231,7 +240,7 @@ def construct_mx_topology(root_user = '',root_pass = '',mx_user = ''):
         pass       
         
     basic_class.mylogger_record.debug('Importing auto-user.vars ...')          
-    global_variables.import_variables_from_file([initialpath+'/etc/auto-user.vars'])# read auto generated users.vars 
+    global_variables.import_variables_from_file([initialpath+'/etc/auto-user.vars'])# read auto generated users.vars     
 
 
     
