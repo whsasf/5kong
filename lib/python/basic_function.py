@@ -54,6 +54,7 @@ def construct_mx_topology(root_user = '',root_pass = '',mx_user = ''):
     import global_variables
     import basic_class
     import remote_operations
+    
     if root_user:
         root_account = root_user
     else:
@@ -68,7 +69,8 @@ def construct_mx_topology(root_user = '',root_pass = '',mx_user = ''):
         mx_account = mx_user
     else:
         mx_account = global_variables.get_value ('mx_account')  
-        
+    
+    sshport = global_variables.get_value ('sshport')      
     basic_class.mylogger_record.debug('root_account = '+str(root_account))
     basic_class.mylogger_record.debug('root_passwd = '+str(root_passwd))
     basic_class.mylogger_record.debug('mx_account = '+str(mx_account))
@@ -98,79 +100,102 @@ def construct_mx_topology(root_user = '',root_pass = '',mx_user = ''):
         basic_class.mylogger_record.debug('regenerate_flag = '+str(regenerate_flag))
         basic_class.mylogger_record.info('Regenerating auto-user.vars again ...')
                 
-    if regenerate_flag == 1:   
+    if regenerate_flag == 1:  # need recreate auto-user.vars
         total = [] # used to store all fetched variabled
         host_dict,port_dict,addr_dict,cass_dict ={},{},{},{}
-        allhost_common_user_home = ''
+        host_sshnonpass_list = [] # to store the flag that if this host can be sshed from testmachne without password 
         
         for xyz in range(int(mx_seed_host_nums)):
             seed_host = global_variables.get_value('mx_seed_host{}_ip'.format(xyz+1))
             basic_class.mylogger_record.debug('seed_host = '+str(seed_host))
-            #ssh_allhost = paramiko.SSHClient()
-            #ssh_allhost.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            #ssh_allhost.connect(seed_host,22,root_account,root_passwd)
             
+            # establish sh conenction with seed_host
+            keyfile = os.environ['HOME']+'/.ssh/id_rsa'            
+            ssh_try = paramiko.SSHClient()
+            ssh_try.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            if os.path.exists(keyfile):          # keyfile exist, will try to ssh withot password
+                basic_class.mylogger_record.debug('Establishing ssh connection with pubkey ...')
+                private_key = paramiko.RSAKey.from_private_key_file(keyfile)
+                try:
+                    ssh_try.connect(hostname = seed_host, port = sshport, username = root_account, pkey = private_key)
+                except:
+                    basic_class.mylogger_record.debug('Establishing ssh connection with pubkey failed! Will continue try with password ...')
+                    basic_class.mylogger_record.debug('Establishing ssh connection with password ...')
+                    try:
+                        ssh_try.connect(hostname = sshhost, port = sshport, username = root_account, password = root_passwd)
+                    except:
+                        basic_class.mylogger_record.warning('Establishing ssh connection with password failed! Please check manually! ')               
+                        exit (1)
+                    else:
+                        basic_class.mylogger_record.debug('Established ssh connection with password success!')   
+                else:
+                    basic_class.mylogger_record.debug('Established ssh connection with pubkey success!')                                    
+            else:                                # keyfile not exist, will try to ssh with password
+                basic_class.mylogger_record.debug('Establishing ssh connection with password ...')
+                try:
+                    ssh_try.connect(hostname = sshhost, port = sshport, username = root_account, password = root_passwd)
+                except:
+                    basic_class.mylogger_record.warning('Establishing ssh connection with password failed! Please check manually! ')               
+                    exit (1)
+                else:
+                    basic_class.mylogger_record.debug('Established ssh connection with password success!')     
             
-            #tmp_cmd1='cat /etc/passwd|grep '+mx_account+'|cut -d\':\' -f6'
-            #basic_class.mylogger_record.debug('tmp_cmd1 = '+str(tmp_cmd1))
-            #stdin,stdout1,stderr=ssh_allhost.exec_command(tmp_cmd1)
-            #if (len(stderr.read())==0):
-            #    allhost_common_user_home=stdout1.read().strip().decode()
-            #else:
-            #    basic_class.mylogger_record.error('SSH Error!')
-            #    exit (1)
-            #basic_class.mylogger_record.debug('allhost_common_user_home = '+str(allhost_common_user_home))
-                
+                    
             #get hosts and hosts, ip, addrs                
-            tmp_cmd2 = 'imconfget  -hosts | grep -v cluster'
-            basic_class.mylogger_record.debug('tmp_cmd2 = '+str(tmp_cmd2))
-            #stdin,stdout2,stderr=ssh_allhost.exec_command(tmp_cmd2)
-            stdout2 = remote_operations.remote_operation(seed_host,root_account,root_passwd,'su - {0} -c "{1}"'.format(mx_account,tmp_cmd2),0)
-            h_lists=stdout2.split('\n')[0:-2]
-            print(h_lists)
+            tmp_cmd1 = 'imconfget  -hosts | grep -v cluster'
+            basic_class.mylogger_record.debug('tmp_cmd1 = '+str(tmp_cmd1))                              
+            stdin, stdout1, stderr = ssh_try.exec_command('su - {0} -c "{1}"'.format(mx_account,tmp_cmd1))    
+            h_lists=str(stdout1.read(),'utf-8').split('\n')[0:-2]
+            basic_class.mylogger_record.debug('h_lists = '+str(h_lists))
             i = 0
             for h_list in h_lists:
                 h_list = h_list.split()[0]
                 key = 'mx'+str(xyz+1)+'_host'+str(i+1)
                 value = str(h_list)
                 addr_dict[key] = value
-                tmp_cmd3="grep "+str(h_list)+" /etc/hosts|awk \'{print $1}\' | head -1"
-                basic_class.mylogger_record.debug('tmp_cmd3 = '+str(tmp_cmd3))
-                #stdin,stdout3,stderr=ssh_allhost.exec_command(tmp_cmd3)
-                stdout3 = remote_operations.remote_operation(seed_host,root_account,root_passwd,'su - {0} -c "{1}"'.format(mx_account,tmp_cmd3),0)
-                tmpip=stdout3.split('\n')[0:-1][0]
-                print(tmpip)
+                
+                tmp_cmd2="grep "+str(h_list)+" /etc/hosts|awk \'{print $1}\' | head -1"
+                basic_class.mylogger_record.debug('tmp_cmd2 = '+str(tmp_cmd2))
+                stdin,stdout2,stderr=ssh_try.exec_command(tmp_cmd2)  
+                tmpip=str(stdout2.read(),'utf-8').split('\n')[0:-1]
+                basic_class.mylogger_record.debug('tmpip = '+str(tmpip))
                 key = 'mx'+str(xyz+1)+'_host'+str(i+1)+"_ip"
                 value = ''.join(tmpip[0].split())
                 addr_dict[key] = value
-                i += 1
-            
-            
-            tmp_cmd4 = 'imconfcontrol -ports'
-            basic_class.mylogger_record.debug('tmp_cmd4 = '+str(tmp_cmd4))
-            #stdin,stdout4,stderr=ssh_allhost.exec_command(tmp_cmd4)
-            stdout4 = remote_operations.remote_operation(seed_host,root_account,root_passwd,'su - {0} -c "{1}"'.format(mx_account,tmp_cmd4),0)
-            #if (len(stderr.read())==0):
-            tmp_list = stdout4.split('\n')[0:-1]
-            for hostports in tmp_list:
-                tmp_a = hostports.split()
                 
+                # check ssh_non_password_flag
+                ssh_authtype_flag = remote_operations.check_host_sshnonpassword_flag(value,root_account,root_passwd)
+                if ssh_authtype_flag == 1:   # auth with pubkey success
+                    host_sshnonpass_list.append(key+'_sshnonpassauth_flag = '+str(ssh_authtype_flag))
+                    host_sshnonpass_list.append(value+'_sshnonpassauth_flag = '+str(ssh_authtype_flag))
+                elif ssh_authtype_flag == 0: # auth with password success
+                    host_sshnonpass_list.append(key+'_sshnonpassauth_flag = '+str(ssh_authtype_flag))
+                    host_sshnonpass_list.append(value+'_sshnonpassauth_flag = '+str(ssh_authtype_flag))
+                else:                        # buth auth types failed
+                    basic_class.mylogger_record.error('Establishing ssh connection with or without password failed, please check manually !')
+                    host_sshnonpass_list.append(key+'_sshnonpassauth_flag = '+str(-1))
+                    host_sshnonpass_list.append(value+'_sshnonpassauth_flag = '+str(-1))
+                    exit(1)                           
+                i += 1
+                        
+            tmp_cmd3 = 'imconfcontrol -ports'
+            basic_class.mylogger_record.debug('tmp_cmd3 = '+str(tmp_cmd3))
+            stdin, stdout3, stderr = ssh_try.exec_command('su - {0} -c "{1}"'.format(mx_account,tmp_cmd3))  
+            tmp_list = str(stdout3.read(),'utf-8').split('\n')[0:-1]
+            basic_class.mylogger_record.debug('tmp_list = ')
+            [basic_class.mylogger_recordnf.debug(tmp) for tmp in tmp_list]
+            for hostports in tmp_list:
+                tmp_a = hostports.split()                
                 if tmp_a[0].isdigit():
-                    #print(tmp_a[2])
-                    #print('===>'+str(tmp_a))
-                    tmp_cmd5 = 'imconfget -server '+ tmp_a[2]
-                    basic_class.mylogger_record.debug('tmp_cmd5 = '+str(tmp_cmd5))
-                    #stdin,stdout5,stderr=ssh_allhost.exec_command(tmp_cmd5)
-                    stdout5 = remote_operations.remote_operation(seed_host,root_account,root_passwd,'su - {0} -c "{1}"'.format(mx_account,tmp_cmd5),0)
-                    s_list=stdout5.split()[0:-1]
-                    print(s_list)
+                    tmp_cmd4 = 'imconfget -server '+ tmp_a[2]
+                    basic_class.mylogger_record.debug('tmp_cmd4 = '+str(tmp_cmd4))
+                    stdin, stdout4, stderr = ssh_try.exec_command('su - {0} -c "{1}"'.format(mx_account,tmp_cmd4)) 
+                    s_list=str(stdout4.read(),'utf-8').split('\n')[0:-1]
+                    basic_class.mylogger_record.debug('s_list = '+str(s_list))
                     for serverhosts in s_list:
                         server_tmp=serverhosts.split()
-                        #print(len(server_tmp))
                         if len(server_tmp) > 0:
-                            #print('-->'+str(server_tmp))
                             for i in range(len(server_tmp)):
-                                #print('i='+str(i))
                                 key = 'mx'+str(xyz+1)+'_'+tmp_a[2]+'_host'+str(i+1)
                                 value = server_tmp[i]
                                 host_dict[key] = value
@@ -188,38 +213,39 @@ def construct_mx_topology(root_user = '',root_pass = '',mx_user = ''):
                             port_dict[key] = value                                           
                 else:   #skip the titles 
                     pass
-
                  
             #get cassandra info
-            tmp_cmd6 = 'grep hostInfo config/config.db | cut -d \':\' -f 3'
-            basic_class.mylogger_record.debug('tmp_cmd6 = '+str(tmp_cmd6))
-            #stdin,stdout6,stderr=ssh_allhost.exec_command(tmp_cmd6)
-            stdout6 = remote_operations.remote_operation(seed_host,root_account,root_passwd,'su - {0} -c "{1}"'.format(mx_account,tmp_cmd6),0)
-            b_n = stdout6.split('\n')[0]
+            tmp_cmd5 = 'grep hostInfo config/config.db | cut -d \':\' -f 3'
+            basic_class.mylogger_record.debug('tmp_cmd5 = '+str(tmp_cmd5))
+            stdin,stdout5,stderr=ssh_try.exec_command('su - {0} -c "{1}"'.format(mx_account,tmp_cmd5)) 
+            b_n = str(stdout5.read(),'utf-8').split('\n')[0:-1]
+            basic_class.mylogger_record.debug('b_n = '+str(b_n))
             blobtier = b_n[0].split()[0]
-            tmp_cmd7 = "grep "+str(blobtier)+" /etc/hosts|awk \'{print $1}\' | head -1"
-            basic_class.mylogger_record.debug('tmp_cmd7 = '+str(tmp_cmd7))
-            #stdin,stdout7,stderr=ssh_allhost.exec_command(tmp_cmd7)
-            stdout7 = remote_operations.remote_operation(seed_host,root_account,root_passwd,'su - {0} -c "{1}"'.format(mx_account,tmp_cmd7),0)
-            tmp_ip = stdout7.split('\n')[0]
-            blob_ip=tmp_ip[0].split()[0] 
+           
+            tmp_cmd6 = "grep "+str(blobtier)+" /etc/hosts|awk \'{print $1}\' | head -1"
+            basic_class.mylogger_record.debug('tmp_cmd6 = '+str(tmp_cmd6))
+            stdin,stdout6,stderr=ssh_try.exec_command(tmp_cmd6) 
+            tmp_ip = str(stdout6.read(),'utf-8').split('\n')[0:-1]
+            basic_class.mylogger_record.debug('tmp_ip = '+str(tmp_ip))
+            blob_ip=tmp_ip[0].split()[0]
             cass_dict['mx'+str(xyz+1)+'_cassblob_hosts'] =str(blobtier)
             cass_dict['mx'+str(xyz+1)+'_cassblob_ip'] = str(blob_ip) 
             
-            tmp_cmd8 = 'grep cassandraMDCluster config/config.db | cut -d \'[\' -f 2| cut -d \']\' -f1 '
-            basic_class.mylogger_record.debug('tmp_cmd8 = '+str(tmp_cmd8))
-            #stdin,stdout8,stderr=ssh_allhost.exec_command(tmp_cmd8)
-            stdout8 = remote_operations.remote_operation(seed_host,root_account,root_passwd,'su - {0} -c "{1}"'.format(mx_account,tmp_cmd8),0)
-            m_n = stdout8.split('\n')[0:-1]
+            tmp_cmd7 = 'grep cassandraMDCluster config/config.db | cut -d \'[\' -f 2| cut -d \']\' -f1 '
+            basic_class.mylogger_record.debug('tmp_cmd7 = '+str(tmp_cmd7))
+            stdin, stdout7, stderr = ssh_try.exec_command('su - {0} -c "{1}"'.format(mx_account,tmp_cmd7)) 
+            m_n = str(stdout7.read(),'utf-8').split('\n')[0:-1]
+            basic_class.mylogger_record.debug('m_n = '+str(m_n))
             metadata = m_n[0].split()[0]
-            tmp_cmd9 = "grep "+str(metadata)+" /etc/hosts|awk \'{print $1}\' | head -1"
-            #stdin,stdout9,stderr=ssh_allhost.exec_command(tmp_cmd9)
-            stdout9 = remote_operations.remote_operation(seed_host,root_account,root_passwd,'su - {0} -c "{1}"'.format(mx_account,tmp_cmd9),0)
-            tmp_ip = stdout9.split('-n')[0]
+            
+            tmp_cmd8 = "grep "+str(metadata)+" /etc/hosts|awk \'{print $1}\' | head -1"
+            stdin,stdout8,stderr=ssh_try.exec_command(tmp_cmd8) 
+            tmp_ip = str(stdout8.read(),'utf-8').split('\n')[0:-1]
+            basic_class.mylogger_record.debug('tmp_ip = '+str(tmp_ip))
             meta_ip = tmp_ip[0].split()[0]
             cass_dict['mx'+str(xyz+1)+'_cassmeta_hosts'] = str(metadata)
             cass_dict['mx'+str(xyz+1)+'_cassmeta_ip'] = str(meta_ip)
-        
+            ssh_try.close()
         
         user_var_file = open('etc/auto-user.vars', "w")
         #tmp_list=list(set(host_list+port_list+addr_list+cass_list))
@@ -230,9 +256,10 @@ def construct_mx_topology(root_user = '',root_pass = '',mx_user = ''):
         for tck ,tcv in sorted(port_dict.items(),key=lambda port_dict:port_dict[0]):       
             total.append(tck+' = '+tcv)          
         for tck ,tcv in sorted(cass_dict.items(),key=lambda cass_dict:cass_dict[0]):       
-            total.append(tck+' = '+tcv)     
-        basic_class.mylogger_record.debug('total = '+str(total))
-        
+            total.append(tck+' = '+tcv)
+        total.extend(host_sshnonpass_list)     
+        basic_class.mylogger_record.debug('total = '+str(total))         
+                
         for item in sorted(total):
             user_var_file.write(item+"\n") 
         user_var_file.close()
@@ -240,8 +267,8 @@ def construct_mx_topology(root_user = '',root_pass = '',mx_user = ''):
         pass       
         
     basic_class.mylogger_record.debug('Importing auto-user.vars ...')          
-    global_variables.import_variables_from_file([initialpath+'/etc/auto-user.vars'])# read auto generated users.vars     
-
+    global_variables.import_variables_from_file([initialpath+'/etc/auto-user.vars'])# read auto generated users.vars 
+    
 
     
 def variables_prepare(initialpath):
