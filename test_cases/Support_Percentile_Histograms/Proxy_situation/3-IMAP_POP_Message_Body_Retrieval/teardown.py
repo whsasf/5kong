@@ -16,12 +16,12 @@ global_variables.get_values('mx2_imapserv_host1_ip','mx2_mss_host1_ip','mx2_mta_
 
 
 basic_class.mylogger_record.info('step1:delete 6 accounts')
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c \'for ((i=1;i<=6;i++));do account-delete {1}$i@{2};done\''.format(mx_account,test_account_base,default_domain),1,'Mailbox Deleted Successfully',6)
-remote_operations.remote_operation(mx2_host1_ip,root_account,root_passwd,'su - {0} -c \'for ((i=1;i<=6;i++));do account-delete {1}$i@{2};done\''.format(mx_account,test_account_base,default_domain),1,'Mailbox Deleted Successfully',6)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'for ((i=1;i<=6;i++));do account-delete {1}$i@{2};done\''.format(mx_account,test_account_base,default_domain),root_account,root_passwd,1,'Mailbox Deleted Successfully',6)
+remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c \'for ((i=1;i<=6;i++));do account-delete {1}$i@{2};done\''.format(mx_account,test_account_base,default_domain),root_account,root_passwd,1,'Mailbox Deleted Successfully',6)
 
 
 
 
 basic_class.mylogger_record.info('step2:restore keys')
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c \'imconfcontrol -install -key \"/*/common/reportParamsInterval=60\";imconfcontrol -install -key \"/*/mta/subAddressAllowedIPs=127.0.0.1\";imconfcontrol -install -key \"/site1-inbound-standardmta-direct/mta/subAddressAllowedIPs=127.0.0.1\";imconfcontrol -install -key \"/*/common/perfStatThresholds=\";imconfcontrol -install -key \"/*/imapserv/imapProxyHost\";imconfcontrol -install -key \"/*/imapserv/imapProxyPort\";imconfcontrol -install -key \"/*/popserv/popProxyHost\";imconfcontrol -install -key \"/*/popserv/popProxyPort\"\''.format(mx_account),0)  
-remote_operations.remote_operation(mx2_host1_ip,root_account,root_passwd,'su - {0} -c \'imconfcontrol -install -key \"/*/common/reportParamsInterval=60\";imconfcontrol -install -key \"/*/mta/subAddressAllowedIPs=127.0.0.1\";imconfcontrol -install -key \"/site1-inbound-standardmta-direct/mta/subAddressAllowedIPs=127.0.0.1\";imconfcontrol -install -key \"/*/common/perfStatThresholds=\"\''.format(mx_account),0)  
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'imconfcontrol -install -key \"/*/common/reportParamsInterval=60\";imconfcontrol -install -key \"/*/mta/subAddressAllowedIPs=127.0.0.1\";imconfcontrol -install -key \"/site1-inbound-standardmta-direct/mta/subAddressAllowedIPs=127.0.0.1\";imconfcontrol -install -key \"/*/common/perfStatThresholds=\";imconfcontrol -install -key \"/*/imapserv/imapProxyHost\";imconfcontrol -install -key \"/*/imapserv/imapProxyPort\";imconfcontrol -install -key \"/*/popserv/popProxyHost\";imconfcontrol -install -key \"/*/popserv/popProxyPort\"\''.format(mx_account),root_account,root_passwd,0)  
+remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c \'imconfcontrol -install -key \"/*/common/reportParamsInterval=60\";imconfcontrol -install -key \"/*/mta/subAddressAllowedIPs=127.0.0.1\";imconfcontrol -install -key \"/site1-inbound-standardmta-direct/mta/subAddressAllowedIPs=127.0.0.1\";imconfcontrol -install -key \"/*/common/perfStatThresholds=\"\''.format(mx_account),root_account,root_passwd,0)  

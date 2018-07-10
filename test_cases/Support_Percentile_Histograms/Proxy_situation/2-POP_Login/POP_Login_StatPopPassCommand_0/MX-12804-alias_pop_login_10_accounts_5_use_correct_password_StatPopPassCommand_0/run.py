@@ -43,10 +43,10 @@ for i in range(6,11):
 basic_class.mylogger_record.info('fetching popserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('step2:check and analyze popserv.stat file ...')
-popserv_stat_content1 = remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "cat log/popserv.stat|grep StatPopPassCommand"'.format(mx_account),0)
+popserv_stat_content1 = remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "cat log/popserv.stat|grep StatPopPassCommand"'.format(mx_account),root_account,root_passwd,0)
 result_lists1 = stat_statistics.stat_statistic(popserv_stat_content1,'[0]','StatPopPassCommand',10)
 
-popserv_stat_content2 = remote_operations.remote_operation(mx2_host1_ip,root_account,root_passwd,'su - {0} -c "cat log/popserv.stat|grep StatPopPassCommand"'.format(mx_account),0)
+popserv_stat_content2 = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/popserv.stat|grep StatPopPassCommand"'.format(mx_account),root_account,root_passwd,0)
 result_lists2 = stat_statistics.stat_statistic(popserv_stat_content2,'[0]','StatPopPassCommand',5)
 
 result_lists = result_lists1 + result_lists2

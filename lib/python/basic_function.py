@@ -723,17 +723,8 @@ def statistics():
     basic_class.mylogger_summary.yes('Total number of Test Cases: '+str(total_testcases_num+imsanity_total+imap_collider_total))
     basic_class.mylogger_summary.yes('PASS:                       '+str(passed_testcases_num+imsanity_pass+imap_collider_pass))
     basic_class.mylogger_summary.yes('FAIL:                       '+str(failed_testcases_num+imsanity_fail+imap_collider_fail))
-            
-    # print time and statistics info to screen and log  
-    basic_class.mylogger_recordnf.info('\n=============================================')
-    basic_class.mylogger_recordnf.info('Test started at: '+str(test_starttime))
-    basic_class.mylogger_recordnf.info('Test endded  at: '+str(test_endtime))
-    basic_class.mylogger_recordnf.info('Total  time  is: {:.2f} minutes'.format(time_costs))
-    basic_class.mylogger_recordnf.info('=============================================') 
-    basic_class.mylogger_recordnf.info('Total number of Test Cases: '+str(total_testcases_num+imsanity_total+imap_collider_total))
-    basic_class.mylogger_recordnf.info('PASS:                       '+str(passed_testcases_num+imsanity_pass+imap_collider_pass))
-    basic_class.mylogger_recordnf.info('FAIL:                       '+str(failed_testcases_num+imsanity_fail+imap_collider_fail)+'\n')          
-    
+
+
     # send notify or not 
     if send_notify_flag == 1: # need send flag
         basic_class.mylogger_record.debug('Need send notify messages.')
@@ -757,6 +748,19 @@ def statistics():
         smtp_operations.send_notify(subject='MX auto tests result for {}'.format(owm_version),body=messagebody,attachment_name='test_result.txt',attachment_data=''.join(lines))
     else: # no need send notify
         basic_class.mylogger_record.debug('No need send notify messages.')    
+        
+                    
+    # print time and statistics info to screen and log  
+    basic_class.mylogger_recordnf.info('\n=============================================')
+    basic_class.mylogger_recordnf.info('Test started at: '+str(test_starttime))
+    basic_class.mylogger_recordnf.info('Test endded  at: '+str(test_endtime))
+    basic_class.mylogger_recordnf.info('Total  time  is: {:.2f} minutes'.format(time_costs))
+    basic_class.mylogger_recordnf.info('=============================================') 
+    basic_class.mylogger_recordnf.info('Total number of Test Cases: '+str(total_testcases_num+imsanity_total+imap_collider_total))
+    basic_class.mylogger_recordnf.info('PASS:                       '+str(passed_testcases_num+imsanity_pass+imap_collider_pass))
+    basic_class.mylogger_recordnf.info('FAIL:                       '+str(failed_testcases_num+imsanity_fail+imap_collider_fail)+'\n')          
+    
+
 
 
 def add_run_time():

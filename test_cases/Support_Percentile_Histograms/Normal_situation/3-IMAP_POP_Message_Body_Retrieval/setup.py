@@ -57,14 +57,14 @@ mx1_mss_host1_ip,mx1_mss_host2_ip,mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4
 global_variables.get_values('mx1_mss_host1_ip','mx1_mss_host2_ip','mx1_imapserv_host1_ip','mx1_imapserv_host1_imap4Port','mx1_mta_host1_ip','mx1_mta_host1_SMTPPort','mx1_popserv_host1_ip','mx1_popserv_host1_pop3Port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','default_domain')
 
 basic_class.mylogger_record.info('step1:set keys')
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c \'imconfcontrol -install -key \"/*/imapserv/enableMOVE=true\";imconfcontrol -install -key \"/*/common/reportParamsInterval=30\";imconfcontrol -install -key \"/*/common/hostInfo=blobtier=Cassandra:blobcluster:9162\";imconfcontrol -install -key \"/*/mta/subAddressAllowedIPs=127.0.0.1\n10.49.58.239\n10.37.2.214\n10.6.105.42\";imconfcontrol -install -key \"/site1-inbound-standardmta-direct/mta/subAddressAllowedIPs=127.0.0.1\n10.49.58.239\n10.37.2.214\n10.6.105.42\"\''.format(mx_account),0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'imconfcontrol -install -key \"/*/imapserv/enableMOVE=true\";imconfcontrol -install -key \"/*/common/reportParamsInterval=30\";imconfcontrol -install -key \"/*/common/hostInfo=blobtier=Cassandra:blobcluster:9162\";imconfcontrol -install -key \"/*/mta/subAddressAllowedIPs=127.0.0.1\n10.49.58.239\n10.37.2.214\n10.6.105.42\";imconfcontrol -install -key \"/site1-inbound-standardmta-direct/mta/subAddressAllowedIPs=127.0.0.1\n10.49.58.239\n10.37.2.214\n10.6.105.42\"\''.format(mx_account),root_account,root_passwd,0)
 basic_class.mylogger_record.info(' restart mss') 
-remote_operations.remote_operation(mx1_mss_host1_ip,root_account,root_passwd,'su - {0} -c "~/lib/imservctrl killStart mss mta"'.format(mx_account),0)
-remote_operations.remote_operation(mx1_mss_host2_ip,root_account,root_passwd,'su - {0} -c "~/lib/imservctrl killStart mss"'.format(mx_account),0)
+remote_operations.remote_operation(mx1_mss_host1_ip,'su - {0} -c "~/lib/imservctrl killStart mss mta"'.format(mx_account),root_account,root_passwd,0)
+remote_operations.remote_operation(mx1_mss_host2_ip,'su - {0} -c "~/lib/imservctrl killStart mss"'.format(mx_account),root_account,root_passwd,0)
 time.sleep(10)  
   
 basic_class.mylogger_record.info('step2:create 6 accounts')
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c \'for ((i=1;i<=6;i++));do account-create {1}$i@{2}   {1}$i default;done\''.format(mx_account,test_account_base,default_domain),1,'Mailbox Created Successfully',6)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'for ((i=1;i<=6;i++));do account-create {1}$i@{2}   {1}$i default;done\''.format(mx_account,test_account_base,default_domain),root_account,root_passwd,1,'Mailbox Created Successfully',6)
 
 basic_class.mylogger_record.info('step3:for each account, do below operations')
 outcome = []
@@ -96,36 +96,36 @@ for i in range(1,6):
     sender = 'testuser6 <testuser6@openwave.com>'
     
     basic_class.mylogger_record.info('step3-4-1:clear mta.log')
-    remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/mta.log"'.format(mx_account),0)
+    remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "> log/mta.log"'.format(mx_account),root_account,root_passwd,0)
     basic_class.mylogger_record.info('step3-4-2:deliver message')
     send_mail(mx1_mta_host1_ip,mx1_mta_host1_SMTPPort,sender,[test_account_base+str(i)])
-    send_result = remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "cat log/mta.log"'.format(mx_account),1,'delivered',1)
+    send_result = remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "cat log/mta.log"'.format(mx_account),root_account,root_passwd,1,'delivered',1)
     time.sleep(5)
     myimap.imap_select()
     
     basic_class.mylogger_record.info('step3-4-3:clear mta.log')
-    remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/mta.log"'.format(mx_account),0)
+    remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "> log/mta.log"'.format(mx_account),root_account,root_passwd,0)
     basic_class.mylogger_record.info('step3-4-4:deliver message')
     send_mail(mx1_mta_host1_ip,mx1_mta_host1_SMTPPort,sender,[test_account_base+str(i)])
-    send_result = remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "cat log/mta.log"'.format(mx_account),1,'delivered',1)
+    send_result = remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "cat log/mta.log"'.format(mx_account),root_account,root_passwd,1,'delivered',1)
     myimap.imap_select()
     time.sleep(2)
     
     basic_class.mylogger_record.info('step3-5:smtp send 2 mssagees to test,now INBOX:5 ,test:4')
     basic_class.mylogger_record.info('step3-5-1:clear mta.log')
-    remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/mta.log"'.format(mx_account),0)
+    remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "> log/mta.log"'.format(mx_account),root_account,root_passwd,0)
     basic_class.mylogger_record.info('step3-5-2:deliver message')
     send_mail(mx1_mta_host1_ip,mx1_mta_host1_SMTPPort,sender,[test_account_base+str(i)+'+test'])
-    send_result = remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "cat log/mta.log"'.format(mx_account),1,'delivered to test folder',1)
+    send_result = remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "cat log/mta.log"'.format(mx_account),root_account,root_passwd,1,'delivered to test folder',1)
     
     time.sleep(5)
     myimap.imap_select('test')
     
     basic_class.mylogger_record.info('step3-5-3:clear mta.log')
-    remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/mta.log"'.format(mx_account),0)
+    remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "> log/mta.log"'.format(mx_account),root_account,root_passwd,0)
     basic_class.mylogger_record.info('step3-5-4:deliver message')
     send_mail(mx1_mta_host1_ip,mx1_mta_host1_SMTPPort,sender,[test_account_base+str(i)+'+test'])
-    send_result = remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "cat log/mta.log"'.format(mx_account),1,'delivered to test folder',1)
+    send_result = remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "cat log/mta.log"'.format(mx_account),root_account,root_passwd,1,'delivered to test folder',1)
     time.sleep(5)
     myimap.imap_select('test')
     myimap.imap_logout()
@@ -153,11 +153,11 @@ for i in range(1,6):
     time.sleep(5)
     
     basic_class.mylogger_record.info('step3-10-1: switch blobstore from cassandra to scality s3 ') 
-    remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c \'imconfcontrol -install -key \"/*/common/hostInfo=blobtier=S3:scality.otosan.opwv:80\";imconfcontrol -install -key \"/*/common/blobStoreAmazonS3Key=blobtier otosankey\";imconfcontrol -install -key \"/*/common/blobStoreAmazonS3KeyId=blobtier otosan\"\''.format(mx_account),0)
+    remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'imconfcontrol -install -key \"/*/common/hostInfo=blobtier=S3:scality.otosan.opwv:80\";imconfcontrol -install -key \"/*/common/blobStoreAmazonS3Key=blobtier otosankey\";imconfcontrol -install -key \"/*/common/blobStoreAmazonS3KeyId=blobtier otosan\"\''.format(mx_account),root_account,root_passwd,0)
     time.sleep(2)
     basic_class.mylogger_record.info(' restart mss') 
-    remote_operations.remote_operation(mx1_mss_host1_ip,root_account,root_passwd,'su - {0} -c "~/lib/imservctrl killStart mss"'.format(mx_account),0)
-    remote_operations.remote_operation(mx1_mss_host2_ip,root_account,root_passwd,'su - {0} -c "~/lib/imservctrl killStart mss"'.format(mx_account),0)
+    remote_operations.remote_operation(mx1_mss_host1_ip,'su - {0} -c "~/lib/imservctrl killStart mss"'.format(mx_account),root_account,root_passwd,0)
+    remote_operations.remote_operation(mx1_mss_host2_ip,'su - {0} -c "~/lib/imservctrl killStart mss"'.format(mx_account),root_account,root_passwd,0)
    
     time.sleep(10)
     
@@ -195,10 +195,10 @@ for i in range(1,6):
         exit (1)   
                
     basic_class.mylogger_record.info('step3-13: switch blobstore from scality s3 to cassandra')  
-    remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c \'imconfcontrol -install -key \"/*/common/hostInfo=blobtier=Cassandra:blobcluster:9162\"\''.format(mx_account),0)
+    remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'imconfcontrol -install -key \"/*/common/hostInfo=blobtier=Cassandra:blobcluster:9162\"\''.format(mx_account),root_account,root_passwd,0)
     basic_class.mylogger_record.info(' restart mss') 
-    remote_operations.remote_operation(mx1_mss_host1_ip,root_account,root_passwd,'su - {0} -c "~/lib/imservctrl killStart mss"'.format(mx_account),0)
-    remote_operations.remote_operation(mx1_mss_host2_ip,root_account,root_passwd,'su - {0} -c "~/lib/imservctrl killStart mss"'.format(mx_account),0)
+    remote_operations.remote_operation(mx1_mss_host1_ip,'su - {0} -c "~/lib/imservctrl killStart mss"'.format(mx_account),root_account,root_passwd,0)
+    remote_operations.remote_operation(mx1_mss_host2_ip,'su - {0} -c "~/lib/imservctrl killStart mss"'.format(mx_account),root_account,root_passwd,0)
     time.sleep(10)
     
 print(outcome)    

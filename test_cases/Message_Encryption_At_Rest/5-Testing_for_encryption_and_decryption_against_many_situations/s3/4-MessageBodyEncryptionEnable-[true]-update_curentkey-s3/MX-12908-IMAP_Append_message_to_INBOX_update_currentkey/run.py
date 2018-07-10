@@ -64,8 +64,8 @@ basic_class.mylogger_record.info('new passphrase uid is: '+str(cuid))
 mxos_operations_MessageBodyEncryption.create_passphrase(mx1_mxos_host1_ip,mx1_mxos_host1_eureka_port,str(cuid),AES_mode1,ASE_key128)
 
 # restart mss to froce to use new encryption key
-remote_operations.remote_operation(mx1_mss_host1_ip,root_account,root_passwd,'su - {0} -c \'~/lib/imservctrl killStart mss\''.format(mx_account),0)
-remote_operations.remote_operation(mx1_mss_host2_ip,root_account,root_passwd,'su - {0} -c \'~/lib/imservctrl killStart mss\''.format(mx_account),0)
+remote_operations.remote_operation(mx1_mss_host1_ip,'su - {0} -c \'~/lib/imservctrl killStart mss\''.format(mx_account),root_account,root_passwd,0)
+remote_operations.remote_operation(mx1_mss_host2_ip,'su - {0} -c \'~/lib/imservctrl killStart mss\''.format(mx_account),root_account,root_passwd,0)
 
 time.sleep(30)
 

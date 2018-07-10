@@ -19,14 +19,14 @@ global_variables.get_values('mx1_mss_host1_ip','mx1_mss_host2_ip','mx1_imapserv_
 basic_class.mylogger_recordnf.title('PART2:POP Message bodyRetrieval--StatMSSRetrMsg')
 basic_class.mylogger_recordnf.title('StatMSSRetrMsg=200')  
 basic_class.mylogger_record.info('set keys:StatMSSRetrMsg=200')  
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c \'imconfcontrol -install -key \"/*/common/perfStatThresholds=StatMSSRetrMsg 200\"\''.format(mx_account),0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'imconfcontrol -install -key \"/*/common/perfStatThresholds=StatMSSRetrMsg 200\"\''.format(mx_account),root_account,root_passwd,0)
 time.sleep(50)
 
 
 #1#########################################################################################################################
 basic_class.mylogger_recordnf.title('running testcase:MX-11688:StatMSSRetrMsg_200_pop_retr_same_normal_message_for_5_times')
 basic_class.mylogger_record.info('clear current popserv.stat file')
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "> log/popserv.stat"'.format(mx_account),root_account,root_passwd,0)
 
 for i in range(1,6):
     mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
@@ -42,7 +42,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching popserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze popserv.stat file ...')
-popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),0)
+popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(popserv_stat_content,'[200]','StatMSSRetrMsg',25)
 basic_function.summary(result_lists,'MX-11688:StatMSSRetrMsg_200_pop_retr_same_normal_message_for_5_times')
 
@@ -50,7 +50,7 @@ basic_function.summary(result_lists,'MX-11688:StatMSSRetrMsg_200_pop_retr_same_n
 #2#########################################################################################################################
 basic_class.mylogger_recordnf.title('running testcase:MX-12685:StatMSSRetrMsg_200_pop_retr_different_normal_message_for_5_times')
 basic_class.mylogger_record.info('clear current popserv.stat file')
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "> log/popserv.stat"'.format(mx_account),root_account,root_passwd,0)
 
 for i in range(1,6):
     mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
@@ -66,7 +66,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching popserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze popserv.stat file ...')
-popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),0)
+popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(popserv_stat_content,'[200]','StatMSSRetrMsg',25)
 basic_function.summary(result_lists,'MX-12685:StatMSSRetrMsg_200_pop_retr_different_normal_message_for_5_times')
 
@@ -75,7 +75,7 @@ basic_function.summary(result_lists,'MX-12685:StatMSSRetrMsg_200_pop_retr_differ
 #3#########################################################################################################################
 basic_class.mylogger_recordnf.title('running testcase:MX-12449:StatMSSRetrMsg_200_pop_retr_same_abnormal_message_for_5_times')
 basic_class.mylogger_record.info('clear current popserv.stat file')
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "> log/popserv.stat"'.format(mx_account),root_account,root_passwd,0)
 
 for i in range(1,6):
     mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
@@ -91,7 +91,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching popserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze popserv.stat file ...')
-popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),0)
+popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(popserv_stat_content,'[200]','StatMSSRetrMsg',25)
 basic_function.summary(result_lists,'MX-12449:StatMSSRetrMsg_200_pop_retr_same_abnormal_message_for_5_times')
 
@@ -99,7 +99,7 @@ basic_function.summary(result_lists,'MX-12449:StatMSSRetrMsg_200_pop_retr_same_a
 #4#########################################################################################################################
 basic_class.mylogger_recordnf.title('running testcase:MX-12686:StatMSSRetrMsg_200_pop_retr_mixed_abnormal_message_for_5_times')
 basic_class.mylogger_record.info('clear current popserv.stat file')
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "> log/popserv.stat"'.format(mx_account),root_account,root_passwd,0)
 
 for i in range(1,6):
     mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
@@ -115,7 +115,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching popserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze popserv.stat file ...')
-popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),0)
+popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(popserv_stat_content,'[200]','StatMSSRetrMsg',25)
 basic_function.summary(result_lists,'MX-12686:StatMSSRetrMsg_200_pop_retr_mixed_abnormal_message_for_5_times')
 
@@ -124,7 +124,7 @@ basic_function.summary(result_lists,'MX-12686:StatMSSRetrMsg_200_pop_retr_mixed_
 #5#########################################################################################################################
 basic_class.mylogger_recordnf.title('running testcase:MX-12687:StatMSSRetrMsg_200_pop_top_same_normal_message_for_5_times')
 basic_class.mylogger_record.info('clear current popserv.stat file')
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "> log/popserv.stat"'.format(mx_account),root_account,root_passwd,0)
 
 for i in range(1,6):
     mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
@@ -140,7 +140,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching popserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze popserv.stat file ...')
-popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),0)
+popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(popserv_stat_content,'[200]','StatMSSRetrMsg',25)
 basic_function.summary(result_lists,'MX-12687:StatMSSRetrMsg_200_pop_top_same_normal_message_for_5_times')
 
@@ -149,7 +149,7 @@ basic_function.summary(result_lists,'MX-12687:StatMSSRetrMsg_200_pop_top_same_no
 #6#########################################################################################################################
 basic_class.mylogger_recordnf.title('running testcase:MX-12688:StatMSSRetrMsg_200_pop_top_different_normal_message_for_5_times')
 basic_class.mylogger_record.info('clear current popserv.stat file')
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "> log/popserv.stat"'.format(mx_account),root_account,root_passwd,0)
 
 for i in range(1,6):
     mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
@@ -165,7 +165,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching popserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze popserv.stat file ...')
-popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),0)
+popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(popserv_stat_content,'[200]','StatMSSRetrMsg',25)
 basic_function.summary(result_lists,'MX-12688:StatMSSRetrMsg_200_pop_top_different_normal_message_for_5_times')
 
@@ -174,7 +174,7 @@ basic_function.summary(result_lists,'MX-12688:StatMSSRetrMsg_200_pop_top_differe
 #7#########################################################################################################################
 basic_class.mylogger_recordnf.title('running testcase:MX-12689:StatMSSRetrMsg_200_pop_top_same_abnormal_message_for_5_times')
 basic_class.mylogger_record.info('clear current popserv.stat file')
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "> log/popserv.stat"'.format(mx_account),root_account,root_passwd,0)
 
 for i in range(1,6):
     mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
@@ -190,7 +190,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching popserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze popserv.stat file ...')
-popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),0)
+popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(popserv_stat_content,'[200]','StatMSSRetrMsg',25)
 basic_function.summary(result_lists,'MX-12689:StatMSSRetrMsg_200_pop_top_same_abnormal_message_for_5_times')
 
@@ -198,7 +198,7 @@ basic_function.summary(result_lists,'MX-12689:StatMSSRetrMsg_200_pop_top_same_ab
 #8#########################################################################################################################
 basic_class.mylogger_recordnf.title('running testcase:MX-12690:StatMSSRetrMsg_200_pop_top_mixed_abnormal_message_for_5_times')
 basic_class.mylogger_record.info('clear current popserv.stat file')
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "> log/popserv.stat"'.format(mx_account),root_account,root_passwd,0)
 
 for i in range(1,6):
     mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
@@ -214,7 +214,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching popserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze popserv.stat file ...')
-popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),0)
+popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(popserv_stat_content,'[200]','StatMSSRetrMsg',25)
 basic_function.summary(result_lists,'MX-12690:StatMSSRetrMsg_200_pop_top_mixed_abnormal_message_for_5_times')
 
@@ -222,7 +222,7 @@ basic_function.summary(result_lists,'MX-12690:StatMSSRetrMsg_200_pop_top_mixed_a
 
 basic_class.mylogger_recordnf.title('StatMSSRetrMsg=0')  
 basic_class.mylogger_record.info('set keys:StatMSSRetrMsg=0')
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c \'imconfcontrol -install -key \"/*/common/perfStatThresholds=StatMSSRetrMsg 0\"\''.format(mx_account),0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'imconfcontrol -install -key \"/*/common/perfStatThresholds=StatMSSRetrMsg 0\"\''.format(mx_account),root_account,root_passwd,0)
 time.sleep(50)
 
 
@@ -231,7 +231,7 @@ time.sleep(50)
 #9#########################################################################################################################
 basic_class.mylogger_recordnf.title('running testcase:MX-12691:StatMSSRetrMsg_0_pop_retr_same_normal_message_for_5_times')
 basic_class.mylogger_record.info('clear current popserv.stat file')
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "> log/popserv.stat"'.format(mx_account),root_account,root_passwd,0)
 
 for i in range(1,6):
     mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
@@ -247,7 +247,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching popserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze popserv.stat file ...')
-popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),0)
+popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(popserv_stat_content,'[0]','StatMSSRetrMsg',25)
 basic_function.summary(result_lists,'MX-12691:StatMSSRetrMsg_0_pop_retr_same_normal_message_for_5_times')
 
@@ -255,7 +255,7 @@ basic_function.summary(result_lists,'MX-12691:StatMSSRetrMsg_0_pop_retr_same_nor
 #10#########################################################################################################################
 basic_class.mylogger_recordnf.title('running testcase:MX-12692:StatMSSRetrMsg_0_pop_retr_different_normal_message_for_5_times')
 basic_class.mylogger_record.info('clear current popserv.stat file')
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "> log/popserv.stat"'.format(mx_account),root_account,root_passwd,0)
 
 for i in range(1,6):
     mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
@@ -271,7 +271,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching popserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze popserv.stat file ...')
-popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),0)
+popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(popserv_stat_content,'[0]','StatMSSRetrMsg',25)
 basic_function.summary(result_lists,'MX-12692:StatMSSRetrMsg_0_pop_retr_different_normal_message_for_5_times')
 
@@ -280,7 +280,7 @@ basic_function.summary(result_lists,'MX-12692:StatMSSRetrMsg_0_pop_retr_differen
 #11#########################################################################################################################
 basic_class.mylogger_recordnf.title('running testcase:MX-12693:StatMSSRetrMsg_0_pop_retr_same_abnormal_message_for_5_times')
 basic_class.mylogger_record.info('clear current popserv.stat file')
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "> log/popserv.stat"'.format(mx_account),root_account,root_passwd,0)
 
 for i in range(1,6):
     mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
@@ -296,7 +296,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching popserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze popserv.stat file ...')
-popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),0)
+popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(popserv_stat_content,'[0]','StatMSSRetrMsg',25)
 basic_function.summary(result_lists,'MX-12693:StatMSSRetrMsg_0_pop_retr_same_abnormal_message_for_5_times')
 
@@ -304,7 +304,7 @@ basic_function.summary(result_lists,'MX-12693:StatMSSRetrMsg_0_pop_retr_same_abn
 #12#########################################################################################################################
 basic_class.mylogger_recordnf.title('running testcase:MX-12694:StatMSSRetrMsg_0_pop_retr_mixed_abnormal_message_for_5_times')
 basic_class.mylogger_record.info('clear current popserv.stat file')
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "> log/popserv.stat"'.format(mx_account),root_account,root_passwd,0)
 
 for i in range(1,6):
     mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
@@ -320,7 +320,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching popserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze popserv.stat file ...')
-popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),0)
+popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(popserv_stat_content,'[0]','StatMSSRetrMsg',25)
 basic_function.summary(result_lists,'MX-12694:StatMSSRetrMsg_0_pop_retr_mixed_abnormal_message_for_5_times')
 
@@ -329,7 +329,7 @@ basic_function.summary(result_lists,'MX-12694:StatMSSRetrMsg_0_pop_retr_mixed_ab
 #13#########################################################################################################################
 basic_class.mylogger_recordnf.title('running testcase:MX-12695:StatMSSRetrMsg_0_pop_top_same_normal_message_for_5_times')
 basic_class.mylogger_record.info('clear current popserv.stat file')
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "> log/popserv.stat"'.format(mx_account),root_account,root_passwd,0)
 
 for i in range(1,6):
     mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
@@ -345,7 +345,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching popserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze popserv.stat file ...')
-popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),0)
+popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(popserv_stat_content,'[0]','StatMSSRetrMsg',25)
 basic_function.summary(result_lists,'MX-12695:StatMSSRetrMsg_0_pop_top_same_normal_message_for_5_times')
 
@@ -354,7 +354,7 @@ basic_function.summary(result_lists,'MX-12695:StatMSSRetrMsg_0_pop_top_same_norm
 #14#########################################################################################################################
 basic_class.mylogger_recordnf.title('running testcase:MX-12696:StatMSSRetrMsg_0_pop_top_different_normal_message_for_5_times')
 basic_class.mylogger_record.info('clear current popserv.stat file')
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "> log/popserv.stat"'.format(mx_account),root_account,root_passwd,0)
 
 for i in range(1,6):
     mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
@@ -370,7 +370,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching popserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze popserv.stat file ...')
-popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),0)
+popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(popserv_stat_content,'[0]','StatMSSRetrMsg',25)
 basic_function.summary(result_lists,'MX-12696:StatMSSRetrMsg_0_pop_top_different_normal_message_for_5_times')
 
@@ -379,7 +379,7 @@ basic_function.summary(result_lists,'MX-12696:StatMSSRetrMsg_0_pop_top_different
 #15#########################################################################################################################
 basic_class.mylogger_recordnf.title('running testcase:MX-12697:StatMSSRetrMsg_0_pop_top_same_abnormal_message_for_5_times')
 basic_class.mylogger_record.info('clear current popserv.stat file')
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "> log/popserv.stat"'.format(mx_account),root_account,root_passwd,0)
 
 for i in range(1,6):
     mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
@@ -395,7 +395,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching popserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze popserv.stat file ...')
-popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),0)
+popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(popserv_stat_content,'[0]','StatMSSRetrMsg',25)
 basic_function.summary(result_lists,'MX-12697:StatMSSRetrMsg_0_pop_top_same_abnormal_message_for_5_times')
 
@@ -403,7 +403,7 @@ basic_function.summary(result_lists,'MX-12697:StatMSSRetrMsg_0_pop_top_same_abno
 #16#########################################################################################################################
 basic_class.mylogger_recordnf.title('running testcase:MX-12698:StatMSSRetrMsg_0_pop_top_mixed_abnormal_message_for_5_times')
 basic_class.mylogger_record.info('clear current popserv.stat file')
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "> log/popserv.stat"'.format(mx_account),root_account,root_passwd,0)
 
 for i in range(1,6):
     mypop3 = pop_operations.POP_Ops(mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port)
@@ -419,6 +419,6 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching popserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze popserv.stat file ...')
-popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),0)
+popserv_stat_content = remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "cat log/popserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(popserv_stat_content,'[0]','StatMSSRetrMsg',25)
 basic_function.summary(result_lists,'MX-12698:StatMSSRetrMsg_0_pop_top_mixed_abnormal_message_for_5_times')

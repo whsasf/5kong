@@ -53,10 +53,10 @@ else:
 
 
 basic_class.mylogger_record.info('step4:disable encryption and restart services')
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c \'imconfcontrol -install -key \"/*/mxos/messageBodyEncryptionEnabled=true\";imconfcontrol -install -key \"/*/common/messageBodyEncryptionEnabled=false\";imconfcontrol -install -key \"/*/mss/compressionEnabled=false\";imconfcontrol -install -key \"/*/mxos/ldapEncryptionDn\";imconfcontrol -install -key \"/*/mxos/ldapReadEncryptionFilter\"\''.format(mx_account),0)
-remote_operations.remote_operation(mx1_mss_host1_ip,root_account,root_passwd,'su - {0} -c \'~/lib/imservctrl killStart mss\''.format(mx_account),0)
-remote_operations.remote_operation(mx1_mss_host2_ip,root_account,root_passwd,'su - {0} -c \'~/lib/imservctrl killStart mss mxos\''.format(mx_account),0)
-remote_operations.remote_operation(mx1_mxos_host2_ip,root_account,root_passwd,'su - {0} -c \'~/lib/imservctrl killStart mxos\''.format(mx_account),0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'imconfcontrol -install -key \"/*/mxos/messageBodyEncryptionEnabled=true\";imconfcontrol -install -key \"/*/common/messageBodyEncryptionEnabled=false\";imconfcontrol -install -key \"/*/mss/compressionEnabled=false\";imconfcontrol -install -key \"/*/mxos/ldapEncryptionDn\";imconfcontrol -install -key \"/*/mxos/ldapReadEncryptionFilter\"\''.format(mx_account),root_account,root_passwd,0)
+remote_operations.remote_operation(mx1_mss_host1_ip,'su - {0} -c \'~/lib/imservctrl killStart mss\''.format(mx_account),root_account,root_passwd,0)
+remote_operations.remote_operation(mx1_mss_host2_ip,'su - {0} -c \'~/lib/imservctrl killStart mss mxos\''.format(mx_account),root_account,root_passwd,0)
+remote_operations.remote_operation(mx1_mxos_host2_ip,'su - {0} -c \'~/lib/imservctrl killStart mxos\''.format(mx_account),root_account,root_passwd,0)
 basic_class.mylogger_record.info('Sleeping 200 seconds ...')
 time.sleep(200)
 

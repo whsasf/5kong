@@ -20,10 +20,10 @@ mx1_popserv_host1,mx1_popserv_host1_pop3Port,mx_account,mx1_host1_ip,root_accoun
 global_variables.get_values('mx1_popserv_host1','mx1_popserv_host1_pop3Port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','default_domain')
 
 
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c \'imconfcontrol -install -key \"/*/mta/requireAuthentication=true\";imconfcontrol -install -key \"/inbound-standardmta-direct/mta/requireAuthentication=true\";imconfcontrol -install -key \"/*/mta/allowCRAMMD5=true\";imconfcontrol -install -key \"/*/mta/allowTLS=true\"\''.format(mx_account),0)
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c \'~/lib/imservctrl killStart mta\''.format(mx_account),0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'imconfcontrol -install -key \"/*/mta/requireAuthentication=true\";imconfcontrol -install -key \"/inbound-standardmta-direct/mta/requireAuthentication=true\";imconfcontrol -install -key \"/*/mta/allowCRAMMD5=true\";imconfcontrol -install -key \"/*/mta/allowTLS=true\"\''.format(mx_account),root_account,root_passwd,0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'~/lib/imservctrl killStart mta\''.format(mx_account),root_account,root_passwd,0)
 
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c \'imdbcontrol sac xx1 openwave.com mailsmtpauth 1\''.format(mx_account),0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'imdbcontrol sac xx1 openwave.com mailsmtpauth 1\''.format(mx_account),root_account,root_passwd,0)
 
 time.sleep(5)
 
@@ -37,4 +37,4 @@ mysmtp.smtp_login('xx1','p')
 mysmtp.smtp_quit()
 
 
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c \'imconfcontrol -install -key \"/*/mta/requireAuthentication=false\";imconfcontrol -install -key \"/inbound-standardmta-direct/mta/requireAuthentication=false\";imconfcontrol -install -key \"/*/mta/allowCRAMMD5=false\";imconfcontrol -install -key \"/*/mta/allowTLS=false\"\''.format(mx_account),0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'imconfcontrol -install -key \"/*/mta/requireAuthentication=false\";imconfcontrol -install -key \"/inbound-standardmta-direct/mta/requireAuthentication=false\";imconfcontrol -install -key \"/*/mta/allowCRAMMD5=false\";imconfcontrol -install -key \"/*/mta/allowTLS=false\"\''.format(mx_account),root_account,root_passwd,0)

@@ -27,14 +27,14 @@ global_variables.get_values('mx1_popserv_host1','mx1_popserv_host1_pop3Port','mx
 
 
 basic_class.mylogger_record.info('step1:set keys')
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c \'imconfcontrol -install -key \"/*/common/perfStatThresholds=StatPopPassCommand 0\";imconfcontrol -install -key \"/*/common/reportParamsInterval=30\";imconfcontrol -install -key \"/*/common/badPasswordDelay=0\";imconfcontrol -install -key \"/*/common/maxBadPasswordDelay=0\"\''.format(mx_account),0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'imconfcontrol -install -key \"/*/common/perfStatThresholds=StatPopPassCommand 0\";imconfcontrol -install -key \"/*/common/reportParamsInterval=30\";imconfcontrol -install -key \"/*/common/badPasswordDelay=0\";imconfcontrol -install -key \"/*/common/maxBadPasswordDelay=0\"\''.format(mx_account),root_account,root_passwd,0)
 
 basic_class.mylogger_record.info('step2:create 10 accounts')
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c \'for ((i=1;i<=10;i++));do account-create {1}$i@{2}   {1}$i default;done\''.format(mx_account,test_account_base,default_domain),1,'Mailbox Created Successfully',10)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'for ((i=1;i<=10;i++));do account-create {1}$i@{2}   {1}$i default;done\''.format(mx_account,test_account_base,default_domain),root_account,root_passwd,1,'Mailbox Created Successfully',10)
 
 time.sleep(30) # to avoid last operations not expires
 basic_class.mylogger_record.info('step3: clear current popserv.stat file')
-remote_operations.remote_operation(mx1_host1_ip,root_account,root_passwd,'su - {0} -c "> log/popserv.stat"'.format(mx_account),0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "> log/popserv.stat"'.format(mx_account),root_account,root_passwd,0)
 
 
 
