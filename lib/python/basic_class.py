@@ -169,22 +169,22 @@ class Loggger_record_noformat():
         self.logger.info(infomessages)
 
     def warning(self,warnmessages='this is warn message'):
-        self.logger.warn('\033[1;31m'+warnmessages+'\033[0m')
+        self.logger.warn('\033[1;31m'+str(warnmessages)+'\033[0m')
 
     def error(self,errormessages='this is error message'):    
-        self.logger.error('\033[1;31m'+errormessages+'\033[0m')
+        self.logger.error('\033[1;31m'+str(errormessages)+'\033[0m')
 
     def critical(self,criticalmessages='this is critical message'):    
-        self.logger.critical('\033[1;31m'+criticalmessages+'\033[0m')
+        self.logger.critical('\033[1;31m'+str(criticalmessages)+'\033[0m')
         
     def title(self,titlemessages='this is title message'):
-        self.logger.info('\033[1;36m'+titlemessages+'\033[0m')        
+        self.logger.info('\033[1;36m'+str(titlemessages)+'\033[0m')        
 
     def yes(self,yesmessages='this is yes message'):
-        self.logger.info('\033[1;32m'+yesmessages+'\033[0m')
+        self.logger.info('\033[1;32m'+str(yesmessages)+'\033[0m')
 
     def no(self,nomessages='this is no message'):
-        self.logger.info('\033[1;31m'+nomessages+'\033[0m')          
+        self.logger.info('\033[1;31m'+str(nomessages)+'\033[0m')          
 if True:
     from basic_function import parse_chloglevel
     

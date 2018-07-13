@@ -43,10 +43,10 @@ for i in range(6,11):
 basic_class.mylogger_record.info('fetching imapserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('step2:check and analyze imapserv.stat file ...')
-imapserv_stat_content1 = remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatImapAuthCommand"'.format(mx_account),root_account,root_passwd,0)
+flag,imapserv_stat_content1 = remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatImapAuthCommand"'.format(mx_account),root_account,root_passwd,0)
 result_lists1 = stat_statistics.stat_statistic(imapserv_stat_content1,'[200]','StatImapAuthCommand',10)
 
-imapserv_stat_content2 = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatImapAuthCommand"'.format(mx_account),root_account,root_passwd,0)
+flag,imapserv_stat_content2 = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatImapAuthCommand"'.format(mx_account),root_account,root_passwd,0)
 result_lists2 = stat_statistics.stat_statistic(imapserv_stat_content2,'[200]','StatImapAuthCommand',5)
 
 result_lists = result_lists1 + result_lists2

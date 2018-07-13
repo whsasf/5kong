@@ -1,6 +1,25 @@
 # -*- coding: utf-8 -*- 
 # this module contains some functions that will used commenly
 
+#function lists
+"""
+def welcome():
+def print_mx_version():
+def construct_mx_topology(root_user = '',root_pass = '',mx_user = ''):
+def variables_prepare(initialpath):
+def parse_args():
+def determine_email_account_with_domain_or_not():
+def parse_chloglevel():
+def parse_testcaselocation(testcaselocation):
+def decide_import_or_reload(case_name,count_type,tmp_type):
+def traverse_judge(casename,currentlists):
+def traverse(Path):
+def execute(Paths,initialpath):
+def create_log_folders():
+def summary(result_lists,tc_name = ''):
+def statistics():
+def add_run_time():
+"""
 
 def welcome():
     """the welcome function used to print some welcome header when using this Wukong test suits
@@ -166,15 +185,15 @@ def construct_mx_topology(root_user = '',root_pass = '',mx_user = ''):
                 # check ssh_non_password_flag
                 ssh_authtype_flag = remote_operations.check_host_sshnonpassword_flag(value,root_account,root_passwd)
                 if ssh_authtype_flag == 1:   # auth with pubkey success
-                    host_sshnonpass_list.append(key+'_sshnonpassauth_flag = '+str(ssh_authtype_flag))
-                    host_sshnonpass_list.append(value+'_sshnonpassauth_flag = '+str(ssh_authtype_flag))
+                    host_sshnonpass_list.append('sshnonpassauth_flag_'+key+' = '+str(ssh_authtype_flag))
+                    host_sshnonpass_list.append('sshnonpassauth_flag_'+value+' = '+str(ssh_authtype_flag))
                 elif ssh_authtype_flag == 0: # auth with password success
-                    host_sshnonpass_list.append(key+'_sshnonpassauth_flag = '+str(ssh_authtype_flag))
-                    host_sshnonpass_list.append(value+'_sshnonpassauth_flag = '+str(ssh_authtype_flag))
+                    host_sshnonpass_list.append('sshnonpassauth_flag_'+key+' = '+str(ssh_authtype_flag))
+                    host_sshnonpass_list.append('sshnonpassauth_flag_'+value+' = '+str(ssh_authtype_flag))
                 else:                        # buth auth types failed
                     basic_class.mylogger_record.error('Establishing ssh connection with or without password failed, please check manually !')
-                    host_sshnonpass_list.append(key+'_sshnonpassauth_flag = '+str(-1))
-                    host_sshnonpass_list.append(value+'_sshnonpassauth_flag = '+str(-1))
+                    host_sshnonpass_list.append('sshnonpassauth_flag_'+key+' = '+str(-1))
+                    host_sshnonpass_list.append('sshnonpassauth_flag_'+value+' = '+str(-1))
                     exit(1)                           
                 i += 1
                         
@@ -303,7 +322,6 @@ def parse_args():
     else:                      # send_notify is disabled
         send_notify_flag = 0
         global_variables.set_value('send_notify_flag',send_notify_flag)        
-
 
 
 def parse_chloglevel():

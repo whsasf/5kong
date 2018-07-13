@@ -42,7 +42,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching imapserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze imapserv.stat file ...')
-imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
+flag,imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(imapserv_stat_content,'[200]','StatMSSRetrMsg',75)
 basic_function.summary(result_lists,'MX-12745:statMSSRetrMsg_200_imap_fetch_INBOX_1:5_body')
 
@@ -64,7 +64,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching imapserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze imapserv.stat file ...')
-imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
+flag,imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(imapserv_stat_content,'[200]','StatMSSRetrMsg',60)
 basic_function.summary(result_lists,'MX-12746:statMSSRetrMsg_200_imap_fetch_INBOX_1,3,4,5_body')
 
@@ -86,7 +86,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching imapserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze imapserv.stat file ...')
-imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
+flag,imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(imapserv_stat_content,'[200]','StatMSSRetrMsg',5)
 basic_function.summary(result_lists,'MX-12747:statMSSRetrMsg_200_imap_fetch_INBOX_2_body')
 
@@ -117,7 +117,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching imapserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze imapserv.stat file ...')
-imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
+flag,imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(imapserv_stat_content,'[200]','StatMSSRetrMsg',105)
 basic_function.summary(result_lists,'MX-12748:statMSSRetrMsg_200_imap_fetch_INBOX_1:*_body')
 
@@ -149,7 +149,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching imapserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze imapserv.stat file ...')
-imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
+flag,imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(imapserv_stat_content,'[200]','StatMSSRetrMsg',15)
 basic_function.summary(result_lists,'MX-12749:statMSSRetrMsg_200_imap_fetch_INBOX_7_body')
 
@@ -172,7 +172,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching imapserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze imapserv.stat file ...')
-imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
+flag,imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(imapserv_stat_content,'[200]','StatMSSRetrMsg',75)
 basic_function.summary(result_lists,'MX-12750:statMSSRetrMsg_200_imap_fetch_test_1:5_body')
 
@@ -195,7 +195,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching imapserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze imapserv.stat file ...')
-imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
+flag,imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(imapserv_stat_content,'[200]','StatMSSRetrMsg',60)
 basic_function.summary(result_lists,'MX-12751:statMSSRetrMsg_200_imap_fetch_test_1,3,4,6_body')
 
@@ -218,7 +218,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching imapserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze imapserv.stat file ...')
-imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
+flag,imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(imapserv_stat_content,'[200]','StatMSSRetrMsg',5)
 basic_function.summary(result_lists,'MX-12752:statMSSRetrMsg_200_imap_fetch_test_2_body')
 
@@ -250,7 +250,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching imapserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze imapserv.stat file ...')
-imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
+flag,imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(imapserv_stat_content,'[200]','StatMSSRetrMsg',120)
 basic_function.summary(result_lists,'MX-12753:statMSSRetrMsg_200_imap_fetch_test_1:*_body')
 
@@ -282,7 +282,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching imapserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze imapserv.stat file ...')
-imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
+flag,imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(imapserv_stat_content,'[200]','StatMSSRetrMsg',15)
 basic_function.summary(result_lists,'MX-12754:statMSSRetrMsg_200_imap_fetch_test_7_body')
 
@@ -311,7 +311,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching imapserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze imapserv.stat file ...')
-imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
+flag,imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(imapserv_stat_content,'[0]','StatMSSRetrMsg',75)
 basic_function.summary(result_lists,'MX-12755:statMSSRetrMsg_0_imap_fetch_INBOX_1:5_body')
 
@@ -333,7 +333,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching imapserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze imapserv.stat file ...')
-imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
+flag,imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(imapserv_stat_content,'[0]','StatMSSRetrMsg',60)
 basic_function.summary(result_lists,'MX-12756:statMSSRetrMsg_0_imap_fetch_INBOX_1,3,4,5_body')
 
@@ -355,7 +355,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching imapserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze imapserv.stat file ...')
-imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
+flag,imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(imapserv_stat_content,'[0]','StatMSSRetrMsg',5)
 basic_function.summary(result_lists,'MX-12757:statMSSRetrMsg_0_imap_fetch_INBOX_2_body')
 
@@ -386,7 +386,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching imapserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze imapserv.stat file ...')
-imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
+flag,imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(imapserv_stat_content,'[0]','StatMSSRetrMsg',105)
 basic_function.summary(result_lists,'MX-12758:statMSSRetrMsg_0_imap_fetch_INBOX_1:*_body')
 
@@ -418,7 +418,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching imapserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze imapserv.stat file ...')
-imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
+flag,imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(imapserv_stat_content,'[0]','StatMSSRetrMsg',15)
 basic_function.summary(result_lists,'MX-12759:statMSSRetrMsg_0_imap_fetch_INBOX_7_body')
 
@@ -441,7 +441,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching imapserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze imapserv.stat file ...')
-imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
+flag,imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(imapserv_stat_content,'[0]','StatMSSRetrMsg',75)
 basic_function.summary(result_lists,'MX-12760:statMSSRetrMsg_0_imap_fetch_test_1:5_body')
 
@@ -464,7 +464,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching imapserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze imapserv.stat file ...')
-imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
+flag,imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(imapserv_stat_content,'[0]','StatMSSRetrMsg',60)
 basic_function.summary(result_lists,'MX-12761:statMSSRetrMsg_0_imap_fetch_test_1,3,4,6_body')
 
@@ -487,7 +487,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching imapserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze imapserv.stat file ...')
-imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
+flag,imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(imapserv_stat_content,'[0]','StatMSSRetrMsg',5)
 basic_function.summary(result_lists,'MX-12762:statMSSRetrMsg_0_imap_fetch_test_2_body')
 
@@ -519,7 +519,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching imapserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze imapserv.stat file ...')
-imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
+flag,imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(imapserv_stat_content,'[0]','StatMSSRetrMsg',120)
 basic_function.summary(result_lists,'MX-12763:statMSSRetrMsg_0_imap_fetch_test_1:*_body')
 
@@ -551,7 +551,7 @@ for i in range(1,6):
 basic_class.mylogger_record.info('fetching imapserv.stat ...')
 time.sleep (50)
 basic_class.mylogger_record.info('check and analyze imapserv.stat file ...')
-imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
+flag,imapserv_stat_content = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/imapserv.stat|grep StatMSSRetrMsg"'.format(mx_account),root_account,root_passwd,0)
 result_lists = stat_statistics.stat_statistic(imapserv_stat_content,'[0]','StatMSSRetrMsg',15)
 basic_function.summary(result_lists,'MX-12764:statMSSRetrMsg_0_imap_fetch_test_7_body')
 

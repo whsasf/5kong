@@ -93,7 +93,7 @@ def remote_operation(sshhost,cmds,\
     
     sshhost = sshhost
     
-    ssh_authtype_flag = global_variables.get_value(sshhost+'_sshnonpassauth_flag')
+    ssh_authtype_flag = global_variables.get_value('sshnonpassauth_flag_'+sshhost)
     if ssh_authtype_flag == str(1):
         basic_class.mylogger_record.debug('eatablishing ssh connection with pubkey to {} ...'.format(sshhost))
         return(remote_operation_with_sshpubkeyauth(sshhost,cmds,username,passwd,confirmflag,confirmobj,confirmobjcount,sshport,keyfile,outlog,errorlog,paramikologenable))
@@ -157,7 +157,9 @@ def remote_operation_with_sshpubkeyauth(sshhost,cmds,\
     
     if paramikologenable == 1:
         paramiko.util.log_to_file('ssh.log') #set up paramiko logging,disbale by default
-            
+    
+    execute_flag = '' # execute flag:1 mesans success,0 means failed,-1 mesans blocked
+           
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     
@@ -187,18 +189,22 @@ def remote_operation_with_sshpubkeyauth(sshhost,cmds,\
             basic_class.mylogger_record.debug('confirmobj_count='+str(sshout.count(confirmobj)))
             if sshout.count(confirmobj) == confirmobjcount:
                 basic_class.mylogger_record.debug('ssh success and target match')
+                execute_flag = 1
                 #print('\033[1;32mOperation success\033[0m')
             else:
                 basic_class.mylogger_record.error('ssh success but target mismatch') 
+                execute_flag = 0
                 #print ('\033[1;31mOperation failed\033[0m')
         else:
             basic_class.mylogger_record.debug('ssh success and no need check target') 
+            execute_flag = 1
     else:
         sshout=str(okout,'utf-8')+str(errout,'utf-8')
         basic_class.mylogger_record.error('ssh operation fail')
+        execute_flag = -1
     basic_class.mylogger_record.debug("sshout=")
     basic_class.mylogger_recordnf.debug(sshout)
-    return sshout   #in case of use 
+    return execute_flag,sshout   #in case of use 
    
     ssh.close()
     
@@ -247,7 +253,8 @@ def remote_operation_with_sshpasswordauth(sshhost,cmds,\
     
     if paramikologenable == 1:
         paramiko.util.log_to_file('ssh.log') #set up paramiko logging,disbale by default
-            
+    
+    execute_flag = ''  # execute flag:1 mesans success,0 means failed,-1 mesans blocked      
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
@@ -271,17 +278,21 @@ def remote_operation_with_sshpasswordauth(sshhost,cmds,\
             basic_class.mylogger_record.debug('confirmobj_count='+str(sshout.count(confirmobj)))
             if sshout.count(confirmobj) == confirmobjcount:
                 basic_class.mylogger_record.debug('ssh success and target match')
+                execute_flag = 1
                 #print('\033[1;32mOperation success\033[0m')
             else:
                 basic_class.mylogger_record.error('ssh success but target mismatch') 
+                execute_flag = 0
                 #print ('\033[1;31mOperation failed\033[0m')
         else:
             basic_class.mylogger_record.debug('ssh success and no need check target') 
+            execute_flag = 1
     else:
         sshout=str(okout,'utf-8')+str(errout,'utf-8')
         basic_class.mylogger_record.error('ssh operation fail')
+        execute_flag = -1
     basic_class.mylogger_record.debug("sshout=")
     basic_class.mylogger_recordnf.debug(sshout)
-    return sshout   #in case of use 
+    return execute_flag,sshout   #in case of use 
    
     ssh.close()

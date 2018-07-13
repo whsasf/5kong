@@ -110,7 +110,7 @@ for i in range(1,6):
     remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "> log/mta.log"'.format(mx_account),root_account,root_passwd,0)
     basic_class.mylogger_record.info('step3-4-2:deliver message')
     send_mail(mx2_mta_host1_ip,mx2_mta_host1_SMTPPort,sender,[test_account_base+str(i)])
-    send_result = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/mta.log"'.format(mx_account),root_account,root_passwd,1,'delivered',1)
+    flag,send_result = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/mta.log"'.format(mx_account),root_account,root_passwd,1,'delivered',1)
     time.sleep(5)
     myimap.imap_select()
     
@@ -118,7 +118,7 @@ for i in range(1,6):
     remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "> log/mta.log"'.format(mx_account),root_account,root_passwd,0)
     basic_class.mylogger_record.info('step3-4-4:deliver message')
     send_mail(mx2_mta_host1_ip,mx2_mta_host1_SMTPPort,sender,[test_account_base+str(i)])
-    send_result = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/mta.log"'.format(mx_account),root_account,root_passwd,1,'delivered',1)
+    flag,send_result = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/mta.log"'.format(mx_account),root_account,root_passwd,1,'delivered',1)
     myimap.imap_select()
     time.sleep(2)
     
@@ -127,7 +127,7 @@ for i in range(1,6):
     remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "> log/mta.log"'.format(mx_account),root_account,root_passwd,0)
     basic_class.mylogger_record.info('step3-5-2:deliver message')
     send_mail(mx2_mta_host1_ip,mx2_mta_host1_SMTPPort,sender,[test_account_base+str(i)+'+test'])
-    send_result = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/mta.log"'.format(mx_account),root_account,root_passwd,1,'delivered to test folder',1)
+    flag,send_result = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/mta.log"'.format(mx_account),root_account,root_passwd,1,'delivered to test folder',1)
     
     time.sleep(5)
     myimap.imap_select('test')
@@ -136,7 +136,7 @@ for i in range(1,6):
     remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "> log/mta.log"'.format(mx_account),root_account,root_passwd,0)
     basic_class.mylogger_record.info('step3-5-4:deliver message')
     send_mail(mx2_mta_host1_ip,mx2_mta_host1_SMTPPort,sender,[test_account_base+str(i)+'+test'])
-    send_result = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/mta.log"'.format(mx_account),root_account,root_passwd,1,'delivered to test folder',1)
+    flag,send_result = remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c "cat log/mta.log"'.format(mx_account),root_account,root_passwd,1,'delivered to test folder',1)
     time.sleep(5)
     myimap.imap_select('test')
     myimap.imap_logout()
