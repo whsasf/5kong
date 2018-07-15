@@ -99,7 +99,7 @@ def remote_operation(sshhost,cmds,\
         return(remote_operation_with_sshpubkeyauth(sshhost,cmds,username,passwd,confirmflag,confirmobj,confirmobjcount,sshport,keyfile,outlog,errorlog,paramikologenable))
     elif ssh_authtype_flag == str(0):
         basic_class.mylogger_record.debug('eatablishing ssh connection with password to {} ...'.format(sshhost))
-        return(remote_operation_with_sshpasswordauth(sshhost,cmds,usernamempasswd,confirmflag,confirmobj,confirmobjcount,sshport,keyfile,outlog,errorlog,paramikologenable))
+        return(remote_operation_with_sshpasswordauth(sshhost,cmds,username,passwd,confirmflag,confirmobj,confirmobjcount,sshport,keyfile,outlog,errorlog,paramikologenable))
     else:
         basic_class.mylogger_record.error('SSH establish failed,please check manually!!')
         exit(1)

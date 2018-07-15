@@ -141,7 +141,7 @@ def construct_mx_topology(root_user = '',root_pass = '',mx_user = ''):
                     basic_class.mylogger_record.debug('Establishing ssh connection with pubkey failed! Will continue try with password ...')
                     basic_class.mylogger_record.debug('Establishing ssh connection with password ...')
                     try:
-                        ssh_try.connect(hostname = sshhost, port = sshport, username = root_account, password = root_passwd)
+                        ssh_try.connect(hostname = seed_host, port = sshport, username = root_account, password = root_passwd)
                     except:
                         basic_class.mylogger_record.warning('Establishing ssh connection with password failed! Please check manually! ')               
                         exit (1)
@@ -152,7 +152,7 @@ def construct_mx_topology(root_user = '',root_pass = '',mx_user = ''):
             else:                                # keyfile not exist, will try to ssh with password
                 basic_class.mylogger_record.debug('Establishing ssh connection with password ...')
                 try:
-                    ssh_try.connect(hostname = sshhost, port = sshport, username = root_account, password = root_passwd)
+                    ssh_try.connect(hostname = seed_host, port = sshport, username = root_account, password = root_passwd)
                 except:
                     basic_class.mylogger_record.warning('Establishing ssh connection with password failed! Please check manually! ')               
                     exit (1)
