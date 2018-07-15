@@ -264,6 +264,15 @@ def construct_mx_topology(root_user = '',root_pass = '',mx_user = ''):
             meta_ip = tmp_ip[0].split()[0]
             cass_dict['mx'+str(xyz+1)+'_cassmeta_hosts'] = str(metadata)
             cass_dict['mx'+str(xyz+1)+'_cassmeta_ip'] = str(meta_ip)
+            
+            # get default domain
+            tmp_cmd9 = "imconfget -fullpath '/*/common/domainName'"
+            stdin,stdout9,stderr=ssh_try.exec_command('su - {0} -c "{1}"'.format(mx_account,tmp_cmd9)) 
+            default_domain = str(stdout9.read(),'utf-8').split('\n')[0:-1]
+            default_domain = default_domain[0].split()[0]
+            basic_class.mylogger_record.debug('default_domain = '+str(default_domain))
+            host_dict['mx'+str(xyz+1)+'_default_domain'] = str(default_domain)
+                        
             ssh_try.close()
         
         user_var_file = open('etc/auto-user.vars', "w")
