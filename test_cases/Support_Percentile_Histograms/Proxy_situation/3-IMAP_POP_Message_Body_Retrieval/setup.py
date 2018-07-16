@@ -57,8 +57,8 @@ import sys
 
 basic_class.mylogger_record.debug('Preparing... get some variables needed for tests')                                                               
                                                                                                                                                     
-mx2_imapserv_host1_ip,mx2_mss_host1_ip,mx2_mta_host1_SMTPPort,mx2_mta_host1_ip,mx2_host1_ip,mx2_popserv_host1_pop3Port,mx2_popserv_host1,mx2_imapserv_host1_imap4Port,mx2_imapserv_host1,mx1_mss_host1_ip,mx1_mss_host2_ip,mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port,mx1_mta_host1_ip,mx1_mta_host1_SMTPPort,mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,default_domain = \
-global_variables.get_values('mx2_imapserv_host1_ip','mx2_mss_host1_ip','mx2_mta_host1_SMTPPort','mx2_mta_host1_ip','mx2_host1_ip','mx2_popserv_host1_pop3Port','mx2_popserv_host1','mx2_imapserv_host1_imap4Port','mx2_imapserv_host1','mx1_mss_host1_ip','mx1_mss_host2_ip','mx1_imapserv_host1_ip','mx1_imapserv_host1_imap4Port','mx1_mta_host1_ip','mx1_mta_host1_SMTPPort','mx1_popserv_host1_ip','mx1_popserv_host1_pop3Port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','default_domain')
+mx2_imapserv_host1_ip,mx2_mss_host1_ip,mx2_mta_host1_SMTPPort,mx2_mta_host1_ip,mx2_host1_ip,mx2_popserv_host1_pop3Port,mx2_popserv_host1,mx2_imapserv_host1_imap4Port,mx2_imapserv_host1,mx1_mss_host1_ip,mx1_mss_host2_ip,mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port,mx1_mta_host1_ip,mx1_mta_host1_SMTPPort,mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,mx1_default_domain,mx2_default_domain = \
+global_variables.get_values('mx2_imapserv_host1_ip','mx2_mss_host1_ip','mx2_mta_host1_SMTPPort','mx2_mta_host1_ip','mx2_host1_ip','mx2_popserv_host1_pop3Port','mx2_popserv_host1','mx2_imapserv_host1_imap4Port','mx2_imapserv_host1','mx1_mss_host1_ip','mx1_mss_host2_ip','mx1_imapserv_host1_ip','mx1_imapserv_host1_imap4Port','mx1_mta_host1_ip','mx1_mta_host1_SMTPPort','mx1_popserv_host1_ip','mx1_popserv_host1_pop3Port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','mx1_default_domain','mx2_default_domain')
 
 
 basic_class.mylogger_record.info('step1:set keys on 2 envs')
@@ -73,9 +73,9 @@ remote_operations.remote_operation(mx2_mss_host1_ip,'su - {0} -c "~/lib/imservct
 time.sleep(10)  
 
 basic_class.mylogger_record.info('step2:create 6 accounts on both envs,and enable proxy status for users on proxy server')
-remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'for ((i=1;i<=6;i++));do account-create {1}$i@{2}   {1}$i default;done\''.format(mx_account,test_account_base,default_domain),root_account,root_passwd,1,'Mailbox Created Successfully',6)
-remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c \'for ((i=1;i<=6;i++));do account-create {1}$i@{2}   {1}$i default;done\''.format(mx_account,test_account_base,default_domain),root_account,root_passwd,1,'Mailbox Created Successfully',6)
-remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'for ((i=1;i<=6;i++));do imdbcontrol sac {1}$i {2} mailboxstatus P;done\''.format(mx_account,test_account_base,default_domain),root_account,root_passwd,0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'for ((i=1;i<=6;i++));do account-create {1}$i@{2}   {1}$i default;done\''.format(mx_account,test_account_base,mx1_default_domain),root_account,root_passwd,1,'Mailbox Created Successfully',6)
+remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c \'for ((i=1;i<=6;i++));do account-create {1}$i@{2}   {1}$i default;done\''.format(mx_account,test_account_base,mx2_default_domain),root_account,root_passwd,1,'Mailbox Created Successfully',6)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'for ((i=1;i<=6;i++));do imdbcontrol sac {1}$i {2} mailboxstatus P;done\''.format(mx_account,test_account_base,mx1_default_domain),root_account,root_passwd,0)
 
 basic_class.mylogger_record.info('step3:for each account, do below operations')
 outcome = []

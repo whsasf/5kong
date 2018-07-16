@@ -17,8 +17,8 @@ import stat_statistics
 #step 1
 basic_class.mylogger_record.info('step1:imap auth_crammd5:10 account with correct passwd, the other 5 use wrong pssswd')
 
-mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,default_domain = \
-global_variables.get_values('mx1_imapserv_host1_ip','mx1_imapserv_host1_imap4Port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','default_domain')
+mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,mx1_default_domain = \
+global_variables.get_values('mx1_imapserv_host1_ip','mx1_imapserv_host1_imap4Port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','mx1_default_domain')
 
 
 for i in range(1,6): 

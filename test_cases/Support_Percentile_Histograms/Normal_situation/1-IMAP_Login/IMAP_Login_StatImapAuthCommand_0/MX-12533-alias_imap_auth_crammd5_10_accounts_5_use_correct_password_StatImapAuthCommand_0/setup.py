@@ -26,21 +26,21 @@ import time
 #basic_class.mylogger_record.info('Runing setup testcase:mx-12533-alias_auth_crammd5_10_accounts_half_pass_half_fail')
 basic_class.mylogger_record.debug('Preparing... get some variables needed for tests')
 
-mx1_imapserv_host1,mx1_imapserv_host1_imap4Port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,default_domain = \
-global_variables.get_values('mx1_imapserv_host1','mx1_imapserv_host1_imap4Port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','default_domain')
+mx1_imapserv_host1,mx1_imapserv_host1_imap4Port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,mx1_default_domain = \
+global_variables.get_values('mx1_imapserv_host1','mx1_imapserv_host1_imap4Port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','mx1_default_domain')
 
 
 basic_class.mylogger_record.info('step1:set keys')
 remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'imconfcontrol -install -key \"/*/common/perfStatThresholds=StatImapAuthCommand 0\";imconfcontrol -install -key \"/*/common/reportParamsInterval=30\";imconfcontrol -install -key \"/*/common/badPasswordDelay=0\";imconfcontrol -install -key \"/*/common/maxBadPasswordDelay=0\";imconfcontrol -install -key \"/*/common/loginAliases=true\";imconfcontrol -install -key \"/*/imapserv/allowCRAMMD5=true\";imconfcontrol -install -key \"/*/mxos/defaultPasswordStoreType=sha512\"\''.format(mx_account),root_account,root_passwd,0)
 
 basic_class.mylogger_record.info('step2:create 10 accounts')
-remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'for ((i=1;i<=10;i++));do account-create {1}$i@{2}   {1}$i default;done\''.format(mx_account,test_account_base,default_domain),root_account,root_passwd,1,'Mailbox Created Successfully',10)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'for ((i=1;i<=10;i++));do account-create {1}$i@{2}   {1}$i default;done\''.format(mx_account,test_account_base,mx1_default_domain),root_account,root_passwd,1,'Mailbox Created Successfully',10)
 
 basic_class.mylogger_record.info('step3:create alias names for 20 accounts')
-remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'for ((i=1;i<=10;i++));do imdbcontrol CreateAlias {1}$i u$i {2};done\''.format(mx_account,test_account_base,default_domain),root_account,root_passwd,0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'for ((i=1;i<=10;i++));do imdbcontrol CreateAlias {1}$i u$i {2};done\''.format(mx_account,test_account_base,mx1_default_domain),root_account,root_passwd,0)
 
 basic_class.mylogger_record.info('step4: set hmac for each account')
-remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'for ((i=1;i<=10;i++));do hmac_value=$(imgenhmac {1}$i);echo $hmac_value; imdbcontrol sac {1}$i {2} mailpasswordhmac $hmac_value;done\''.format(mx_account,test_account_base,default_domain),root_account,root_passwd,0)
+remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'for ((i=1;i<=10;i++));do hmac_value=$(imgenhmac {1}$i);echo $hmac_value; imdbcontrol sac {1}$i {2} mailpasswordhmac $hmac_value;done\''.format(mx_account,test_account_base,mx1_default_domain),root_account,root_passwd,0)
 
 time.sleep(30) # to avoid last operations not expires
 basic_class.mylogger_record.info('step5: clear current imapserv.stat file')
