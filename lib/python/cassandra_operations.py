@@ -9,6 +9,9 @@ def cassandra_cqlsh_fetch_messagebody(blobip,blobport,messageid,decryption_flag)
     import basic_class
     import encryption_decryption_related    
     
+    if not blobport:
+        blobport = global_variables.get_values('default_cassblob_port')[0]
+        
     iv = global_variables.get_values('AES_iv')  #AES_iv
     # get passphrase value
     if decryption_flag != 0:
@@ -23,6 +26,8 @@ def cassandra_cqlsh_fetch_messagebody(blobip,blobport,messageid,decryption_flag)
     else:
         pass   
     try:    
+        print('blobip='+str(blobip))
+        print('blobport='+str(blobport))
         cluster = Cluster([blobip],port=blobport,connect_timeout=30)
     except:
         basic_class.mylogger_record.warning('Connect to cassamblob host failed')

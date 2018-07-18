@@ -87,7 +87,6 @@ def fast_send_mail (mtahost,mtaport,fromuser,tousers,\
     --%s--
     """.replace('\n    ','\n') %(attachment_name, attachment_name, attdata, marker)
     message = part1 + part2 + part3
-
     try:
        smtpObj = smtplib.SMTP(smtphost,smtpport)
        #print ("recievers="+str(recievers))

@@ -28,8 +28,8 @@ import time
 #basic_class.mylogger_record.info('Runing setup testcase:mx-12539-apop_alias_auth_10_accounts_half_pass_half_fail')
 basic_class.mylogger_record.debug('Preparing... get some variables needed for tests')
 
-mx1_mxos_host1_ip,mx1_mxos_host2_ip,mx1_popserv_host1,mx1_popserv_host1_pop3Port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,mx1_default_domain = \
-global_variables.get_values('mx1_mxos_host1_ip','mx1_mxos_host2_ip','mx1_popserv_host1','mx1_popserv_host1_pop3Port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','mx1_default_domain')
+mx1_mxos_host1_ip,mx1_mxos_host1_ip,mx1_popserv_host1,mx1_popserv_host1_pop3Port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,mx1_default_domain = \
+global_variables.get_values('mx1_mxos_host1_ip','mx1_mxos_host1_ip','mx1_popserv_host1','mx1_popserv_host1_pop3Port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','mx1_default_domain')
 
 
 basic_class.mylogger_record.info('step1:set keys')
@@ -41,7 +41,7 @@ remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'for ((i=1;i<=10;i
 basic_class.mylogger_record.info('step3:create alias account for 20 accounts')
 remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'for ((i=1;i<=10;i++));do imdbcontrol CreateAlias {1}$i u$i {2};done\''.format(mx_account,test_account_base,mx1_default_domain),root_account,root_passwd,0)
 
-remote_operations.remote_operation(mx1_mxos_host2_ip,'su - {0} -c "~/lib/imservctrl killStart mxos"'.format(mx_account),root_account,root_passwd,0)
+remote_operations.remote_operation(mx1_mxos_host1_ip,'su - {0} -c "~/lib/imservctrl killStart mxos"'.format(mx_account),root_account,root_passwd,0)
 remote_operations.remote_operation(mx1_mxos_host1_ip,'su - {0} -c "~/lib/imservctrl killStart mss mxos"'.format(mx_account),root_account,root_passwd,0)
 
 
