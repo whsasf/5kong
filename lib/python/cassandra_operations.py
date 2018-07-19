@@ -46,8 +46,8 @@ def cassandra_cqlsh_fetch_messagebody(blobip,blobport,messageid,decryption_flag)
         raw_datas = session.execute(target,timeout=6000)                
         if raw_datas:
             
-            basic_class.mylogger_record.debug('raw_datas stored in KeyspaceBlobStore.CF_Message_{0} is:'.format(i))
-            basic_class.mylogger_recordnf.debug(raw_datas[:])  
+            #basic_class.mylogger_record.debug('raw_datas stored in KeyspaceBlobStore.CF_Message_{0} is:'.format(i))
+            #basic_class.mylogger_recordnf.debug(raw_datas[:])  
             
             single_blob_size = 0
             total_blob_size = 0
