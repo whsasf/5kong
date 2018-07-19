@@ -71,18 +71,18 @@ def cassandra_cqlsh_fetch_messagebody(blobip,blobport,messageid,decryption_flag)
                 
                     if decryption_flag == 0:   # no need decryption first
                         basic_class.mylogger_record.info('mesage body is not encrypted')
-                        plain_data_lists.append(value)
+                        plain_data = value
                     else:                      # need decrypt,raw_data[2] is contains the message body raw data                   
                         basic_class.mylogger_record.info('message body is encrypted, need decrypt first')
                         plain_data = encryption_decryption_related.decrypt_aes(decryption_flag,passphrase,iv,value)
-                        basic_class.mylogger_record.debug('plain message body data is:')
-                        basic_class.mylogger_recordnf.debug(plain_data) 
-                        data_format = plain_data.decode('utf-8','ignore')
-                        try:
-                            data_format = data_format[data_format.rindex('\x00'):]
-                            plain_data_lists.append(data_format)
-                        except ValueError:
-                            basic_class.mylogger_recordnf.warning('substring not found')   
+                    basic_class.mylogger_record.debug('plain message body data is:')
+                    basic_class.mylogger_recordnf.debug(plain_data) 
+                    data_format = plain_data.decode('utf-8','ignore')
+                    try:
+                        data_format = data_format[data_format.rindex('\x00'):]
+                        plain_data_lists.append(data_format)
+                    except ValueError:
+                        basic_class.mylogger_recordnf.warning('substring not found')
                          
             basic_class.mylogger_record.debug('full message body is:')
             print('===='+str(plain_data_lists))
