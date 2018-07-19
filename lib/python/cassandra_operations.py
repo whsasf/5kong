@@ -56,10 +56,10 @@ def cassandra_cqlsh_fetch_messagebody(blobip,blobport,messageid,decryption_flag)
             for raw_data in raw_datas:
                 if raw_data[1] == 2: # single blob size
                     single_blob_size = raw_data[2]
-                    basic_class.mylogger_record.debug('single messageblob_size is: '+str(single_blob_size))
+                    basic_class.mylogger_record.debug('single messageblob_size is: '+str(single_blob_size.decode()))
                 if raw_data[1] == 3: # total stored blob size
                     total_blob_size = raw_data[2]
-                    basic_class.mylogger_record.debug('total messageblob_size is: '+str(total_blob_size))
+                    basic_class.mylogger_record.debug('total messageblob_size is: '+str(total_blob_size.decode()))
                     blob_num = math.ceil(int(total_blob_size.decode())/int(single_blob_size.decode()))
                     basic_class.mylogger_record.debug('total messageblob_number is: '+str(blob_num))                                
                 
@@ -80,6 +80,7 @@ def cassandra_cqlsh_fetch_messagebody(blobip,blobport,messageid,decryption_flag)
                     data_format = plain_data.decode('utf-8','ignore')
                     try:
                         data_format = data_format[data_format.rindex('\x00'):]
+                        data_format = data_format[:data_format.rindex('\r\n')]
                         plain_data_lists.append(data_format)
                     except ValueError:
                         basic_class.mylogger_recordnf.warning('substring not found')
