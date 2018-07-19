@@ -83,8 +83,9 @@ def cassandra_cqlsh_fetch_messagebody(blobip,blobport,messageid,decryption_flag)
                             plain_data_lists.append(data_format)
                         except ValueError:
                             basic_class.mylogger_recordnf.warning('substring not found')   
-                            
+                         
             basic_class.mylogger_record.debug('full message body is:')
+            print('===='+str(plain_data_lists))
             full_messagebody = ''.join(plain_data_lists)
             basic_class.mylogger_recordnf.debug(full_messagebody)
     cluster.shutdown()
