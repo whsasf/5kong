@@ -35,7 +35,7 @@ def decrypt_aes(mode,key,iv,data_to_decrypt):
     else:
         cipher = AES.new(key[0],decryption_mode,iv[0])   
     data_after_decrypt = cipher.decrypt(data_to_decrypt)
-    basic_class.mylogger_record.debug('the raw message data after decryption is:')
-    basic_class.mylogger_recordnf.debug(data_after_decrypt)
+    #basic_class.mylogger_record.debug('the raw message data after decryption is:')
+    #basic_class.mylogger_recordnf.debug(data_after_decrypt)
     return data_after_decrypt
     

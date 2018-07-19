@@ -45,7 +45,7 @@ def cassandra_cqlsh_fetch_messagebody(blobip,blobport,messageid,decryption_flag)
         
         raw_datas = session.execute(target,timeout=6000)                
         if raw_datas:
-            
+            # disable below 2 lines default, to avoid large messge display
             #basic_class.mylogger_record.debug('raw_datas stored in KeyspaceBlobStore.CF_Message_{0} is:'.format(i))
             #basic_class.mylogger_recordnf.debug(raw_datas[:])  
             
@@ -66,8 +66,12 @@ def cassandra_cqlsh_fetch_messagebody(blobip,blobport,messageid,decryption_flag)
                 if raw_data[1] in range(101,101+blob_num):
                     column = raw_data[1]
                     value = raw_data[2]
-                    basic_class.mylogger_record.debug('raw message body for column {0} is:'.format(column))
-                    basic_class.mylogger_recordnf.debug(value)
+                    
+                    if blob_num <= 3:#do not outout each column to save time for large message.
+                        basic_class.mylogger_record.debug('raw message body for column {0} is:'.format(column))
+                        basic_class.mylogger_recordnf.debug(value)
+                    else:
+                        pass
                 
                     if decryption_flag == 0:   # no need decryption first
                         basic_class.mylogger_record.info('mesage body is not encrypted')
@@ -75,8 +79,12 @@ def cassandra_cqlsh_fetch_messagebody(blobip,blobport,messageid,decryption_flag)
                     else:                      # need decrypt,raw_data[2] is contains the message body raw data                   
                         basic_class.mylogger_record.info('message body is encrypted, need decrypt first')
                         plain_data = encryption_decryption_related.decrypt_aes(decryption_flag,passphrase,iv,value)
-                    basic_class.mylogger_record.debug('plain message body data is:')
-                    basic_class.mylogger_recordnf.debug(plain_data) 
+                    
+                    if blob_num  <= 3: #do not outout each column to save time for large messages.
+                        basic_class.mylogger_record.debug('plain message body data is:')
+                        basic_class.mylogger_recordnf.debug(plain_data) 
+                    else:
+                        pass
                     data_format = plain_data.decode('utf-8','ignore')
                     try:
                         data_format = data_format[data_format.rindex('\x00'):]
@@ -84,9 +92,13 @@ def cassandra_cqlsh_fetch_messagebody(blobip,blobport,messageid,decryption_flag)
                         plain_data_lists.append(data_format)
                     except ValueError:
                         basic_class.mylogger_recordnf.warning('substring not found')
-                         
-            basic_class.mylogger_record.debug('full message body is:')
             full_messagebody = ''.join(plain_data_lists)
-            basic_class.mylogger_recordnf.debug(full_messagebody)
+            if blob_num  <= 3: #do not outout each column to save time for large messages.                    
+                basic_class.mylogger_record.debug('full message body is:')                
+                basic_class.mylogger_recordnf.debug(full_messagebody)
+            else:
+                pass
+            #with open("xx.txt", 'w') as f:
+            #    f.write(full_messagebody)
     cluster.shutdown()
     return (encrypted_flag,full_messagebody)  
