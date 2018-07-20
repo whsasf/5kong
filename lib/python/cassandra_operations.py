@@ -85,6 +85,7 @@ def cassandra_cqlsh_fetch_messagebody(blobip,blobport,messageid,decryption_flag)
                         basic_class.mylogger_recordnf.debug(plain_data) 
                     else:
                         pass
+                        
                     data_format = plain_data.decode('utf-8','ignore')
                     try:
                         data_format = data_format[data_format.rindex('\x00'):]
@@ -92,13 +93,14 @@ def cassandra_cqlsh_fetch_messagebody(blobip,blobport,messageid,decryption_flag)
                         plain_data_lists.append(data_format)
                     except ValueError:
                         basic_class.mylogger_recordnf.warning('substring not found')
+                        plain_data_lists.append(data_format)
             full_messagebody = ''.join(plain_data_lists)
             if blob_num  <= 3: #do not outout each column to save time for large messages.                    
                 basic_class.mylogger_record.debug('full message body is:')                
                 basic_class.mylogger_recordnf.debug(full_messagebody)
             else:
                 pass
-            #with open("xx.txt", 'w') as f:
-            #    f.write(full_messagebody)
+            with open("xx.txt",'w',encoding='utf8') as f:
+                f.write(full_messagebody)
     cluster.shutdown()
     return (encrypted_flag,full_messagebody)  
