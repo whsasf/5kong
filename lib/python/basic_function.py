@@ -310,8 +310,9 @@ def variables_prepare(initialpath):
     global_variables.set_value('setup_num',1)     # used to count setup scripts numbers in function traverse_judge
     global_variables.set_value('run_num',1)       # used to count run scripts numbers in function traverse_judge
     global_variables.set_value('teardowm_num',1)  # used to count teardown scripts numbers in function traverse_judge
+    global_variables.set_value('predefined_msg_templates',initialpath+'/lib/predefined_msg_templates')
     global_variables.import_variables_from_file([initialpath+'/etc/global.vars',initialpath+'/etc/manu-user.vars',initialpath+'/etc/contacts.txt'])# read all pre-defined vars
-
+    
     
 def parse_args():
     """this function used to parse the arguements providded,help determine the testcase location,logging levels,notify_send,etc"""
