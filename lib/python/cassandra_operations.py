@@ -100,7 +100,7 @@ def cassandra_cqlsh_fetch_messagebody(blobip,blobport,messageid,decryption_flag)
                 basic_class.mylogger_recordnf.debug(full_messagebody)
             else:
                 pass
-            with open("xx.txt",'w',encoding='utf8') as f:
-                f.write(full_messagebody)
+            #with open("xx.txt",'w',encoding='utf8') as f:
+            #    f.write(full_messagebody)
     cluster.shutdown()
     return (encrypted_flag,full_messagebody)  
