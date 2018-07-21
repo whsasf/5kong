@@ -15,25 +15,25 @@ def send_notify(subject,body,attachment_name,attachment_data):
     
     basic_class.mylogger_recordnf.title('\n[[Section3: Delivering notify messages to all involved QA testers ...]]')
     basic_class.mylogger_record.info('step1:get needed variables:')
-    notify_user,default_domain,mx_account,root_account,root_passwd,mx1_host1_ip,mx1_mta_host1_ip,mx1_mta_host1_SMTPPort,rcpts=global_variables.get_values('notify_user','default_domain','mx_account','root_account','root_passwd','mx1_host1_ip','mx1_mta_host1_ip','mx1_mta_host1_SMTPPort','rcpts')
-    basic_class.mylogger_record.debug('sender='+str(notify_user+'@'+default_domain))
+    notify_user,mx1_default_domain,mx_account,root_account,root_passwd,mx1_host1_ip,mx1_mta_host1_ip,mx1_mta_host1_SMTPPort,rcpts=global_variables.get_values('notify_user','mx1_default_domain','mx_account','root_account','root_passwd','mx1_host1_ip','mx1_mta_host1_ip','mx1_mta_host1_SMTPPort','rcpts')
+    basic_class.mylogger_record.debug('sender='+str(notify_user+'@'+mx1_default_domain))
     
     root_passwd,basic_class.mylogger_record.info('step2:enable smtprelay:')
     remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'imconfcontrol -install -key \"/*/mta/relaySourcePolicy=allowAll\";imconfcontrol -install -key \"/inbound-standardmta-direct/mta/relaySourcePolicy=allowAll\"\''.format(mx_account),root_account,root_passwd,0)
         
-    root_passwd,basic_class.mylogger_record.info('step3:create send user:'+str(notify_user+'@'+default_domain))
-    remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'account-create {1}@{2}   test default\''.format(mx_account,notify_user,default_domain),root_account,root_passwd,1,'Mailbox Created Successfully',1)
+    root_passwd,basic_class.mylogger_record.info('step3:create send user:'+str(notify_user+'@'+mx1_default_domain))
+    remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'account-create {1}@{2}   test default\''.format(mx_account,notify_user,mx1_default_domain),root_account,root_passwd,1,'Mailbox Created Successfully',1)
     
     root_passwd,basic_class.mylogger_record.info('step4:deliver statistic messages to all related persions ...')   
     root_passwd,basic_class.mylogger_record.debug('rcpts are:'+str(rcpts.split(' ')))
-    fast_send_mail(mx1_mta_host1_ip,mx1_mta_host1_SMTPPort,notify_user+'@'+default_domain,rcpts.split(' '),subject=subject,body=body,attachment_name=attachment_name,attachment_data=attachment_data)
+    fast_send_mail(mx1_mta_host1_ip,mx1_mta_host1_SMTPPort,notify_user+'@'+mx1_default_domain,rcpts.split(' '),subject=subject,body=body,attachment_name=attachment_name,attachment_data=attachment_data)
     time.sleep(5)
     
     root_passwd,basic_class.mylogger_record.info('step5:disable smtprelay:')
     remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'imconfcontrol -install -key \"/*/mta/relaySourcePolicy=denyAll\";imconfcontrol -install -key \"/inbound-standardmta-direct/mta/relaySourcePolicy=denyAll\"\''.format(mx_account),root_account,root_passwd,0)
 
     root_passwd,basic_class.mylogger_record.info('step6:delete send user:test@openwave.com')
-    remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'account-delete {1}@{2}\''.format(mx_account,notify_user,default_domain),root_account,root_passwd,1,'Mailbox Deleted Successfully',1)
+    remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'account-delete {1}@{2}\''.format(mx_account,notify_user,mx1_default_domain),root_account,root_passwd,1,'Mailbox Deleted Successfully',1)
 
              
 def fast_send_mail (mtahost,mtaport,fromuser,tousers,\
