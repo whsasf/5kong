@@ -16,8 +16,8 @@ result_lists = []
 
 basic_class.mylogger_record.debug('Preparing... get some variables needed for tests')
 
-mx1_imapserv_host1_imap4Port,mx1_imapserv_host1_ip,AES_mode6,mx1_mxos_host1_eureka_port,mx1_search_cassandraBlobPort,mx1_cassblob_ip,mx1_mxos_host1_ip,ASE_key128,AES_mode1,mx1_mta_host1_SMTPPort,mx1_mta_host1_ip,mx1_mxos_host1_eureka_port,mx1_mxos_host1_ip,mx1_mss_host2_ip,mx1_mss_host1_ip,mx1_popserv_host1,mx1_popserv_host1_pop3Port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,mx1_default_domain = \
-global_variables.get_values('mx1_imapserv_host1_imap4Port','mx1_imapserv_host1_ip','AES_mode6','mx1_mxos_host1_eureka_port','mx1_search_cassandraBlobPort','mx1_cassblob_ip','mx1_mxos_host1_ip','ASE_key128','AES_mode1','mx1_mta_host1_SMTPPort','mx1_mta_host1_ip','mx1_mxos_host1_eureka_port','mx1_mxos_host1_ip','mx1_mss_host2_ip','mx1_mss_host1_ip','mx1_popserv_host1','mx1_popserv_host1_pop3Port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','mx1_default_domain')
+mx1_imapserv_host1_imap4Port,mx1_imapserv_host1_ip,AES_mode6,mx1_mxos_host1_eureka_port,mx1_search_cassandraBlobPort,mx1_cassblob_ip,mx1_mxos_host2_ip,ASE_key128,AES_mode1,mx1_mta_host1_SMTPPort,mx1_mta_host1_ip,mx1_mxos_host1_eureka_port,mx1_mxos_host1_ip,mx1_mss_host2_ip,mx1_mss_host1_ip,mx1_popserv_host1,mx1_popserv_host1_pop3Port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,mx1_default_domain = \
+global_variables.get_values('mx1_imapserv_host1_imap4Port','mx1_imapserv_host1_ip','AES_mode6','mx1_mxos_host1_eureka_port','mx1_search_cassandraBlobPort','mx1_cassblob_ip','mx1_mxos_host2_ip','ASE_key128','AES_mode1','mx1_mta_host1_SMTPPort','mx1_mta_host1_ip','mx1_mxos_host1_eureka_port','mx1_mxos_host1_ip','mx1_mss_host2_ip','mx1_mss_host1_ip','mx1_popserv_host1','mx1_popserv_host1_pop3Port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','mx1_default_domain')
 
 basic_class.mylogger_record.debug('step1:fetching the latest message uuid')
 uuid = mxos_operations_MessageBodyEncryption.fetch_latest_message_uuid(mx1_mxos_host1_ip,mx1_mxos_host1_eureka_port,'testuser1@openwave.com')

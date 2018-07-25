@@ -22,8 +22,8 @@ import time
 #basic_class.mylogger_record.info('Runing setup testcase:mx-12534-pop_login_10_accounts_half_pass_half_fail')
 basic_class.mylogger_record.debug('Preparing... get some variables needed for tests')
 
-mx1_mxos_host1_ip,mx1_mxos_host1_ip,mx2_imapserv_host1_ip,mx2_mss_host1_ip,mx2_mta_host1_SMTPPort,mx2_mta_host1_ip,mx2_host1_ip,mx2_popserv_host1_pop3Port,mx2_popserv_host1,mx2_imapserv_host1_imap4Port,mx2_imapserv_host1,mx1_mss_host1_ip,mx1_mss_host2_ip,mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port,mx1_mta_host1_ip,mx1_mta_host1_SMTPPort,mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,mx1_default_domain,mx2_default_domain = \
-global_variables.get_values('mx1_mxos_host1_ip','mx1_mxos_host1_ip','mx2_imapserv_host1_ip','mx2_mss_host1_ip','mx2_mta_host1_SMTPPort','mx2_mta_host1_ip','mx2_host1_ip','mx2_popserv_host1_pop3Port','mx2_popserv_host1','mx2_imapserv_host1_imap4Port','mx2_imapserv_host1','mx1_mss_host1_ip','mx1_mss_host2_ip','mx1_imapserv_host1_ip','mx1_imapserv_host1_imap4Port','mx1_mta_host1_ip','mx1_mta_host1_SMTPPort','mx1_popserv_host1_ip','mx1_popserv_host1_pop3Port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','mx1_default_domain','mx2_default_domain')
+mx1_mxos_host1_ip,mx1_mxos_host2_ip,mx2_imapserv_host1_ip,mx2_mss_host1_ip,mx2_mta_host1_SMTPPort,mx2_mta_host1_ip,mx2_host1_ip,mx2_popserv_host1_pop3Port,mx2_popserv_host1,mx2_imapserv_host1_imap4Port,mx2_imapserv_host1,mx1_mss_host1_ip,mx1_mss_host2_ip,mx1_imapserv_host1_ip,mx1_imapserv_host1_imap4Port,mx1_mta_host1_ip,mx1_mta_host1_SMTPPort,mx1_popserv_host1_ip,mx1_popserv_host1_pop3Port,mx_account,mx1_host1_ip,root_account,root_passwd,test_account_base,mx1_default_domain,mx2_default_domain = \
+global_variables.get_values('mx1_mxos_host1_ip','mx1_mxos_host2_ip','mx2_imapserv_host1_ip','mx2_mss_host1_ip','mx2_mta_host1_SMTPPort','mx2_mta_host1_ip','mx2_host1_ip','mx2_popserv_host1_pop3Port','mx2_popserv_host1','mx2_imapserv_host1_imap4Port','mx2_imapserv_host1','mx1_mss_host1_ip','mx1_mss_host2_ip','mx1_imapserv_host1_ip','mx1_imapserv_host1_imap4Port','mx1_mta_host1_ip','mx1_mta_host1_SMTPPort','mx1_popserv_host1_ip','mx1_popserv_host1_pop3Port','mx_account','mx1_host1_ip','root_account','root_passwd','test_account_base','mx1_default_domain','mx2_default_domain')
 
 
 basic_class.mylogger_record.info('step1:set keys')
@@ -39,7 +39,7 @@ basic_class.mylogger_record.info('step3:create alias account for 20 accounts')
 remote_operations.remote_operation(mx1_host1_ip,'su - {0} -c \'for ((i=1;i<=10;i++));do imdbcontrol CreateAlias {1}$i u$i {2};done\''.format(mx_account,test_account_base,mx1_default_domain),root_account,root_passwd,0)
 remote_operations.remote_operation(mx2_host1_ip,'su - {0} -c \'for ((i=1;i<=10;i++));do imdbcontrol CreateAlias {1}$i u$i {2};done\''.format(mx_account,test_account_base,mx2_default_domain),root_account,root_passwd,0)
 
-remote_operations.remote_operation(mx1_mxos_host1_ip,'su - {0} -c "~/lib/imservctrl killStart mss mxos"'.format(mx_account),root_account,root_passwd,0)
+remote_operations.remote_operation(mx1_mxos_host2_ip,'su - {0} -c "~/lib/imservctrl killStart mss mxos"'.format(mx_account),root_account,root_passwd,0)
 remote_operations.remote_operation(mx1_mxos_host1_ip,'su - {0} -c "~/lib/imservctrl killStart mss mxos"'.format(mx_account),root_account,root_passwd,0)
 
 
